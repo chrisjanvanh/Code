@@ -1,0 +1,96 @@
+body {
+    font-family: sans-serif;
+    margin: 0px;
+    background-color: #F2F2F2;
+}
+
+header {
+    background-color: #3795ed;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+}
+
+header img {
+    height: 80%;
+    margin-left: 25px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 18px;
+    padding: 5px;
+    background-color: #167ff7;
+    border-radius: 5px;
+    border: 1px solid #0c66cc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.current {
+    background-color: #509cf2;
+    border: 1px solid #000000;
+    border-width: 2px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header a:hover {
+    background-color: #509cf2;
+}
+
+.content {
+    background-color: white;
+    padding: 30px;
+    font-weight: 600;
+    margin-left: 30%;
+    margin-right: 30%;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .content {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+@media (max-width: 760px) {
+    .content {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+
+@media (max-width: 760px) {
+    header {
+        height: 30vh;
+        flex-direction: column;
+        justify-content: center;
+        position: static;
+    }
+}
+
+@media (max-width: 760px) {
+    header a {
+        margin: 5px;
+        width: 26%;
+        font-size: 20px;
+    }
+}
+
+    @media (max-width: 760px) {
+    header img {
+        height: 20%;
+        margin-left: 5px;
+    }
+}

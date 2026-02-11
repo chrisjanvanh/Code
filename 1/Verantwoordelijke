@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/Verantwoordelijke.css">
+</head>
+<body>
+    <header>
+        <img src="img/logo.svg" alt="VDL Groep Logo">
+        <a href="index">Homepagina</a>
+        <a href="HuidigeToegangen">Medewerkers</a>
+        <a href="HardwareToevoegen"> Hardware toevoegen</a>
+        <a href="Verantwoordelijke" class="current">Producten</a>
+    </header>
+
+    <div class="content">
+        <table>
+            <tr>
+                <th>Product</th>
+                <th>Contactperson</th>
+                <th>Product verwijderen</th>
+            </tr>
+            <tr>
+                <td>SAP</td>
+                <td><input type="text" id="sap" name="sap" value="Antoine Henselmans"></td>
+                <td><button onclick="VerwijderProduct('sap')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>CIP</td>
+                <td><input type="text" id="cip" name="cip" value="Elisa Debourse"></td>
+                <td><button onclick="VerwijderProduct('cip')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>CRM</td>
+                <td><input type="text" id="crm" name="crm" value="Lambert van Gompel"></td>
+                <td><button onclick="VerwijderProduct('crm')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>CPQ</td>
+                <td><input type="text" id="cpq" name="cpq" value="Sven de Vaal"></td>
+                <td><button onclick="VerwijderProduct('cpq')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Power BI</td>
+                <td><input type="text" id="powerbi" name="powerbi" value="Alexander van Vals"></td>
+                <td><button onclick="VerwijderProduct('powerbi')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>VDL AD Account</td>
+                <td><input type="text" id="vdladaccount" name="vdladaccount" value="Sven de Vaal"></td>
+                <td><button onclick="VerwijderProduct('vdladaccount')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Rechten Netwerkschijf</td>
+                <td><input type="text" id="rechtennetwerkschijf" name="rechtennetwerkschijf" value="Service Desk"></td>
+                <td><button onclick="VerwijderProduct('rechtennetwerkschijf')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>MyVDL</td>
+                <td><input type="text" id="myvdl" name="myvdl" value="Stefanie van Meijl"></td>
+                <td><button onclick="VerwijderProduct('myvdl')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>PLM Windchill</td>
+                <td><input type="text" id="plmwindchill" name="plmwindchill" value="Rik Vanderper"></td>
+                <td><button onclick="VerwijderProduct('plmwindchill')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Bedrijfsportal Access</td>
+                <td><input type="text" id="bedrijfsportalaccess" name="bedrijfsportalaccess" value="Elisa Debourse"></td>
+                <td><button onclick="VerwijderProduct('bedrijfsportalaccess')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>IMS</td>
+                <td><input type="text" id="ims" name="ims" value="Berrie Posthuma"></td>
+                <td><button onclick="VerwijderProduct('ims')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Laptop</td>
+                <td><input type="text" id="laptop" name="laptop" value="Sven de Vaal"></td>
+                <td><button onclick="VerwijderProduct('laptop')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Mobiele telefoon</td>
+                <td><input type="text" id="mobiele_telefoon" name="mobiele_telefoon" value="Mariëlle van Keulen"></td>
+                <td><button onclick="VerwijderProduct('mobiele_telefoon')" class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td>Muis en toetsenbord</td>
+                <td><input type="text" id="muis_toetsenbord" name="muis_toetsenbord" value="Sven de Vaal"></td>
+                <td><button onclick="VerwijderProduct('muis_toetsenbord')" type="button"class="button">Verwijder</button></td>
+            </tr>
+            <tr>
+                <td colspan="3"><button type="button" class="Toevoegen">Toevoegen product</button></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
