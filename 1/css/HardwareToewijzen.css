@@ -1,4 +1,4 @@
-form input[type=text] {
+form input[type=text], input[type=date] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -33,6 +33,8 @@ form input[type=submit]:hover, .button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
 }
 
 th, td {
@@ -41,37 +43,21 @@ th, td {
     border-radius: 8px;
 }
 
-td {
-    color: white;
-}
-
-table button {
-    background-color: #3795ed;
-    color: white;
+table .button {
+    background-color: red;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 25%;
 }
 
-#MedewerkerVerlaat {
-    margin-top: 50px;;
-}
-
-.Toevoegen {
-    background-color: green;
-}
-
-.Toevoegen:hover {
-    background-color: #03ab03;
-}
-
-.Verwijderen {
-    background-color: red;
-}
-
-.Verwijderen:hover {
+table .button:hover {
     background-color: darkred;
+}
+
+@media (max-width: 750px) {
+    table {
+        font-size: 14px;
+    }
 }

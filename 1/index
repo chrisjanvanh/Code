@@ -6,13 +6,15 @@
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
     <header>
         <img src="img/logo.svg" alt="VDL Groep Logo">
         <a href="index" class="current">Homepagina</a>
         <a href="HuidigeToegangen">Medewerkers</a>
-        <a href="HardwareToevoegen"> Hardware toevoegen</a>
+        <a href="HardwareToewijzen"> Hardware</a>
         <a href="Verantwoordelijke">Producten</a>
     </header>
 

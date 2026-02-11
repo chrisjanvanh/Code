@@ -6,13 +6,26 @@
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/NieuweMedewerker.css">
+    <script src="javascript/HuidigeToegang.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
+    <script>
+        // Laad de opgeslagen naam in het naam veld
+        window.addEventListener("load", function() {
+            const naamOpgeslagen = localStorage.getItem("naamNieuweMedewerker");
+            if (naamOpgeslagen) {
+                document.getElementById("naam").value = naamOpgeslagen;
+                localStorage.removeItem("naamNieuweMedewerker"); // Wis na gebruik
+            }
+        });
+    </script>
     <header>
         <img src="img/logo.svg" alt="VDL Groep Logo">
         <a href="index">Homepagina</a>
         <a href="HuidigeToegangen" class="current">Medewerkers</a>
-        <a href="HardwareToevoegen"> Hardware toevoegen</a>
+        <a href="HardwareToewijzen"> Hardware</a>
         <a href="Verantwoordelijke">Producten</a>
     </header>
 
@@ -30,7 +43,8 @@
         <input type="text" id="leidinggevende" id="leidinggevende" required><br>
         Bedrijf: <br>
         <input type="text" id="bedrijf" name="bedrijf" required><br><br>
-        De nieuwe medewerker heeft het volgende nodig: <br>     
+        <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
+        <h3>Software</h3>  
         <input type="checkbox" id="sap" name="sap">
         <label for="sap"> SAP</label><br>
         <input type="checkbox" id="cip" name="cip">
@@ -43,10 +57,8 @@
         <label for="powerbi"> PowerBI</label><br>
         <input type="checkbox" id="ad" name="ad">
         <label for="ad"> VDL AD Acccount</label><br>
-        <input type="checkbox" id="laptop" name="laptop">
-        <label for="laptop"> Laptop</label><br>
-        <input type="checkbox" id="toets" name="toets">
-        <label for="toets"> Toetsenbord en Muis</label><br>
+        <input type="checkbox" id="netwerkschijf" name="netwerkschijf">
+        <label for="netwerkschijf"> Rechten Netwerkschijf</label><br>
         <input type="checkbox" id="myvdl" name="myvdl">
         <label for="myvdl"> MyVDL</label><br>
         <input type="checkbox" id="plm" name="plm">
@@ -55,11 +67,17 @@
         <label for="bedrijfsportal"> Bedrijfsportal Access</label><br>
         <input type="checkbox" id="ims" name="ims">
         <label for="ims"> IMS</label><br>
+
+        <h3>Hardware</h3>
+        <input type="checkbox" id="laptop" name="laptop">
+        <label for="laptop"> Laptop</label><br>
         <input type="checkbox" id="telefoon" name="telefoon">
         <label for="telefoon"> Mobiele Telefoon</label><br>
-        <input type="checkbox" id="netwerkschijf" name="netwerkschijf">
-        <label for="netwerkschijf"> Rechten Netwerkschijf</label><br><br>
-        <input type="submit">
+        <input type="checkbox" id="toets" name="toets">
+        <label for="toets"> Toetsenbord en Muis</label><br><br>
+        Referentie: <br>
+        <input type="text" id="referentie" name="referentie"><br>
+        <input type="submit" value="Opslaan">
     </form>
     </div>
 </body>

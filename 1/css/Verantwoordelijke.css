@@ -26,7 +26,7 @@ table input[type=text] {
 }
 
 .button:hover {
-    background-color: #ff4d4d;
+    background-color: darkred;
 }
 
 .Toevoegen {
@@ -36,5 +36,5 @@ table input[type=text] {
 }
 
 .Toevoegen:hover {
-    background-color: #03ab03;
+    background-color: darkgreen;
 }

@@ -26,3 +26,8 @@ form input[type=submit] {
 form input[type=submit]:hover {
     background-color: #167ff7;
 }
+
+form h3 {
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
