@@ -100,7 +100,7 @@
             auth: {
                 clientId: "00fc974d-f877-4135-8bb4-fb6345b5bac4",
                 authority: "https://login.microsoftonline.com/common",
-                redirectUri: window.location.href
+                redirectUri: "https://vdl-backend.azurewebsites.net/login.php"
             }
         };
 
