@@ -60,8 +60,8 @@ function addLogoutButton() {
             const logoutDiv = document.createElement('div');
             logoutDiv.style.cssText = 'position: absolute; right: 20px; top: 15px; display: flex; align-items: center; gap: 15px; color: white;';
             logoutDiv.innerHTML = `
-                <span>${user.name}</span>
-                <span style="font-size: 12px; background: #667eea; padding: 5px 10px; border-radius: 5px;">${getUserRole()}</span>
+                <span class="username">${user.name}</span>
+                <span class="userrole" style="font-size: 12px; background: #667eea; padding: 5px 10px; border-radius: 5px;">${getUserRole()}</span>
                 <button onclick="logout()" style="padding: 8px 15px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Uitloggen</button>
             `;
             header.appendChild(logoutDiv);

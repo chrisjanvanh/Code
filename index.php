@@ -17,7 +17,7 @@
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
-        <a href="HR.php">HR</a>
+        <a href="HR.php" class="No-Mobile">HR</a>
     </header>
 
     <div class="content">
