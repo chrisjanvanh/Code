@@ -31,7 +31,7 @@ function logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
-    window.location.href = 'login';
+    window.location.href = 'login.php';
 }
 
 // Haal user info op
