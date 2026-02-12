@@ -29,6 +29,12 @@ include 'backend/config.php';
     <div class="content">
         <h1>Welkom op de Medewerkerspagina</h1>
         <img src="img/bus.png" alt="Bus">
+
+        <?php if($conn-> connect_error): ?> 
+            <p>Database connection failed: <?php echo $conn->connect_error; ?></p> 
+        <?php else: ?> 
+            <p>Database connection successful!</p> 
+        <?php endif; ?>
     </div>
 </body>
 </html>
