@@ -91,7 +91,7 @@
         // Als gebruiker al ingelogd is, ga naar homepagina
         window.addEventListener('load', function() {
             if (localStorage.getItem('user')) {
-                window.location.href = 'index.html';
+                window.location.href = 'index.php';
             }
         });
     </script>

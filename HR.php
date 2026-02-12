@@ -14,11 +14,11 @@
 <body>
     <header>
         <img src="img/logo.svg" alt="VDL Groep Logo">
-        <a href="index.html">Homepagina</a>
-        <a href="HuidigeToegangen.html">Medewerkers</a>
-        <a href="HardwareToewijzen.html"> Hardware</a>
-        <a href="Verantwoordelijke.html">Producten</a>
-        <a href="HR.html" class="current">HR</a>
+        <a href="index.php">Homepagina</a>
+        <a href="HuidigeToegangen.php">Medewerkers</a>
+        <a href="HardwareToewijzen.php"> Hardware</a>
+        <a href="Verantwoordelijke.php">Producten</a>
+        <a href="HR.php" class="current">HR</a>
     </header>
 
     <div class="content">

@@ -6,7 +6,6 @@ $database = "VDL";
 
 $conn = new mysqli($host, $user, $password, $database);
 
-<?php
 if ($conn->connect_error) {
     echo '<script>console.error("DB Error: '.addslashes($conn->connect_error).'");</script>';
 } else {

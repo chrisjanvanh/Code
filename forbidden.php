@@ -50,7 +50,7 @@
             <h1>❌ Geen toegang</h1>
             <p>Je hebt geen toestemming om deze pagina te bekijken.</p>
             <p>Je huidige rol: <strong id="currentRole"></strong></p>
-            <a href="index">Terug naar homepagina</a>
+            <a href="index.php">Terug naar homepagina</a>
         </div>
     </div>
 
