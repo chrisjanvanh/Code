@@ -72,7 +72,7 @@
                 <td><button type="button" class="Verwijderen">Verwijder</button></td>
             </tr>
             <tr>
-                <td style="background-color: green;">VDL AD Account</td>
+                <td style="background-color: orange;">VDL AD Account</td>
                 <td><button type="button" class="Toevoegen">Toevoegen</button></td>
                 <td><button type="button" class="Verwijderen">Verwijder</button></td>
             </tr>
@@ -87,7 +87,7 @@
                 <td><button type="button" class="Verwijderen">Verwijder</button></td>
             </tr>
             <tr>
-                <td style="background-color: red;">PLM Windchill</td>
+                <td style="background-color: orange;">PLM Windchill</td>
                 <td><button type="button" class="Toevoegen">Toevoegen</button></td>
                 <td><button type="button" class="Verwijderen">Verwijder</button></td>
             </tr>
@@ -102,7 +102,7 @@
                 <td><button type="button" class="Verwijderen">Verwijder</button></td>
             </tr>
             <tr>             
-                <td style="background-color: green;">Laptop</td>
+                <td style="background-color: orange;">Laptop</td>
                 <td><button type="button" class="Toevoegen">Toevoegen</button></td>
                 <td><button type="button" class="Verwijderen">Verwijder</button></td> 
             </tr>
