@@ -63,11 +63,9 @@ header a:hover {
         margin-right: 20%;
     }
 
-    .username, .userrole, .NoMobile {
+    .username, .userrole, .No-Mobile {
         display: none;
     }
-
-
 }
 
 @media (max-width: 760px) {
@@ -89,7 +87,7 @@ header a:hover {
 @media (max-width: 760px) {
     header a {
         margin: 5px;
-        width: 26%;
+        width: 30%;
         font-size: 20px;
     }
 }
