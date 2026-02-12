@@ -66,6 +66,11 @@ header a:hover {
     .username, .userrole, .No-Mobile {
         display: none;
     }
+
+    .header a {
+        margin-left: 10px;
+        padding: 5px 10px;
+    }
 }
 
 @media (max-width: 760px) {
