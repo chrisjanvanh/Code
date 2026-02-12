@@ -17,7 +17,7 @@
         <img src="img/logo.svg" alt="VDL Groep Logo">
         <a href="index.php" class="current">Homepagina</a>
         <a href="HuidigeToegangen.php">Medewerkers</a>
-        <a href="HardwareToewijzen.php"> Hardware</a>
+        <a href="HardwareToewijzen.php" class="current"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
         <script src="javascript/HardwareToewijzen.js"></script>
     </header>

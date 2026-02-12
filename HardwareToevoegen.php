@@ -15,9 +15,9 @@
     <header>
         <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
         <img src="img/logo.svg" alt="VDL Groep Logo">
-        <a href="index.php" class="current">Homepagina</a>
+        <a href="index.php">Homepagina</a>
         <a href="HuidigeToegangen.php">Medewerkers</a>
-        <a href="HardwareToewijzen.php"> Hardware</a>
+        <a href="HardwareToewijzen.php" class="current"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
     </header>
 

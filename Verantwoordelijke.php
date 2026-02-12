@@ -19,7 +19,7 @@
         <a href="index.php" class="current">Homepagina</a>
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php"> Hardware</a>
-        <a href="Verantwoordelijke.php">Producten</a>
+        <a href="Verantwoordelijke.php" class="current">Producten</a>
     </header>
 
     <div class="content">
