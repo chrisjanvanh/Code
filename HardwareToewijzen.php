@@ -40,7 +40,7 @@
         </form>
             <button class="button" id="Opslaan">Opslaan</button>
             <button class="button" id="zoek" onclick="naamzoeken()">Zoek</button>
-            <a href="HardwareToevoegen" class="button">Hardware Toevoegen</a>
+            <a href="HardwareToevoegen.php" class="button">Hardware Toevoegen</a>
 <br><br><br>
         <table id="Toegewezen">
             <tr>
