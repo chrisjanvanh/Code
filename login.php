@@ -85,7 +85,7 @@
             localStorage.setItem('userRole', userRole);
             
             // Redirect naar homepagina
-            window.location.href = 'index';
+            window.location.href = 'index.php';
         }
 
         // Als gebruiker al ingelogd is, ga naar homepagina
