@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/Verantwoordelijke.css">
     <script src="javascript/auth.js"></script>
     <script src="javascript/Verantwoordelijke.js"></script>
+    <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
