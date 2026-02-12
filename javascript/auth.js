@@ -1,7 +1,7 @@
 // Check of gebruiker ingelogd is
 function checkAuth() {
     if (!localStorage.getItem('user')) {
-        window.location.href = 'login';
+        window.location.href = 'login.html';
         return false;
     }
     return true;
