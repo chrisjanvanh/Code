@@ -123,6 +123,10 @@ header a:hover {
     .No-Mobile {
         display: none !important;
     }
+
+    .content h1 {
+        font-size: 24px;
+    }
 }
 
 
