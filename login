@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #F2F2F2;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .login-box {
             background: white;
@@ -22,13 +22,29 @@
             text-align: center;
             max-width: 400px;
         }
+        .login-box h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .login-box p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .login-box img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+        #g_id_onload {
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-box">
             <img src="img/logo.svg" alt="VDL Groep Logo">
-            <h1>Stage opdracht Chrisjan</h1>
+            <h1>VDL Groep</h1>
             <p>Meld je aan met je Google account</p>
             
             <script src="https://accounts.google.com/gsi/client" async defer></script>

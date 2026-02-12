@@ -1,0 +1,40 @@
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+table button {
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+table input[type=text] {
+    width: 100%;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button {
+    background-color: red;
+}
+
+.button:hover {
+    background-color: darkred;
+}
+
+.Toevoegen {
+    background-color: green;
+    height: 40px;
+    width: 100%;
+}
+
+.Toevoegen:hover {
+    background-color: darkgreen;
+}

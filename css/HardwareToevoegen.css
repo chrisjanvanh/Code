@@ -1,0 +1,28 @@
+form input[type=text], form input[type=date] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.6;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+form input[type=submit] {
+    display: inline-block;
+    background-color: #3795ed;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 2px 2px 2px ;
+    color: white;
+}
+
+form input[type=submit]:hover {
+    background-color: #167ff7;
+}
