@@ -6,6 +6,7 @@
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
+    <script src="javascript/auth.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -16,6 +17,7 @@
         <a href="HuidigeToegangen">Medewerkers</a>
         <a href="HardwareToewijzen"> Hardware</a>
         <a href="Verantwoordelijke">Producten</a>
+        <a href="HR">HR</a>
     </header>
 
     <div class="content">
