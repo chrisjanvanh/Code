@@ -33,6 +33,8 @@ form input[type=submit]:hover, .button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
 }
 
 th, td {
