@@ -161,13 +161,3 @@ header a:hover {
         display: none;
     }
 }
-
-.melding {
-    background-color: #e0ffe0;
-    border: 1px solid #4caf50;
-    padding: 10px;
-    margin: 15px;
-    font-weight: bold;
-    color: #2e7d32;
-    border-radius: 5px;
-}

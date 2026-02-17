@@ -17,8 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->execute()) {
         $melding = "Hardware succesvol toegevoegd!";
     } else {
-        $melding = "Er is iets fout gegaan";
-        echo "Fout: " . $stmt->error;
+        error_log("Hardware insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+
+        $melding = "Er is iets fout gegaan bij het opslaan. Probeer het opnieuw.";
     }
 
     $stmt->close();
