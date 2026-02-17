@@ -69,10 +69,9 @@ $producten = $stmt->get_result();
                     <td><?= $m['Referentie'] ?></td>
 
                     <td>
-                        <?php if ($m[$kolom] == 0): ?>
-                            <button class="button" onclick="afronden(<?= $m['ID'] ?>, '<?= $kolom ?>', 1)">Toevoegen afronden</button>
+                        <button class="button" onclick="afronden(<?= $m['ID'] ?>, <?= json_encode($kolom) ?>, 1)">Toevoegen afronden </button>
                         <?php elseif ($m[$kolom] == 2): ?>
-                            <button class="button" onclick="afronden(<?= $m['ID'] ?>, '<?= $kolom ?>', 1)">Verwijderen afronden</button>
+                            <button class="button" onclick="afronden(<?= $m['ID'] ?>, <?= json_encode($kolom) ?>, 0)">Verwijderen afronden</button>
                         <?php endif; ?>
                     </td>
                 </tr>
