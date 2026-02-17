@@ -1,3 +1,62 @@
+<?php
+require 'backend/config.php';
+
+$melding = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    // Tekstvelden
+    $naam = $_POST['naam'];
+    $functie = $_POST['functie'];
+    $locatie = $_POST['locatie'];
+    $leidinggevende = $_POST['leidinggevende'];
+    $bedrijf = $_POST['bedrijf'];
+    $referentie = $_POST['referentie'];
+
+    // Checkboxen → 0 of NULL
+    $sap = isset($_POST['sap']) ? 0 : NULL;
+    $cip = isset($_POST['cip']) ? 0 : NULL;
+    $crm = isset($_POST['crm']) ? 0 : NULL;
+    $cpq = isset($_POST['cpq']) ? 0 : NULL;
+    $powerbi = isset($_POST['powerbi']) ? 0 : NULL;
+    $ad = isset($_POST['ad']) ? 0 : NULL;
+    $netwerkschijf = isset($_POST['netwerkschijf']) ? 0 : NULL;
+    $myvdl = isset($_POST['myvdl']) ? 0 : NULL;
+    $plm = isset($_POST['plm']) ? 0 : NULL;
+    $bedrijfsportal = isset($_POST['bedrijfsportal']) ? 0 : NULL;
+    $ims = isset($_POST['ims']) ? 0 : NULL;
+
+    $laptop = isset($_POST['laptop']) ? 0 : NULL;
+    $telefoon = isset($_POST['telefoon']) ? 0 : NULL;
+    $toets = isset($_POST['toets']) ? 0 : NULL;
+
+    // SQL INSERT
+    $stmt = $conn->prepare("
+        INSERT INTO Medewerker 
+        (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie,
+         SAP, CIP, CRM, CPQ, PowerBI, VDLAD, Netwerkschijf, MyVDL, PLM, Bedrijfsportal, IMS,
+         Laptop, Telefoon, Accessoires)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+
+    $stmt->bind_param(
+        "ssssssiiiiiiiiiiiiii",
+        $naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie,
+        $sap, $cip, $crm, $cpq, $powerbi, $ad, $netwerkschijf, $myvdl, $plm, $bedrijfsportal, $ims,
+        $laptop, $telefoon, $toets
+    );
+
+    if ($stmt->execute()) {
+        $melding = "Nieuwe medewerker succesvol toegevoegd!";
+    } else {
+        error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+        $melding = "Er is iets fout gegaan bij het opslaan.";
+    }
+
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +92,7 @@
     </header>
 
     <div class="content">
-    <form action="">
+    <form action="" method="POST">
         <h2>Nieuwe medewerker</h2>
         <div id="inputvelden"></div>
         Naam: <br>

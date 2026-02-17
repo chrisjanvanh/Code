@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $prijs = str_replace(',', '.', $prijs);
 
     if (!is_numeric($prijs)) {
-        $melding = "Voer een geldige prijs in (bijv. 12.50).";
+        $melding = "Prijs is geen geldige waarde.";
     } else {
 
         // 2. Check of serienummer al bestaat
