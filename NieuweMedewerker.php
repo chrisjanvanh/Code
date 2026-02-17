@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // 2. Dynamische INSERT opbouwen
         $kolomnamen = array_keys($values);
-        $kolomnamen_sql = implode(", ", $kolomnamen);
+        $kolomnamen_sql = implode(", ", array_map(fn($c) => "`$c`", $kolomnamen));
         $placeholders = implode(", ", array_fill(0, count($kolomnamen), "?"));
 
         $sql = "
