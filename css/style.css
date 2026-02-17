@@ -29,22 +29,6 @@ header a {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Logo moet GEEN knop-styling krijgen */
-.logo-link {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin-left: 25px; /* of wat je wilt */
-    display: flex;
-    align-items: center;
-}
-
-.logo-link img {
-    height: 80%;
-    display: block;
-}
-
 .current {
     background-color: #509cf2;
     border: 1px solid #000000;
@@ -170,5 +154,32 @@ header a:hover {
 @media (min-width: 761px) {
     .menu-button {
         display: none;
+    }
+}
+
+/* LOGO-LINK MOET NOOIT ALS MENU-KNOP WORDEN GESTYLED */
+.logo-link {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin-left: 25px !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.logo-link img {
+    height: 80% !important;
+    width: auto !important;
+    display: block !important;
+}
+
+/* Op mobiel mag het logo NIET verdwijnen */
+@media (max-width: 760px) {
+    .logo-link {
+        display: flex !important;
+        width: auto !important;
+        margin: 5px !important;
     }
 }
