@@ -11,18 +11,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $prijs = $_POST['prijs'];
     $aankoopdatum = $_POST['aankoopdatum'];
 
-    $stmt = $conn->prepare("INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssds", $serienummer, $merk, $model, $prijs, $aankoopdatum);
+    // 1. Prijs normaliseren
+    $prijs = str_replace(',', '.', $prijs);
 
-    if ($stmt->execute()) {
-        $melding = "Hardware succesvol toegevoegd!";
+    if (!is_numeric($prijs)) {
+        $melding = "Voer een geldige prijs in (bijv. 12.50).";
     } else {
-        error_log("Hardware insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
 
-        $melding = "Er is iets fout gegaan bij het opslaan. Probeer het opnieuw.";
+        // 2. Check of serienummer al bestaat
+        $check = $conn->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
+        $check->bind_param("s", $serienummer);
+        $check->execute();
+        $check->store_result();
+
+        if ($check->num_rows > 0) {
+            $melding = "Dit serienummer bestaat al. Kies een uniek serienummer.";
+        } else {
+
+            // 3. INSERT uitvoeren
+            $stmt = $conn->prepare("INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssds", $serienummer, $merk, $model, $prijs, $aankoopdatum);
+
+            if ($stmt->execute()) {
+                $melding = "Hardware succesvol toegevoegd!";
+            } else {
+                // Log technische fout
+                error_log("Insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+
+                // Gebruiksvriendelijke melding
+                $melding = "Er is iets fout gegaan bij het opslaan. Probeer het opnieuw.";
+            }
+
+            $stmt->close();
+        }
+
+        $check->close();
     }
-
-    $stmt->close();
 }
 ?>
 
