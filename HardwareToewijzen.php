@@ -6,7 +6,7 @@ $melding = "";
 /* ---------------------------------------------------
    1. TABEL VULLEN
 --------------------------------------------------- */
-$result = $conn->query("SELECT * FROM Gebruikersname ORDER BY Naam ASC");
+$result = $conn->query("SELECT * FROM Gebruikname ORDER BY Naam ASC");
 $toegewezen = $result->fetch_all(MYSQLI_ASSOC);
 
 /* ---------------------------------------------------
@@ -44,7 +44,7 @@ if (isset($_POST['opslaan'])) {
             } else {
 
                 /* 2.3 Check of serienummer al is toegewezen */
-                $checkSN = $conn->prepare("SELECT 1 FROM Gebruikersname WHERE Serienummer = ?");
+                $checkSN = $conn->prepare("SELECT 1 FROM Gebruikname WHERE Serienummer = ?");
                 $checkSN->bind_param("s", $serienummer);
                 $checkSN->execute();
                 $checkSN->store_result();
@@ -55,7 +55,7 @@ if (isset($_POST['opslaan'])) {
 
                     /* 2.4 INSERT uitvoeren */
                     $stmt = $conn->prepare("
-                        INSERT INTO Gebruikersname (Serienummer, Naam, Uitgiftedatum)
+                        INSERT INTO Gebruikname (Serienummer, Naam, Uitgiftedatum)
                         VALUES (?, ?, ?)
                     ");
                     $stmt->bind_param("sss", $serienummer, $naam, $uitgiftedatum);
@@ -81,7 +81,7 @@ if (isset($_POST['verwijder'])) {
 
     $sn = $_POST['verwijder'];
 
-    $del = $conn->prepare("DELETE FROM Gebruikersname WHERE Serienummer = ?");
+    $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
     $del->bind_param("s", $sn);
     $del->execute();
 
