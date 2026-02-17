@@ -129,7 +129,7 @@ if (isset($_POST['verwijder'])) {
         <h1>Hardware Toewijzen</h1>
         <form method="POST">
             Naam: <br>
-            <input list="namen" id="naam" name="naam">
+            <input list="namen" id="naam" name="naam" required>
 
             <datalist id="namen">
                 <?php foreach ($medewerkers as $m): ?>
@@ -139,7 +139,7 @@ if (isset($_POST['verwijder'])) {
             <br>
 
             Serienummer: <br>
-            <input list="serienummers" id="serienummer" name="serienummer">
+            <input list="serienummers" id="serienummer" name="serienummer" required>
 
             <datalist id="serienummers">
                 <?php foreach ($hardware as $h): ?>

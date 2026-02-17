@@ -1,6 +1,8 @@
 <?php
 require 'backend/config.php';
 
+$medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
+
 $melding = "";
 
 // Haal alle kolommen op van de tabel Medewerker
@@ -99,7 +101,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     <h2>Medewerker zoeken</h2>
     <form method="GET">
         Naam: <br>
-        <input type="text" id="naamtoegangen" name="naam" value="<?= $medewerker['Naam'] ?? '' ?>" required>
+            <input list="namen" id="naam" name="naam" required>
+
+            <datalist id="namen">
+                <?php foreach ($medewerkers as $m): ?>
+                    <option value="<?= htmlspecialchars($m['Naam']) ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
+            <br>
         <button type="submit" class="button">Zoeken</button>
         <a href="NieuweMedewerker.php" class="button" onclick="naamtoevoegen();">Medewerker Toevoegen</a><br><br>
     </form>
