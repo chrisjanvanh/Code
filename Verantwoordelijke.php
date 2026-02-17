@@ -23,6 +23,11 @@
     </header>
 
     <div class="content">
+        <?php
+        require 'backend/config.php';
+        $result = $conn->query("SELECT * FROM Product ORDER BY Product ASC");
+        ?>
+
         <table>
             <tr>
                 <th>Product</th>
@@ -30,92 +35,32 @@
                 <th>Afdeling</th>
                 <th>Product verwijderen</th>
             </tr>
+
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row['Product']) ?></td>
+
+                    <td>
+                        <input type="text"
+                            value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
+                    </td>
+
+                    <td>
+                        <input type="text"
+                            value="<?= htmlspecialchars($row['Afdeling']) ?>">
+                    </td>
+
+                    <td>
+                        <button onclick="VerwijderProduct(<?= $row['ID'] ?>)"
+                                class="button">Verwijder</button>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+
             <tr>
-                <td>SAP</td>
-                <td><input type="text" id="sap" name="sap" value="Antoine Henselmans"></td>
-                <td><input type="text" id="sap" name="sap" value="Finance"></td>
-                <td><button onclick="VerwijderProduct('SAP')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>CIP</td>
-                <td><input type="text" id="cip" name="cip" value="Elisa Debourse"></td>
-                <td><input type="text" id="cip" name="cip" value="Communicatie"></td>
-                <td><button onclick="VerwijderProduct('CIP')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>CRM</td>
-                <td><input type="text" id="crm" name="crm" value="Lambert van Gompel"></td>
-                <td><input type="text" id="crm" name="crm" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('CRM')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>CPQ</td>
-                <td><input type="text" id="cpq" name="cpq" value="Sven de Vaal"></td>
-                <td><input type="text" id="cpq" name="cpq" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('CPQ')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Power BI</td>
-                <td><input type="text" id="powerbi" name="powerbi" value="Alexander van Vals"></td>
-                <td><input type="text" id="powerbi" name="powerbi" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('Power BI')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>VDL AD Account</td>
-                <td><input type="text" id="vdladaccount" name="vdladaccount" value="Sven de Vaal"></td>
-                <td><input type="text" id="vdladaccount" name="vdladaccount" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('VDL AD Account')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Rechten Netwerkschijf</td>
-                <td><input type="text" id="rechtennetwerkschijf" name="rechtennetwerkschijf" value="Service Desk"></td>
-                <td><input type="text" id="rechtennetwerkschijf" name="rechtennetwerkschijf" value="Service Desk"></td>
-                <td><button onclick="VerwijderProduct('Rechten Netwerkschijf')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>MyVDL</td>
-                <td><input type="text" id="myvdl" name="myvdl" value="Stefanie van Meijl"></td>
-                <td><input type="text" id="myvdl" name="myvdl" value="HR"></td>
-                <td><button onclick="VerwijderProduct('MyVDL')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>PLM Windchill</td>
-                <td><input type="text" id="plmwindchill" name="plmwindchill" value="Rik Vanderper"></td>
-                <td><input type="text" id="plmwindchill" name="plmwindchill" value="Engineering"></td>
-                <td><button onclick="VerwijderProduct('PLM Windchill')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Bedrijfsportal Access</td>
-                <td><input type="text" id="bedrijfsportalaccess" name="bedrijfsportalaccess" value="Elisa Debourse"></td>
-                <td><input type="text" id="bedrijfsportalaccess" name="bedrijfsportalaccess" value="Communicatie"></td>
-                <td><button onclick="VerwijderProduct('Bedrijfsportal Access')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>IMS</td>
-                <td><input type="text" id="ims" name="ims" value="Berrie Posthuma"></td>
-                <td><input type="text" id="ims" name="ims" value="Quality"></td>
-                <td><button onclick="VerwijderProduct('IMS')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Laptop</td>
-                <td><input type="text" id="laptop" name="laptop" value="Sven de Vaal"></td>
-                <td><input type="text" id="laptop" name="laptop" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('Laptop')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Mobiele telefoon</td>
-                <td><input type="text" id="mobiele_telefoon" name="mobiele_telefoon" value="Mariëlle van Keulen"></td>
-                <td><input type="text" id="mobiele_telefoon" name="mobiele_telefoon" value="Management Assistent"></td>
-                <td><button onclick="VerwijderProduct('Mobiele telefoon')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td>Muis en toetsenbord</td>
-                <td><input type="text" id="muis_toetsenbord" name="muis_toetsenbord" value="Sven de Vaal"></td>
-                <td><input type="text" id="muis_toetsenbord" name="muis_toetsenbord" value="Business IT"></td>
-                <td><button onclick="VerwijderProduct('Muis en toetsenbord')" class="button">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td colspan="4"><button type="button" class="Toevoegen">Toevoegen product</button></td>
+                <td colspan="4">
+                    <button type="button" class="Toevoegen">Toevoegen product</button>
+                </td>
             </tr>
         </table>
     </div>
