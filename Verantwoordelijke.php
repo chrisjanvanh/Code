@@ -26,6 +26,7 @@
         <?php
         require 'backend/config.php';
         $result = $conn->query("SELECT * FROM Product");
+        ?>
 
         <table>
             <tr>
