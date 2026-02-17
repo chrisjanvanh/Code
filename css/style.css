@@ -17,6 +17,11 @@ header {
     top: 0;
 }
 
+header img {
+    height: 80%;
+    margin-left: 25px;
+}
+
 header a {
     color: white;
     text-decoration: none;
@@ -154,32 +159,5 @@ header a:hover {
 @media (min-width: 761px) {
     .menu-button {
         display: none;
-    }
-}
-
-/* LOGO-LINK MOET NOOIT ALS MENU-KNOP WORDEN GESTYLED */
-.logo-link {
-    background: none !important;
-    border: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    margin-left: 25px !important;
-    width: auto !important;
-    display: flex !important;
-    align-items: center !important;
-}
-
-.logo-link img {
-    height: 80% !important;
-    width: auto !important;
-    display: block !important;
-}
-
-/* Op mobiel mag het logo NIET verdwijnen */
-@media (max-width: 760px) {
-    .logo-link {
-        display: flex !important;
-        width: auto !important;
-        margin: 5px !important;
     }
 }
