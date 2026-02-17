@@ -33,7 +33,8 @@ if (isset($_POST['opslaan'])) {
         $checkNaam->store_result();
 
         if ($checkNaam->num_rows == 0) {
-            echo "<script>alert('Deze medewerker bestaat niet. Voeg de medewerker eerst toe voordat je hardware toewijst.');</script>";
+            $melding = "Deze medewerker bestaat niet.";
+            echo "<script>alert('$melding');</script>";
         } else {
 
             /* 2.2 Check of serienummer bestaat in Hardware */
@@ -44,6 +45,7 @@ if (isset($_POST['opslaan'])) {
 
             if ($checkHW->num_rows == 0) {
                 $melding = "Dit serienummer bestaat niet in de hardwarelijst.";
+                echo "<script>alert('$melding');</script>";
             } else {
 
                 /* 2.3 Check of serienummer al is toegewezen */
@@ -54,6 +56,7 @@ if (isset($_POST['opslaan'])) {
 
                 if ($checkSN->num_rows > 0) {
                     $melding = "Dit serienummer is al toegewezen.";
+                    echo "<script>alert('$melding');</script>";
                 } else {
 
                     /* 2.4 INSERT uitvoeren */
@@ -70,6 +73,7 @@ if (isset($_POST['opslaan'])) {
                     } else {
                         error_log("Insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
                         $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
+                        echo "<script>alert('$melding');</script>";
                     }
                 }
             }
