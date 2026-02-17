@@ -1,3 +1,77 @@
+<?php
+require 'backend/config.php';
+
+$melding = "";
+
+// Haal alle kolommen op van de tabel Medewerker
+$columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
+$columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
+
+// Kolommen die GEEN toegang zijn
+$exclude = ["Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie"];
+
+// Medewerker ophalen
+$medewerker = null;
+
+if (isset($_GET['naam'])) {
+    $naam = $_GET['naam'];
+
+    $stmt = $conn->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
+    $stmt->bind_param("s", $naam);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $medewerker = $result->fetch_assoc();
+}
+
+/* ---------------------------------------------------
+   1. Toevoegen / Verwijderen van toegang
+--------------------------------------------------- */
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
+
+    $veld = $_POST['veld'];
+    $naam = $_POST['naam'];
+
+    if ($_POST['actie'] === "toevoegen") {
+        // NULL → 0
+        $waarde = 0;
+    } else {
+        // verwijderen: alles → 2
+        $waarde = 2;
+    }
+
+    $stmt = $conn->prepare("UPDATE Medewerker SET $veld = ? WHERE Naam = ?");
+    $stmt->bind_param("is", $waarde, $naam);
+    $stmt->execute();
+
+    header("Location: HuidigeToegangen.php?naam=" . urlencode($naam));
+    exit;
+}
+
+/* ---------------------------------------------------
+   2. Opslaan van bovenste velden
+--------------------------------------------------- */
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset($_POST['actie'])) {
+
+    $stmt = $conn->prepare("
+        UPDATE Medewerker 
+        SET Functie=?, Locatie=?, Leidinggevende=?, Bedrijf=? 
+        WHERE Naam=?
+    ");
+    $stmt->bind_param(
+        "sssss",
+        $_POST['functie'],
+        $_POST['locatie'],
+        $_POST['leidinggevende'],
+        $_POST['bedrijf'],
+        $_POST['naam']
+    );
+    $stmt->execute();
+
+    header("Location: HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,116 +83,93 @@
     <script src="javascript/auth.js"></script>
     <script src="javascript/HuidigeToegang.js"></script>
     <script src="javascript/main.js"></script>
-
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
-    <header>
-        <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
-        <img src="img/logo.svg" alt="VDL Groep Logo">
-        <a href="index.php">Homepagina</a>
-        <a href="HuidigeToegangen.php" class="current">Medewerkers</a>
-        <a href="HardwareToewijzen.php"> Hardware</a>
-        <a href="Verantwoordelijke.php">Producten</a>
-    </header>
+<header>
+    <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
+    <img src="img/logo.svg" alt="VDL Groep Logo">
+    <a href="index.php">Homepagina</a>
+    <a href="HuidigeToegangen.php" class="current">Medewerkers</a>
+    <a href="HardwareToewijzen.php"> Hardware</a>
+    <a href="Verantwoordelijke.php">Producten</a>
+</header>
 
-    <div class="content">
-        <h2>Medewerker zoeken</h2>
-        <form action="">
+<div class="content">
+
+    <h2>Medewerker zoeken</h2>
+    <form method="GET">
         Naam: <br>
-        <input type="text" id="naamtoegangen" name="naam" value="Chrisjan van Houtert" required>
-        <button type="button" class="button">Zoeken</button> <a href="NieuweMedewerker.php" class="button" onclick="naamtoevoegen(); window.location.href='NieuweMedewerker.php'; return false;">Medewerker Toevoegen</a><br><br>
+        <input type="text" id="naamtoegangen" name="naam" value="<?= $medewerker['Naam'] ?? '' ?>" required>
+        <button type="submit" class="button">Zoeken</button>
+        <a href="NieuweMedewerker.php" class="button" onclick="naamtoevoegen();">Medewerker Toevoegen</a><br><br>
+    </form>
+
+    <?php if ($medewerker): ?>
+
+    <form method="POST">
         Functie: <br>
-        <input type="text" id="functie" name="functie" value="Stagiair" required><br>
+        <input type="text" id="functie" name="functie" value="<?= $medewerker['Functie'] ?>"><br>
         Locatie: <br>
-        <input type="text" id="locatie" name="locatie" value="Valkenswaard" required><br>
+        <input type="text" id="locatie" name="locatie" value="<?= $medewerker['Locatie'] ?>"><br>
         Leidinggevende: <br>
-        <input type="text" id="leidinggevende" name="leidinggevende" value="Pim Verlinden" required><br>
+        <input type="text" id="leidinggevende" name="leidinggevende" value="<?= $medewerker['Leidinggevende'] ?>"><br>
         Bedrijf: <br>
-        <input type="text" id="bedrijf" name="bedrijf" value="VDL Bus & Coach" required><br>
+        <input type="text" id="bedrijf" name="bedrijf" value="<?= $medewerker['Bedrijf'] ?>"><br>
+        <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
         <input type="submit" value="Opslaan">
-        </form>
+    </form>
 
-        <h2>Huidige toegangen</h2>
-        <table>
-            <tr>
-                <th>Product</th>
-                <th>Toevoegen</th>
-                <th>Verwijderen</th>
-            </tr>
-            <tr>
-                <td style="background-color: green;">SAP</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">CIP</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">CRM</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: green;">CPQ</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">Power BI</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: orange;">VDL AD Account</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">Rechten Netwerkschijf</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">MyVDL</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: orange;">PLM Windchill</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: green;">Bedrijfsportal Access</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: red;">IMS</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>             
-                <td style="background-color: orange;">Laptop</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td> 
-            </tr>
-            <tr>
-                <td style="background-color: red;">Mobiele telefoon</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-            <tr>
-                <td style="background-color: green;">Muis en toetsenbord</td>
-                <td><button type="button" class="Toevoegen">Toevoegen</button></td>
-                <td><button type="button" class="Verwijderen">Verwijder</button></td>
-            </tr>
-        </table>
+    <h2>Huidige toegangen</h2>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Toevoegen</th>
+            <th>Verwijderen</th>
+        </tr>
 
-        <button onclick="BedrijfVerlaat()" class="button" id="MedewerkerVerlaat">Medewerker verlaat het bedrijf</button>
-    </div>
+        <?php foreach ($columns as $col): ?>
+            <?php
+                $kolom = $col['Field'];
+                if (in_array($kolom, $exclude)) continue;
+
+                $waarde = $medewerker[$kolom];
+
+                // kleur bepalen
+                $kleur = "white";
+                if ($waarde === 0) $kleur = "orange";
+                if ($waarde === 1) $kleur = "green";
+                if ($waarde === 2) $kleur = "black";
+
+                // label netjes maken
+                $label = $kolom;
+            ?>
+            <tr>
+                <td style="background-color: <?= $kleur ?>;"><?= $label ?></td>
+
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="actie" value="toevoegen">
+                        <input type="hidden" name="veld" value="<?= $kolom ?>">
+                        <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
+                        <button type="submit" class="Toevoegen">Toevoegen</button>
+                    </form>
+                </td>
+
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="actie" value="verwijderen">
+                        <input type="hidden" name="veld" value="<?= $kolom ?>">
+                        <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
+                        <button type="submit" class="Verwijderen">Verwijder</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+
+    </table>
+
+    <?php endif; ?>
+
+</div>
 </body>
 </html>
