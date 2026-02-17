@@ -114,7 +114,7 @@ if (isset($_POST['verwijder'])) {
 <body>
     <header>
         <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
-        <img src="img/logo.svg" alt="VDL Groep Logo">
+        <a href="index.php" class="logo-link"><img src="img/logo.svg" alt="VDL Groep Logo"></a>
         <a href="index.php">Homepagina</a>
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php" class="current"> Hardware</a>

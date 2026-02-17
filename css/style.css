@@ -29,9 +29,17 @@ header a {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-header a img {
-    height: 80%;
+.logo-link {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
     margin-left: 25px;
+}
+
+.logo-link img {
+    height: 80%;
+    display: block;
 }
 
 .current {
