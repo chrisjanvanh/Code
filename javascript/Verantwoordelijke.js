@@ -45,9 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ENTER opslaan voor ALLE contactpersoon- en afdelingvelden
+    // Alle inputvelden voor contactpersoon en afdeling selecteren
     document.querySelectorAll("input[id^='contact_'], input[id^='afdeling_']").forEach(input => {
-        input.addEventListener("keypress", function(e) {
+
+        input.addEventListener("keydown", function(e) {
             if (e.key === "Enter") {
                 e.preventDefault(); // voorkomt dat de pagina herlaadt
 
@@ -65,7 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.text())
                 .then(data => {
                     if (data === "OK") {
-                        alert("Opgeslagen");
+                        // Optioneel: visuele feedback
+                        this.style.backgroundColor = "#c8f7c5"; // lichtgroen
+                        setTimeout(() => this.style.backgroundColor = "", 500);
                     } else {
                         alert("Opslaan mislukt");
                     }
@@ -75,4 +78,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
-
