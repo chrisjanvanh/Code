@@ -1,14 +1,3 @@
-function Naamingevuld() {
-    var naam = document.getElementById("naam").value;
-    var serienummerInput = document.getElementById("serienummer");
-    if (naam != "") {
-        serienummerInput.setAttribute("list", "serienummerLijst");
-    }
-    else {
-        serienummerInput.removeAttribute("list");
-    }
-}
-
 function naamzoeken() {
   var naamInput, serienummerInput, naamFilter, serienummerFilter, table, tr, td, i, naamValue, serienummerValue;
   naamInput = document.getElementById("naam");

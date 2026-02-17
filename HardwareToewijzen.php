@@ -4,7 +4,7 @@ require 'backend/config.php';
 $melding = "";
 
 // Ophalen van alle toegewezen hardware
-$result = $conn->query("SELECT * FROM Gebruiksname ORDER BY Naam ASC");
+$result = $conn->query("SELECT * FROM Gebruikname ORDER BY Naam ASC");
 $toegewezen = $result->fetch_all(MYSQLI_ASSOC);
 
 // Opslaan van nieuwe toewijzing
@@ -25,7 +25,7 @@ if (isset($_POST['opslaan'])) {
     } else {
 
         // Check of serienummer al bestaat
-        $checkSN = $conn->prepare("SELECT 1 FROM Gebruiksname WHERE Serienummer = ?");
+        $checkSN = $conn->prepare("SELECT 1 FROM Gebruikname WHERE Serienummer = ?");
         $checkSN->bind_param("s", $serienummer);
         $checkSN->execute();
         $checkSN->store_result();
@@ -35,7 +35,7 @@ if (isset($_POST['opslaan'])) {
         } else {
 
             // INSERT uitvoeren
-            $stmt = $conn->prepare("INSERT INTO Gebruiksname (Serienummer, Naam, Uitgiftedatum) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO Gebruikname (Serienummer, Naam, Uitgiftedatum) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $serienummer, $naam, $uitgiftedatum);
 
             if ($stmt->execute()) {
@@ -52,7 +52,7 @@ if (isset($_POST['opslaan'])) {
 if (isset($_POST['verwijder'])) {
     $sn = $_POST['verwijder'];
 
-    $del = $conn->prepare("DELETE FROM Gebruiksname WHERE Serienummer = ?");
+    $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
     $del->bind_param("s", $sn);
     $del->execute();
 
