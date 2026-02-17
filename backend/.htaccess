@@ -1,7 +1,0 @@
-# Blokkeer directe toegang via de browser
-Require all denied
-
-# Sta PHP toe om bestanden te includen
-<FilesMatch "\.php$">
-    Require all granted
-</FilesMatch>
