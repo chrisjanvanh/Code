@@ -17,7 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->execute()) {
         $melding = "Hardware succesvol toegevoegd!";
     } else {
-        $melding = "Fout: " . $stmt->error;
+        $melding = "Er is iets fout gegaan";
+        echo "Fout: " . $stmt->error;
     }
 
     $stmt->close();
