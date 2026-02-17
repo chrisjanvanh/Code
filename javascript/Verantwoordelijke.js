@@ -42,3 +42,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ENTER opslaan voor ALLE contactpersoon- en afdelingvelden
+    document.querySelectorAll("input[id^='contact_'], input[id^='afdeling_']").forEach(input => {
+        input.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                e.preventDefault(); // voorkomt dat de pagina herlaadt
+
+                const parts = this.id.split("_");
+                const id = parts[1];
+
+                const contact = document.getElementById("contact_" + id).value;
+                const afdeling = document.getElementById("afdeling_" + id).value;
+
+                fetch("backend/update_product.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `id=${id}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
+                })
+                .then(res => res.text())
+                .then(data => {
+                    if (data === "OK") {
+                        alert("Opgeslagen");
+                    } else {
+                        alert("Opslaan mislukt");
+                    }
+                });
+            }
+        });
+    });
+
+});
+

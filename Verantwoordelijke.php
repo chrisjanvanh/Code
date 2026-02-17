@@ -25,8 +25,7 @@
     <div class="content">
         <?php
         require 'backend/config.php';
-        $result = $conn->query("SELECT * FROM Product ORDER BY Product ASC");
-        ?>
+        $result = $conn->query("SELECT * FROM Product");
 
         <table>
             <tr>
