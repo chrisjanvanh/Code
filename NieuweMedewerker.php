@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         Locatie: <br>
         <input type="text" id="locatie" name="locatie" required><br>
         Leidinggevende: <br>
-        <input type="text" id="leidinggevende" id="leidinggevende" required><br>
+        <input type="text" id="leidinggevende" name="leidinggevende" required><br>
         Bedrijf: <br>
         <input type="text" id="bedrijf" name="bedrijf" required><br><br>
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
