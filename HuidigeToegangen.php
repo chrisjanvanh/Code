@@ -105,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
         <div class="melding">
             <?= $melding ?>
         </div>
+    <?php endif; ?>
 
     <h2>Medewerker zoeken</h2>
     <form method="GET">
