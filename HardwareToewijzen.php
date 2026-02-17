@@ -33,7 +33,7 @@ if (isset($_POST['opslaan'])) {
         $checkNaam->store_result();
 
         if ($checkNaam->num_rows == 0) {
-            $melding = "Deze medewerker bestaat niet.";
+            alert =("Deze medewerker bestaat niet. Voeg de medewerker eerst toe voordat je hardware toewijst.");
         } else {
 
             /* 2.2 Check of serienummer bestaat in Hardware */
