@@ -135,16 +135,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
                 $waarde = $medewerker[$kolom];
 
                 // kleur bepalen
+                // achtergrondkleur bepalen
                 $kleur = "white";
-                if ($waarde === 0) $kleur = "orange";
-                if ($waarde === 1) $kleur = "green";
-                if ($waarde === 2) $kleur = "black";
+                $tekst = "black";
+
+                if ($waarde === 0) {
+                    $kleur = "orange";
+                    $tekst = "black";
+                }
+
+                if ($waarde === 1) {
+                    $kleur = "green";
+                    $tekst = "black";
+                }
+
+                if ($waarde === 2) {
+                    $kleur = "black";
+                    $tekst = "white";
+                }
+
 
                 // label netjes maken
                 $label = $kolom;
             ?>
             <tr>
-                <td style="background-color: <?= $kleur ?>;"><?= $label ?></td>
+                <td style="background-color: <?= $kleur ?>; color: <?= $tekst ?>"><?= $label ?></td>
 
                 <td>
                     <form method="POST">
