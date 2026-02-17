@@ -1,3 +1,29 @@
+<?php
+require 'backend/config.php';
+
+$melding = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $serienummer = $_POST['serienummer'];
+    $merk = $_POST['merk'];
+    $model = $_POST['model'];
+    $prijs = $_POST['prijs'];
+    $aankoopdatum = $_POST['aankoopdatum'];
+
+    $stmt = $conn->prepare("INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssds", $serienummer, $merk, $model, $prijs, $aankoopdatum);
+
+    if ($stmt->execute()) {
+        $melding = "Hardware succesvol toegevoegd!";
+    } else {
+        $melding = "Fout: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +48,14 @@
     </header>
 
     <div class="content">
-    <form action="backend/hardware_toevoegen.php" method="POST">
+
+    <?php if (!empty($melding)): ?>
+        <div class="melding">
+            <?= $melding ?>
+        </div>
+    <?php endif; ?>
+
+    <form action="" method="POST">
         <h2>Hardware toevoegen</h2>
         <div id="inputvelden"></div>
         Serienummer: <br>
