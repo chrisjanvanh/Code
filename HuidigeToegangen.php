@@ -27,7 +27,7 @@
         <form action="">
         Naam: <br>
         <input type="text" id="naamtoegangen" name="naam" value="Chrisjan van Houtert" required>
-        <button type="button" class="button">Zoeken</button> <a href="NieuweMedewerker.php" class="button" onclick="naamtoevoegen(); window.location.href='NieuweMedewerker'; return false;">Medewerker Toevoegen</a><br><br>
+        <button type="button" class="button">Zoeken</button> <a href="NieuweMedewerker.php" class="button" onclick="naamtoevoegen(); window.location.href='NieuweMedewerker.php'; return false;">Medewerker Toevoegen</a><br><br>
         Functie: <br>
         <input type="text" id="functie" name="functie" value="Stagiair" required><br>
         Locatie: <br>

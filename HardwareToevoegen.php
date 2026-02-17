@@ -22,7 +22,7 @@
     </header>
 
     <div class="content">
-    <form action="">
+    <form action="backend/hardware_toevoegen.php" method="POST">
         <h2>Hardware toevoegen</h2>
         <div id="inputvelden"></div>
         Serienummer: <br>
