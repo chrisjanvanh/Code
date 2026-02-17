@@ -1,6 +1,9 @@
 <?php
 require 'backend/config.php';
 
+$medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
+$hardware = $conn->query("SELECT Serienummer FROM Hardware ORDER BY Serienummer ASC")->fetch_all(MYSQLI_ASSOC);
+
 $melding = "";
 
 /* ---------------------------------------------------
@@ -126,10 +129,24 @@ if (isset($_POST['verwijder'])) {
         <h1>Hardware Toewijzen</h1>
         <form method="POST">
             Naam: <br>
-            <input onchange="Naamingevuld()" type="text" id="naam" name="naam"><br>
+            <input list="namen" id="naam" name="naam">
+
+            <datalist id="namen">
+                <?php foreach ($medewerkers as $m): ?>
+                    <option value="<?= htmlspecialchars($m['Naam']) ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
+            <br>
 
             Serienummer: <br>
-            <input type="text" id="serienummer" name="serienummer"><br>
+            <input list="serienummers" id="serienummer" name="serienummer">
+
+            <datalist id="serienummers">
+                <?php foreach ($hardware as $h): ?>
+                    <option value="<?= htmlspecialchars($h['Serienummer']) ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
+            <br>
 
             Uitgiftedatum: <br>
             <input type="date" id="uitgiftedatum" name="uitgiftedatum"><br><br>

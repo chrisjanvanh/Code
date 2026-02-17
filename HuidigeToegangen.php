@@ -32,10 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
     $naam = $_POST['naam'];
 
     if ($_POST['actie'] === "toevoegen") {
-        // NULL → 0
         $waarde = 0;
     } else {
-        // verwijderen: alles → 2
         $waarde = 2;
     }
 
