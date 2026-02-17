@@ -3,62 +3,93 @@ require 'backend/config.php';
 
 $melding = "";
 
-// Ophalen van alle toegewezen hardware
-$result = $conn->query("SELECT * FROM Gebruikname ORDER BY Naam ASC");
+/* ---------------------------------------------------
+   1. TABEL VULLEN
+--------------------------------------------------- */
+$result = $conn->query("SELECT * FROM Gebruikersname ORDER BY Naam ASC");
 $toegewezen = $result->fetch_all(MYSQLI_ASSOC);
 
-// Opslaan van nieuwe toewijzing
+/* ---------------------------------------------------
+   2. OPSLAAN VAN NIEUWE TOEWĲZING
+--------------------------------------------------- */
 if (isset($_POST['opslaan'])) {
 
-    $naam = $_POST['naam'];
-    $serienummer = $_POST['serienummer'];
+    $naam = trim($_POST['naam']);
+    $serienummer = trim($_POST['serienummer']);
     $uitgiftedatum = $_POST['uitgiftedatum'];
 
-    // Check of medewerker bestaat
-    $checkNaam = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
-    $checkNaam->bind_param("s", $naam);
-    $checkNaam->execute();
-    $checkNaam->store_result();
-
-    if ($checkNaam->num_rows == 0) {
-        $melding = "Deze medewerker bestaat niet.";
+    // Lege velden checken
+    if ($naam === "" || $serienummer === "" || $uitgiftedatum === "") {
+        $melding = "Vul alle velden in.";
     } else {
 
-        // Check of serienummer al bestaat
-        $checkSN = $conn->prepare("SELECT 1 FROM Gebruikname WHERE Serienummer = ?");
-        $checkSN->bind_param("s", $serienummer);
-        $checkSN->execute();
-        $checkSN->store_result();
+        /* 2.1 Check of medewerker bestaat */
+        $checkNaam = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
+        $checkNaam->bind_param("s", $naam);
+        $checkNaam->execute();
+        $checkNaam->store_result();
 
-        if ($checkSN->num_rows > 0) {
-            $melding = "Dit serienummer is al toegewezen.";
+        if ($checkNaam->num_rows == 0) {
+            $melding = "Deze medewerker bestaat niet.";
         } else {
 
-            // INSERT uitvoeren
-            $stmt = $conn->prepare("INSERT INTO Gebruikname (Serienummer, Naam, Uitgiftedatum) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $serienummer, $naam, $uitgiftedatum);
+            /* 2.2 Check of serienummer bestaat in Hardware */
+            $checkHW = $conn->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
+            $checkHW->bind_param("s", $serienummer);
+            $checkHW->execute();
+            $checkHW->store_result();
 
-            if ($stmt->execute()) {
-                $melding = "Hardware succesvol toegewezen!";
-                header("Refresh:0"); // pagina herladen zodat tabel update
+            if ($checkHW->num_rows == 0) {
+                $melding = "Dit serienummer bestaat niet in de hardwarelijst.";
             } else {
-                $melding = "Er is iets fout gegaan.";
+
+                /* 2.3 Check of serienummer al is toegewezen */
+                $checkSN = $conn->prepare("SELECT 1 FROM Gebruikersname WHERE Serienummer = ?");
+                $checkSN->bind_param("s", $serienummer);
+                $checkSN->execute();
+                $checkSN->store_result();
+
+                if ($checkSN->num_rows > 0) {
+                    $melding = "Dit serienummer is al toegewezen.";
+                } else {
+
+                    /* 2.4 INSERT uitvoeren */
+                    $stmt = $conn->prepare("
+                        INSERT INTO Gebruikersname (Serienummer, Naam, Uitgiftedatum)
+                        VALUES (?, ?, ?)
+                    ");
+                    $stmt->bind_param("sss", $serienummer, $naam, $uitgiftedatum);
+
+                    if ($stmt->execute()) {
+                        $melding = "Hardware succesvol toegewezen!";
+                        header("Refresh:0");
+                        exit;
+                    } else {
+                        error_log("Insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+                        $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
+                    }
+                }
             }
         }
     }
 }
 
-// Verwijderen
+/* ---------------------------------------------------
+   3. VERWIJDEREN
+--------------------------------------------------- */
 if (isset($_POST['verwijder'])) {
+
     $sn = $_POST['verwijder'];
 
-    $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
+    $del = $conn->prepare("DELETE FROM Gebruikersname WHERE Serienummer = ?");
     $del->bind_param("s", $sn);
     $del->execute();
 
     header("Refresh:0");
+    exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
