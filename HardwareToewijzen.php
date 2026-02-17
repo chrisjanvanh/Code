@@ -116,6 +116,13 @@ if (isset($_POST['verwijder'])) {
     </header>
 
     <div class="content">
+
+        <?php if (!empty($melding)): ?>
+            <div class="melding">
+                <?= $melding ?>
+            </div>
+        <?php endif; ?>
+
         <h1>Hardware Toewijzen</h1>
         <form method="POST">
             Naam: <br>
