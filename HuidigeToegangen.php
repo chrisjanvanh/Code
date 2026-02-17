@@ -83,6 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     <script src="javascript/auth.js"></script>
     <script src="javascript/HuidigeToegang.js"></script>
     <script src="javascript/main.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
 <header>
@@ -162,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
                 <td style="background-color: <?= $kleur ?>; color: <?= $tekst ?>"><?= $label ?></td>
 
                 <td>
-                    <form method="POST">
+                    <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt toevoegen?')">
                         <input type="hidden" name="actie" value="toevoegen">
                         <input type="hidden" name="veld" value="<?= $kolom ?>">
                         <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
@@ -171,11 +173,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
                 </td>
 
                 <td>
-                    <form method="POST">
+                    <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt verwijderen?')">
                         <input type="hidden" name="actie" value="verwijderen">
                         <input type="hidden" name="veld" value="<?= $kolom ?>">
                         <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
-                        <button type="submit" class="Verwijderen">Verwijder</button>
+                        <button type="submit" class="Verwijderen">Verwijderen</button>
                     </form>
                 </td>
             </tr>
