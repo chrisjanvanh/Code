@@ -9,7 +9,7 @@ $melding = "";
 /* ---------------------------------------------------
    1. TABEL VULLEN
 --------------------------------------------------- */
-$result = $conn->query("SELECT * FROM Gebruikname ORDER BY Naam ASC");
+$result = $conn->query("SELECT * FROM Gebruikname ORDER BY uitgiftedatum ASC");
 $toegewezen = $result->fetch_all(MYSQLI_ASSOC);
 
 /* ---------------------------------------------------
