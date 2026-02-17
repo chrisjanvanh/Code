@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
 require 'backend/config.php';
 
 $melding = "";
@@ -92,6 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </header>
 
     <div class="content">
+
+    <?php if (!empty($melding)): ?>
+        <div class="melding">
+            <?= $melding ?>
+        </div>
+    <?php endif; ?>
+
     <form action="" method="POST">
         <h2>Nieuwe medewerker</h2>
         <div id="inputvelden"></div>
