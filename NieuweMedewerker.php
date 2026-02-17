@@ -1,6 +1,15 @@
 <?php
 require 'backend/config.php';
 
+// Haal alle kolommen op van de tabel Medewerker
+$columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
+$columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
+
+// Kolommen die GEEN checkbox zijn
+$exclude = [
+    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie"
+];
+
 $melding = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -12,22 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $bedrijf = $_POST['bedrijf'];
     $referentie = $_POST['referentie'];
 
-    // Checkboxen → 0 of NULL
-    $sap = isset($_POST['sap']) ? 0 : NULL;
-    $cip = isset($_POST['cip']) ? 0 : NULL;
-    $crm = isset($_POST['crm']) ? 0 : NULL;
-    $cpq = isset($_POST['cpq']) ? 0 : NULL;
-    $powerbi = isset($_POST['powerbi']) ? 0 : NULL;
-    $ad = isset($_POST['ad']) ? 0 : NULL;
-    $netwerkschijf = isset($_POST['netwerkschijf']) ? 0 : NULL;
-    $myvdl = isset($_POST['myvdl']) ? 0 : NULL;
-    $plm = isset($_POST['plm']) ? 0 : NULL;
-    $bedrijfsportal = isset($_POST['bedrijfsportal']) ? 0 : NULL;
-    $ims = isset($_POST['ims']) ? 0 : NULL;
+    // Dynamisch checkbox‑waarden verzamelen
+    $values = [];
+    foreach ($columns as $col) {
+        $kolom = $col['Field'];
+        if (in_array($kolom, $exclude)) continue;
 
-    $laptop = isset($_POST['laptop']) ? 0 : NULL;
-    $telefoon = isset($_POST['telefoon']) ? 0 : NULL;
-    $toets = isset($_POST['toets']) ? 0 : NULL;
+        // Checkbox: aangevinkt = 0, niet aangevinkt = NULL
+        $values[$kolom] = isset($_POST[$kolom]) ? 0 : NULL;
+    }
 
     // 1. Check of medewerker al bestaat
     $check = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
@@ -41,21 +43,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } else {
         $check->close();
 
-        // 2. INSERT uitvoeren
-        $stmt = $conn->prepare("
-            INSERT INTO Medewerker 
-            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie,
-             SAP, CIP, CRM, CPQ, PowerBI, VDLAD, Netwerkschijf, MyVDL, PLM, Bedrijfsportal, IMS,
-             Laptop, Telefoon, Accessoires)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ");
+        // 2. Dynamische INSERT opbouwen
+        $kolomnamen = array_keys($values);
+        $kolomnamen_sql = implode(", ", $kolomnamen);
+        $placeholders = implode(", ", array_fill(0, count($kolomnamen), "?"));
 
-        $stmt->bind_param(
-            "ssssssiiiiiiiiiiiiii",
-            $naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie,
-            $sap, $cip, $crm, $cpq, $powerbi, $ad, $netwerkschijf, $myvdl, $plm, $bedrijfsportal, $ims,
-            $laptop, $telefoon, $toets
+        $sql = "
+            INSERT INTO Medewerker 
+            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, $kolomnamen_sql)
+            VALUES (?, ?, ?, ?, ?, ?, $placeholders)
+        ";
+
+        $stmt = $conn->prepare($sql);
+
+        // Typestring opbouwen
+        $types = "ssssss" . str_repeat("i", count($values));
+
+        // Parameters samenvoegen
+        $params = array_merge(
+            [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie],
+            array_values($values)
         );
+
+        // Dynamisch binden
+        $stmt->bind_param($types, ...$params);
 
         if ($stmt->execute()) {
             $melding = "Nieuwe medewerker succesvol toegevoegd!";
@@ -125,37 +136,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         Bedrijf: <br>
         <input type="text" id="bedrijf" name="bedrijf" required><br><br>
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
-        <h3>Software</h3>  
-        <input type="checkbox" id="sap" name="sap">
-        <label for="sap"> SAP</label><br>
-        <input type="checkbox" id="cip" name="cip">
-        <label for="cip"> CIP</label><br>
-        <input type="checkbox" id="crm" name="crm">
-        <label for="crm"> CRM</label><br>
-        <input type="checkbox" id="cpq" name="cpq">
-        <label for="cpq"> CPQ</label><br>
-        <input type="checkbox" id="powerbi" name="powerbi">
-        <label for="powerbi"> PowerBI</label><br>
-        <input type="checkbox" id="ad" name="ad">
-        <label for="ad"> VDL AD Acccount</label><br>
-        <input type="checkbox" id="netwerkschijf" name="netwerkschijf">
-        <label for="netwerkschijf"> Rechten Netwerkschijf</label><br>
-        <input type="checkbox" id="myvdl" name="myvdl">
-        <label for="myvdl"> MyVDL</label><br>
-        <input type="checkbox" id="plm" name="plm">
-        <label for="plm"> PLM Windchill</label><br>
-        <input type="checkbox" id="bedrijfsportal" name="bedrijfsportal">
-        <label for="bedrijfsportal"> Bedrijfsportal Access</label><br>
-        <input type="checkbox" id="ims" name="ims">
-        <label for="ims"> IMS</label><br>
+        <h3>Software & Hardware</h3>
 
-        <h3>Hardware</h3>
-        <input type="checkbox" id="laptop" name="laptop">
-        <label for="laptop"> Laptop</label><br>
-        <input type="checkbox" id="telefoon" name="telefoon">
-        <label for="telefoon"> Mobiele Telefoon</label><br>
-        <input type="checkbox" id="toets" name="toets">
-        <label for="toets"> Toetsenbord en Muis</label><br><br>
+            <?php
+            foreach ($columns as $col) {
+                $kolom = $col['Field'];
+
+                // Sla velden over die geen checkbox moeten zijn
+                if (in_array($kolom, $exclude)) continue;
+
+                // Label netjes maken (PowerBI → PowerBI, Netwerkschijf → Netwerkschijf)
+                $label = $kolom;
+
+                echo '
+                    <input type="checkbox" id="'.$kolom.'" name="'.$kolom.'">
+                    <label for="'.$kolom.'"> '.$label.'</label><br>
+                ';
+            }
+            ?>
+<br><br>
         Referentie: <br>
         <input type="text" id="referentie" name="referentie"><br>
         <input type="submit" value="Opslaan">
