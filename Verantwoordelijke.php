@@ -23,15 +23,16 @@
     </header>
 
     <div class="content">
+
         <?php
         require 'backend/config.php';
-        $result = $conn->query("SELECT * FROM Product");
+        $result = $conn->query("SELECT * FROM Product ORDER BY Product ASC");
         ?>
 
         <table>
             <tr>
                 <th>Product</th>
-                <th>Contactperson</th>
+                <th>Contactpersoon</th>
                 <th>Afdeling</th>
                 <th>Product verwijderen</th>
             </tr>
@@ -42,12 +43,14 @@
 
                     <td>
                         <input type="text"
-                            value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
+                               id="contact_<?= $row['ID'] ?>"
+                               value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
                     </td>
 
                     <td>
                         <input type="text"
-                            value="<?= htmlspecialchars($row['Afdeling']) ?>">
+                               id="afdeling_<?= $row['ID'] ?>"
+                               value="<?= htmlspecialchars($row['Afdeling']) ?>">
                     </td>
 
                     <td>
