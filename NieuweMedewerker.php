@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($check->num_rows > 0) {
         $melding = "Deze medewerker bestaat al.";
+        echo "<script>alert('$melding');</script>";
         $check->close();
     } else {
         $check->close();
@@ -73,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
             $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
+            echo "<script>alert('$melding');</script>";
         }
 
         $stmt->close();

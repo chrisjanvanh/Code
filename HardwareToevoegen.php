@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!is_numeric($prijs)) {
         $melding = "Prijs is geen geldige waarde.";
+        echo "<script>alert('$melding');</script>";
     } else {
 
         // 2. Check of serienummer al bestaat
@@ -26,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($check->num_rows > 0) {
             $melding = "Dit serienummer bestaat al. Kies een uniek serienummer.";
+            echo "<script>alert('$melding');</script>";
         } else {
 
             // 3. INSERT uitvoeren
@@ -40,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 // Gebruiksvriendelijke melding
                 $melding = "Er is iets fout gegaan bij het opslaan. Probeer het opnieuw.";
+                echo "<script>alert('$melding');</script>";
             }
 
             $stmt->close();

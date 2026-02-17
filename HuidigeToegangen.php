@@ -67,6 +67,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     );
     $stmt->execute();
 
+    $melding = "Gegevens succesvol opgeslagen!";
+    echo "<script>alert('$melding');</script>";
+
     header("Location: HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
     exit;
 }
@@ -97,6 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
 </header>
 
 <div class="content">
+
+    <?php if (!empty($melding)): ?>
+        <div class="melding">
+            <?= $melding ?>
+        </div>
 
     <h2>Medewerker zoeken</h2>
     <form method="GET">
