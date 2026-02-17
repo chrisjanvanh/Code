@@ -29,12 +29,15 @@ header a {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Logo moet GEEN knop-styling krijgen */
 .logo-link {
     background: none !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
-    margin-left: 25px;
+    margin-left: 25px; /* of wat je wilt */
+    display: flex;
+    align-items: center;
 }
 
 .logo-link img {
