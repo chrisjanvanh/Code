@@ -17,11 +17,6 @@ header {
     top: 0;
 }
 
-header img {
-    height: 80%;
-    margin-left: 25px;
-}
-
 header a {
     color: white;
     text-decoration: none;
@@ -32,6 +27,11 @@ header a {
     border-radius: 5px;
     border: 1px solid #0c66cc;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+header a img {
+    height: 80%;
+    margin-left: 25px;
 }
 
 .current {
