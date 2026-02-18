@@ -1,7 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
@@ -10,7 +7,7 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 
-require_once "backend/db.php"; // als je dit nog niet had
+require_once "backend/config.php"; // als je dit nog niet had
 
 $stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
 $stmt->bind_param("s", $gebruikerEmail);
