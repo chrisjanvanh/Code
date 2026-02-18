@@ -1,3 +1,21 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$gebruikerEmail = $_SESSION['email'];
+
+// 3. Controleer of gebruiker toegang heeft tot deze afdeling
+$stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
+$stmt->bind_param("s", $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -49,7 +67,7 @@
         <div class="forbidden-box">
             <h1>❌ Geen toegang</h1>
             <p>Je hebt geen toestemming om deze pagina te bekijken.</p>
-            <p>Je huidige rol: <strong id="currentRole"></strong></p>
+            <p>Je huidige afdelingen: <?= htmlspecialchars($afdeling) ?></p>
             <a href="index.php">Terug naar homepagina</a>
         </div>
     </div>
