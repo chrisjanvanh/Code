@@ -22,46 +22,35 @@ function afronden(naam, kolom, waarde) {
 }
 
 function verwijderEmail(id) {
-    if (!confirm("Weet je zeker dat je dit e-mailadres wilt verwijderen?")) {
-        return;
-    }
+    if (!confirm("Weet je zeker dat je dit e-mailadres wilt verwijderen?")) return;
 
     fetch("backend/EmailAfdeling.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "id=" + encodeURIComponent(id)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "action=delete&id=" + encodeURIComponent(id)
     })
     .then(r => r.text())
     .then(t => {
-        if (t.trim() === "OK") {
-            location.reload();
-        } else {
-            alert("Fout: " + t);
-        }
+        if (t.trim() === "OK") location.reload();
+        else alert("Fout: " + t);
     });
 }
 
+
 function voegEmailToe() {
     const email = prompt("Voer een e-mailadres in dat je wilt toevoegen:");
-
     if (!email) return;
 
     fetch("backend/EmailAfdeling.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "email=" + encodeURIComponent(email) +
-              "&afdeling=" + encodeURIComponent("HR")
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:
+            "action=add&email=" + encodeURIComponent(email) +
+            "&afdeling=" + encodeURIComponent("HR")
     })
     .then(r => r.text())
     .then(t => {
-        if (t.trim() === "OK") {
-            location.reload();
-        } else {
-            alert("Fout: " + t);
-        }
+        if (t.trim() === "OK") location.reload();
+        else alert("Fout: " + t);
     });
 }

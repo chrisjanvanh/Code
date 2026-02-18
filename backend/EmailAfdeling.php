@@ -1,46 +1,57 @@
 <?php
-//Verwijderen
-require 'backend/config.php';
+require 'config.php';
 
-if (!isset($_POST['id'])) {
-    echo "FOUT: geen ID ontvangen";
+if (!isset($_POST['action'])) {
+    echo "FOUT: geen actie opgegeven";
     exit;
 }
 
-$id = intval($_POST['id']);
+$action = $_POST['action'];
 
-$stmt = $conn->prepare("DELETE FROM AfdelingEmails WHERE ID = ?");
-$stmt->bind_param("i", $id);
+// -----------------------------
+// VERWIJDEREN
+// -----------------------------
+if ($action === "delete") {
 
-if ($stmt->execute()) {
-    echo "OK";
-} else {
-    echo "FOUT: " . $stmt->error;
-}
+    if (!isset($_POST['id'])) {
+        echo "FOUT: geen ID ontvangen";
+        exit;
+    }
 
-$stmt->close();
+    $id = intval($_POST['id']);
 
+    $stmt = $conn->prepare("DELETE FROM AfdelingEmails WHERE ID = ?");
+    $stmt->bind_param("i", $id);
 
+    if ($stmt->execute()) echo "OK";
+    else echo "FOUT: " . $stmt->error;
 
-// Toevoegen
-<?php
-require 'backend/config.php';
-
-if (!isset($_POST['email'], $_POST['afdeling'])) {
-    echo "FOUT: ontbrekende parameters";
+    $stmt->close();
     exit;
 }
 
-$email = $_POST['email'];
-$afdeling = $_POST['afdeling'];
 
-$stmt = $conn->prepare("INSERT INTO AfdelingEmails (Afdeling, Email) VALUES (?, ?)");
-$stmt->bind_param("ss", $afdeling, $email);
+// -----------------------------
+// TOEVOEGEN
+// -----------------------------
+if ($action === "add") {
 
-if ($stmt->execute()) {
-    echo "OK";
-} else {
-    echo "FOUT: " . $stmt->error;
+    if (!isset($_POST['email'], $_POST['afdeling'])) {
+        echo "FOUT: ontbrekende parameters";
+        exit;
+    }
+
+    $email = $_POST['email'];
+    $afdeling = $_POST['afdeling'];
+
+    $stmt = $conn->prepare("INSERT INTO AfdelingEmails (Afdeling, Email) VALUES (?, ?)");
+    $stmt->bind_param("ss", $afdeling, $email);
+
+    if ($stmt->execute()) echo "OK";
+    else echo "FOUT: " . $stmt->error;
+
+    $stmt->close();
+    exit;
 }
 
-$stmt->close();
+echo "FOUT: onbekende actie";
