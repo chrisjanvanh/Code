@@ -1,8 +1,7 @@
-function confirmAfronden() {
-    confirm("Weet je zeker dat je deze taak wilt afronden?")
-}
-
 function afronden(naam, kolom, waarde) {
+
+    if (!confirm("Weet je zeker dat je deze taak wilt afronden?")) return;
+
     fetch("backend/afronden.php", {
         method: "POST",
         headers: {
