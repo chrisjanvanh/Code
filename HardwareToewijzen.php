@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
 require 'backend/config.php';
 
 $medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
@@ -103,7 +109,7 @@ if (isset($_POST['verwijder'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stage</title>
+    <title>VDL Bus & Coach</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HardwareToewijzen.css">
     <script src="javascript/main.js"></script>

@@ -42,7 +42,7 @@ $producten = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stage</title>
+    <title>VDL Bus & Coach</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/Afdeling.css">
     <script src="javascript/Afdeling.js"></script>
@@ -70,7 +70,7 @@ $producten = $stmt->get_result();
                 Uitloggen
             </a>
         </div>
-        
+
 </header>
 
 <script>const afdeling = "<?= $afdeling ?>";</script>

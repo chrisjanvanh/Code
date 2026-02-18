@@ -1,4 +1,10 @@
 <?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
 require 'backend/config.php';
 
 // Haal alle kolommen op van de tabel Medewerker
@@ -87,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stage</title>
+    <title>VDL Bus & Coach</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/NieuweMedewerker.css">
     <script src="javascript/HuidigeToegang.js"></script>
@@ -124,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 Uitloggen
             </a>
         </div>
-        
+
     </header>
 
     <div class="content">
