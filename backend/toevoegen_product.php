@@ -19,7 +19,7 @@ if (!$stmt->execute()) $ok = false;
 $stmt->close();
 
 // 2. Kolom toevoegen aan Medewerker
-$stmt2 = $conn->prepare("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL AFTER `Toetsenbord en Muis`");
+$stmt2 = $conn->prepare("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL");
 if (!$stmt2->execute()) $ok = false;
 $stmt2->close();
 
