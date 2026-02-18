@@ -42,7 +42,7 @@ if (count($afdelingen) === 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VDL Bus & Coach</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/afdelingRouter.css">
+    <!-- <link rel="stylesheet" href="css/afdelingRouter.css"> -->
 
 </head>
 <body>
@@ -68,7 +68,7 @@ if (count($afdelingen) === 1) {
 
     </header>
     
-    <div class="box">
+    <div class="content">
         <h2>Kies jouw afdeling</h2>
 
         <?php foreach ($afdelingen as $afd): ?>
