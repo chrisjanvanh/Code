@@ -1,5 +1,6 @@
 <?php
 require 'backend/config.php';
+require 'backend/afronden.php';
 
 $afdeling = "HR"; // deze pagina is voor HR
 
