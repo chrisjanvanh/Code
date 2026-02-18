@@ -37,7 +37,7 @@ $producten = $stmt->get_result();
 <script>const afdeling = "<?= $afdeling ?>";</script>
 
 <div class="content">
-    <h1>Taken</h1>
+    <h1>Taken voor afdeling <?= $afdeling ?></h1>
 
     <table>
         <tr>
