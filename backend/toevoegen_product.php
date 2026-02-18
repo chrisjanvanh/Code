@@ -10,15 +10,6 @@ if ($product === '') {
     exit;
 }
 
-function maakKolomNaam($product) {
-    $kolom = strtolower($product);
-    $kolom = str_replace(' ', '_', $kolom);
-    $kolom = preg_replace('/[^a-z0-9_]/', '', $kolom);
-    return $kolom;
-}
-
-$kolomnaam = maakKolomNaam($product);
-
 $ok = true;
 
 // 1. Product toevoegen
@@ -28,7 +19,7 @@ if (!$stmt->execute()) $ok = false;
 $stmt->close();
 
 // 2. Kolom toevoegen aan Medewerker
-$stmt2 = $conn->prepare("ALTER TABLE Medewerker ADD COLUMN `$kolomnaam` INT DEFAULT NULL");
+$stmt2 = $conn->prepare("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL AFTER `Toetsenbord en Muis`");
 if (!$stmt2->execute()) $ok = false;
 $stmt2->close();
 
