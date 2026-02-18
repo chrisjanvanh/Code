@@ -12,32 +12,32 @@ if (!isset($_SESSION['email'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VDL Bus & Coach</title>
-    <link rel="stylesheet" href="Algemeen/css/style.css">
-    <link rel="stylesheet" href="Homepagina/css/index.css">
-    <script src="Algemeen/javascript/main.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
     <header>
-        <img src="img/menu.png" alt="Menu button" class="menu-button" onclick="toggleMenu()">
+        <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
         <img src="img/logo.svg" alt="VDL Groep Logo">
         <a href="index.php" class="current">Homepagina</a>
-        <a href="Medewerker/Huidig/HuidigeToegangen.php">Medewerkers</a>
-        <a href="Hardware/Toewijzen/HardwareToewijzen.php"> Hardware</a>
-        <a href="Producten/Verantwoordelijke.php">Producten</a>
-        <a href="Afdeling/Afdeling.php?afdeling=HR">Taken</a>
+        <a href="HuidigeToegangen.php">Medewerkers</a>
+        <a href="HardwareToewijzen.php"> Hardware</a>
+        <a href="Verantwoordelijke.php">Producten</a>
+        <a href="afdelingRouter.php">Taken</a>
         <div style="
-                position: absolute;
-                right: 20px;
-                top: 15px;
-            ">
-                <a href="Algemeen/Uitlog/logout.php" 
-                style="padding: 8px 15px; background: #e74c3c; color: white; 
-                        border-radius: 5px; text-decoration: none;">
-                    Uitloggen
-                </a>
-            </div>
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        ">
+            <a href="logout.php" 
+            style="padding: 8px 15px; background: #e74c3c; color: white; 
+                    border-radius: 5px; text-decoration: none;">
+                Uitloggen
+            </a>
+        </div>
 
     </header>
 
