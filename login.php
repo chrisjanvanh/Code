@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -6,6 +10,12 @@
     <title>Inloggen - VDL Groep</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <!-- Microsoft SSO -->
+    <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
+
+    <!-- Google SSO -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
         .login-container {
@@ -23,22 +33,6 @@
             text-align: center;
             max-width: 400px;
         }
-        .login-box h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        .login-box p {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .login-box img {
-            max-width: 150px;
-            margin-bottom: 20px;
-        }
-        #g_id_onload {
-            display: flex;
-            justify-content: center;
-        }
         .ms-btn {
             display:block;
             margin-top:20px;
@@ -50,97 +44,80 @@
             cursor:pointer;
         }
     </style>
-
-    <!-- Microsoft SSO -->
-    <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
-
-    <!-- Google SSO -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body>
-    <div class="login-container">
-        <div class="login-box">
-            <img src="img/logo.svg" alt="VDL Groep Logo">
-            <h1>VDL Groep</h1>
-            <p>Meld je aan met je account</p>
+<div class="login-container">
+    <div class="login-box">
+        <img src="img/logo.svg" alt="VDL Groep Logo" style="max-width:150px;">
+        <h1>VDL Groep</h1>
+        <p>Meld je aan met je account</p>
 
-            <!-- Microsoft Login -->
-            <button class="ms-btn" onclick="loginMicrosoft()">Login met Microsoft</button>
+        <!-- Microsoft Login -->
+        <button class="ms-btn" onclick="loginMicrosoft()">Login met Microsoft</button>
 
-            <!-- Google Login -->
-            <div id="g_id_onload"
-                data-client_id="208183931140-rafgpe00evlhagalk0adasd7ffelt5is.apps.googleusercontent.com"
-                data-callback="handleCredentialResponse">
-            </div>
-            <div class="g_id_signin" data-type="standard"></div>
+        <!-- Google Login -->
+        <div id="g_id_onload"
+             data-client_id="208183931140-rafgpe00evlhagalk0adasd7ffelt5is.apps.googleusercontent.com"
+             data-callback="handleGoogleLogin">
         </div>
+        <div class="g_id_signin" data-type="standard"></div>
     </div>
+</div>
 
-    <script>
-        /* ---------------- GOOGLE LOGIN ---------------- */
-        function handleCredentialResponse(response) {
-            const base64Url = response.credential.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
-                '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-            ).join(''));
+<script>
+/* ---------------- GOOGLE LOGIN ---------------- */
+function handleGoogleLogin(response) {
+    const base64Url = response.credential.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+    ).join(''));
 
-            const userData = JSON.parse(jsonPayload);
+    const user = JSON.parse(jsonPayload);
+    const email = user.email;
 
-            localStorage.setItem('user', JSON.stringify(userData));
-            localStorage.setItem('token', response.credential);
+    setSession(email);
+}
 
-            assignRole(userData.email);
-            window.location.href = 'index.php';
-        }
+/* ---------------- MICROSOFT LOGIN ---------------- */
+const msalConfig = {
+    auth: {
+        clientId: "00fc974d-f877-4135-8bb4-fb6345b5bac4",
+        authority: "https://login.microsoftonline.com/common",
+        redirectUri: "https://vdl-backend.azurewebsites.net/login.php"
+    }
+};
 
-        /* ---------------- MICROSOFT LOGIN ---------------- */
-        const msalConfig = {
-            auth: {
-                clientId: "00fc974d-f877-4135-8bb4-fb6345b5bac4",
-                authority: "https://login.microsoftonline.com/common",
-                redirectUri: "https://vdl-backend.azurewebsites.net/login.php"
-            }
-        };
+const msalInstance = new msal.PublicClientApplication(msalConfig);
 
-        const msalInstance = new msal.PublicClientApplication(msalConfig);
-
-        function loginMicrosoft() {
-            msalInstance.loginPopup({
-                scopes: ["User.Read"]
-            }).then(response => {
-                localStorage.setItem("token", response.accessToken);
-
-                fetch("https://graph.microsoft.com/v1.0/me", {
-                    headers: { "Authorization": `Bearer ${response.accessToken}` }
-                })
-                .then(res => res.json())
-                .then(user => {
-                    localStorage.setItem("user", JSON.stringify(user));
-                    assignRole(user.mail);
-                    window.location.href = "index.php";
-                });
-            })
-            .catch(err => console.error("Microsoft login error:", err));
-        }
-
-        /* ---------------- ROLLEN ---------------- */
-        function assignRole(email) {
-            let role = "user";
-
-            if (email.includes("chrisjan")) role = "admin";
-            if (email.includes("manager")) role = "manager";
-
-            localStorage.setItem("userRole", role);
-        }
-
-        /* ---------------- AUTO REDIRECT ---------------- */
-        window.addEventListener('load', () => {
-            if (localStorage.getItem('user')) {
-                window.location.href = 'index.php';
-            }
+function loginMicrosoft() {
+    msalInstance.loginPopup({
+        scopes: ["User.Read"]
+    }).then(response => {
+        fetch("https://graph.microsoft.com/v1.0/me", {
+            headers: { "Authorization": `Bearer ${response.accessToken}` }
+        })
+        .then(res => res.json())
+        .then(user => {
+            const email = user.mail || user.userPrincipalName;
+            setSession(email);
         });
-    </script>
+    });
+}
+
+/* ---------------- SESSIE ZETTEN ---------------- */
+function setSession(email) {
+    fetch("backend/setSession.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "email=" + encodeURIComponent(email)
+    })
+    .then(() => {
+        window.location.href = "index.php";
+    });
+}
+</script>
+
 </body>
 </html>
