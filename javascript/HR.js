@@ -46,7 +46,7 @@ function voegEmailToe() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body:
             "action=add&email=" + encodeURIComponent(email) +
-            "&afdeling=" + encodeURIComponent("HR")
+            "&afdeling=" + encodeURIComponent(afdeling)
     })
     .then(r => r.text())
     .then(t => {

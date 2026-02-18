@@ -19,7 +19,7 @@
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
-        <a href="HR.php" class="No-Mobile">HR</a>
+        <a href="Afdeling.php?afdeling=HR" class="no-mobile">HR</a>
     </header>
 
     <div class="content">

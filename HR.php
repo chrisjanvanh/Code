@@ -1,7 +1,7 @@
 <?php
 require 'backend/config.php';
 
-$afdeling = "HR"; // deze pagina is voor HR
+$afdeling = $_GET['afdeling']; // deze pagina is voor HR
 
 // Haal alle producten op waarvoor HR verantwoordelijk is
 $stmt = $conn->prepare("SELECT * FROM Product WHERE Afdeling = ?");
@@ -31,8 +31,10 @@ $producten = $stmt->get_result();
     <a href="HuidigeToegangen.php">Medewerkers</a>
     <a href="HardwareToewijzen.php"> Hardware</a>
     <a href="Verantwoordelijke.php">Producten</a>
-    <a href="HR.php" class="current">HR</a>
+    <a href="Afdeling.php?afdeling=HR" class="current">HR</a>
 </header>
+
+<script>const afdeling = "<?= $afdeling ?>";</script>
 
 <div class="content">
     <h1>Taken</h1>
