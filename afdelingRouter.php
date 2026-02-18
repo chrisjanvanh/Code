@@ -5,7 +5,7 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-require_once "backend/db.php";
+require_once "backend/config.php";
 
 $gebruikerEmail = $_SESSION['email'];
 
