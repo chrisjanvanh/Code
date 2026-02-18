@@ -73,10 +73,10 @@ $producten = $stmt->get_result();
                     <td>
                         <?php if ($m[$kolom] == 0): ?>
                             Toevoegen
-                            <button class="button" onclick="afronden(<?= json_encode($m['Naam']) ?>, <?= json_encode($kolom) ?>, 1)">Afronden</button>
+                            <button class="button" onclick='afronden(<?= json_encode($m["Naam"]) ?>, <?= json_encode($kolom) ?>, 1)'>Afronden</button>
                         <?php elseif ($m[$kolom] == 2): ?>
                             Verwijderen
-                            <button class="button" onclick="afronden(<?= json_encode($m['Naam']) ?>, <?= json_encode($kolom) ?>, 0)">Afronden</button>
+                            <button class="button" onclick='afronden(<?= json_encode($m["Naam"]) ?>, <?= json_encode($kolom) ?>, 0)'>Afronden</button>
                         <?php endif; ?>
                     </td>
                 </tr>
