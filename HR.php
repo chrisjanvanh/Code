@@ -100,7 +100,7 @@ $producten = $stmt->get_result();
         <?php while ($e = $emails->fetch_assoc()): ?>
             <tr>
                 <td><?= $e['Email'] ?></td>
-                <td><button onclick="verwijderEmail(<?= $e['ID'] ?>)" class="button">Verwijder</button></td>
+                <td><button onclick="verwijderEmail(<?= $e['ID'] ?>)" class="button" style="background-color: #ff4d4d;">Verwijder</button></td>
             </tr>
         <?php endwhile; ?>
 
