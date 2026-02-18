@@ -1,6 +1,6 @@
 function afronden(naam, kolom, waarde) {
 
-    if (!confirm("Weet je zeker dat je deze taak wilt afronden?")) return;
+    if (!confirm("Weet je zeker dat je deze taak van " + naam + " wilt afronden?")) return;
 
     fetch("backend/afronden.php", {
         method: "POST",
@@ -17,6 +17,51 @@ function afronden(naam, kolom, waarde) {
             location.reload(); // pagina verversen zodat taak verdwijnt
         } else {
             alert("Fout bij afronden: " + data);
+        }
+    });
+}
+
+function verwijderEmail(id) {
+    if (!confirm("Weet je zeker dat je dit e-mailadres wilt verwijderen?")) {
+        return;
+    }
+
+    fetch("backend/EmailAfdeling.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "id=" + encodeURIComponent(id)
+    })
+    .then(r => r.text())
+    .then(t => {
+        if (t.trim() === "OK") {
+            location.reload();
+        } else {
+            alert("Fout: " + t);
+        }
+    });
+}
+
+function voegEmailToe() {
+    const email = prompt("Voer een e-mailadres in dat je wilt toevoegen:");
+
+    if (!email) return;
+
+    fetch("backend/EmailAfdeling.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "email=" + encodeURIComponent(email) +
+              "&afdeling=" + encodeURIComponent("HR")
+    })
+    .then(r => r.text())
+    .then(t => {
+        if (t.trim() === "OK") {
+            location.reload();
+        } else {
+            alert("Fout: " + t);
         }
     });
 }
