@@ -45,7 +45,6 @@ $producten = $stmt->get_result();
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/Afdeling.css">
-    <script src="javascript/auth.js"></script>
     <script src="javascript/Afdeling.js"></script>
     <script src="javascript/main.js"></script>
 

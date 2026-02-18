@@ -106,7 +106,6 @@ if (isset($_POST['verwijder'])) {
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HardwareToewijzen.css">
-    <script src="javascript/auth.js"></script>
     <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">

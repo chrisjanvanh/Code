@@ -90,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/NieuweMedewerker.css">
-    <script src="javascript/auth.js"></script>
     <script src="javascript/HuidigeToegang.js"></script>
     <script src="javascript/main.js"></script>
 

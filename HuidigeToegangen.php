@@ -83,7 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     <title>Stage</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HuidigeToegangen.css">
-    <script src="javascript/auth.js"></script>
     <script src="javascript/HuidigeToegang.js"></script>
     <script src="javascript/main.js"></script>
 
