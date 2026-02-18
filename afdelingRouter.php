@@ -53,7 +53,7 @@ if (count($afdelingen) === 1) {
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
-        <a href="afdelingRouter.php" class="current">HR</a>
+        <a href="afdelingRouter.php" class="current">Taken</a>
         <div style="
             position: absolute;
             right: 20px;

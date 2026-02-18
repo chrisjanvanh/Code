@@ -125,6 +125,7 @@ if (isset($_POST['verwijder'])) {
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php" class="current"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
+        <a href="afdelingRouter.php">Taken</a>
         <div style="
             position: absolute;
             right: 20px;

@@ -58,7 +58,7 @@ $producten = $stmt->get_result();
     <a href="HuidigeToegangen.php">Medewerkers</a>
     <a href="HardwareToewijzen.php"> Hardware</a>
     <a href="Verantwoordelijke.php">Producten</a>
-    <a href="Afdeling.php?afdeling=HR" class="current">HR</a>
+    <a href="Afdeling.php?afdeling=HR" class="current">Taken</a>
     <div style="
             position: absolute;
             right: 20px;

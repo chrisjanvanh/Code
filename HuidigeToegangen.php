@@ -102,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     <a href="HuidigeToegangen.php" class="current">Medewerkers</a>
     <a href="HardwareToewijzen.php"> Hardware</a>
     <a href="Verantwoordelijke.php">Producten</a>
+    <a href="afdelingRouter.php">Taken</a>
     <div style="
             position: absolute;
             right: 20px;
@@ -185,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
                 }
 
                 if ($waarde === 2) {
-                    $kleur = "black";
+                    $kleur = "light-gray";
                     $tekst = "white";
                 }
 

@@ -26,7 +26,7 @@ if (!isset($_SESSION['email'])) {
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
-        <a href="afdelingRouter.php" class="no-mobile">HR</a>
+        <a href="afdelingRouter.php">Taken</a>
         <div style="
             position: absolute;
             right: 20px;
