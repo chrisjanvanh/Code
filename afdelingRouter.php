@@ -39,41 +39,35 @@ if (count($afdelingen) === 1) {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Kies jouw afdeling</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .box {
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .box h2 {
-            margin-bottom: 20px;
-        }
-        .afdeling-btn {
-            display: block;
-            margin: 10px 0;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-        }
-        .afdeling-btn:hover {
-            background: #556cd6;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VDL Bus & Coach</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/afdelingRouter.css">
+
 </head>
 <body>
+    <header>
+        <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
+        <img src="img/logo.svg" alt="VDL Groep Logo">
+        <a href="index.php" class="current">Homepagina</a>
+        <a href="HuidigeToegangen.php">Medewerkers</a>
+        <a href="HardwareToewijzen.php"> Hardware</a>
+        <a href="Verantwoordelijke.php">Producten</a>
+        <a href="afdelingRouter.php" class="no-mobile">HR</a>
+        <div style="
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        ">
+            <a href="logout.php" 
+            style="padding: 8px 15px; background: #e74c3c; color: white; 
+                    border-radius: 5px; text-decoration: none;">
+                Uitloggen
+            </a>
+        </div>
+
+    </header>
+    
     <div class="box">
         <h2>Kies jouw afdeling</h2>
 
