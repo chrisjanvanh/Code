@@ -20,17 +20,8 @@ $stmt->close();
 
 // 2. Kolom toevoegen aan Medewerker
 $stmt2 = $conn->prepare("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL");
-if (!$stmt2) {
-    echo "Prepare error: " . $conn->error;
-    $ok = false;
-} else {
-    if (!$stmt2->execute()) {
-        echo "Execute error: " . $stmt2->error;
-        $ok = false;
-    }
-    $stmt2->close();
-}
-
+if (!$stmt2->execute()) $ok = false;
+$stmt2->close();
 
 echo $ok ? "OK" : "FOUT";
 ?>
