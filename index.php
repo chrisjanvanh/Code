@@ -27,6 +27,18 @@ if (!isset($_SESSION['email'])) {
         <a href="HardwareToewijzen.php"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
         <a href="Afdeling.php?afdeling=HR" class="no-mobile">HR</a>
+        <div style="
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        ">
+            <a href="logout.php" 
+            style="padding: 8px 15px; background: #e74c3c; color: white; 
+                    border-radius: 5px; text-decoration: none;">
+                Uitloggen
+            </a>
+        </div>
+
     </header>
 
     <div class="content">
