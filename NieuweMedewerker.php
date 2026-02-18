@@ -147,7 +147,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Sla velden over die geen checkbox moeten zijn
                 if (in_array($kolom, $exclude)) continue;
 
-                // Label netjes maken (PowerBI → PowerBI, Netwerkschijf → Netwerkschijf)
                 $label = $kolom;
 
                 echo '

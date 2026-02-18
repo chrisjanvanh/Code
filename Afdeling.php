@@ -1,14 +1,42 @@
 <?php
+session_start();
 require 'backend/config.php';
 
-$afdeling = $_GET['afdeling']; // deze pagina is voor HR
+// 1. Check of afdeling is meegegeven
+if (!isset($_GET['afdeling'])) {
+    header("Location: forbidden.php");
+    exit;
+}
 
-// Haal alle producten op waarvoor HR verantwoordelijk is
+$afdeling = $_GET['afdeling'];
+
+// 2. Check of gebruiker is ingelogd (sessie moet email bevatten)
+if (!isset($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$gebruikerEmail = $_SESSION['email'];
+
+// 3. Controleer of gebruiker toegang heeft tot deze afdeling
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    // Geen toegang
+    header("Location: forbidden.php");
+    exit;
+}
+
+// 4. Haal producten op voor deze afdeling
 $stmt = $conn->prepare("SELECT * FROM Product WHERE Afdeling = ?");
 $stmt->bind_param("s", $afdeling);
 $stmt->execute();
 $producten = $stmt->get_result();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
