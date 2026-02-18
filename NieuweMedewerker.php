@@ -77,6 +77,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         if ($stmt->execute()) {
             $melding = "Nieuwe medewerker succesvol toegevoegd!";
+
+                                            // Check of er een productveld op 0 staat
+                                $trigger = false;
+                                foreach ($values as $kolom => $waarde) {
+                                    if ($waarde === 0) {
+                                        $trigger = true;
+                                        break;
+                                    }
+                                }
+
+                                if ($trigger) {
+                                    // Make.com webhook URL
+                                    $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
+
+                                    // Webhook versturen
+                                    $ch = curl_init($url);
+                                    curl_setopt($ch, CURLOPT_POST, true);
+                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                                    curl_exec($ch);
+                                    curl_close($ch);
+                                }
+
         } else {
             error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
             $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
