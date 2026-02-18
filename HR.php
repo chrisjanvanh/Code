@@ -32,8 +32,6 @@ $producten = $stmt->get_result();
     <a href="HardwareToewijzen.php"> Hardware</a>
     <a href="Verantwoordelijke.php">Producten</a>
     <a href="HR.php" class="current">HR</a>
-
-
 </header>
 
 <div class="content">
@@ -74,9 +72,11 @@ $producten = $stmt->get_result();
 
                     <td>
                         <?php if ($m[$kolom] == 0): ?>
-                        <button class="button" onclick="afronden(<?= $m['ID'] ?>, <?= json_encode($kolom) ?>, 1)">Toevoegen afronden </button>
+                            Toevoegen
+                            <button class="button" onclick="afronden(<?= $m['Naam'] ?>, <?= json_encode($kolom) ?>, 1)">Afronden</button>
                         <?php elseif ($m[$kolom] == 2): ?>
-                            <button class="button" onclick="afronden(<?= $m['ID'] ?>, <?= json_encode($kolom) ?>, 0)">Verwijderen afronden</button>
+                            Verwijderen
+                            <button class="button" onclick="afronden(<?= $m['Naam'] ?>, <?= json_encode($kolom) ?>, 0)">Afronden</button>
                         <?php endif; ?>
                     </td>
                 </tr>
