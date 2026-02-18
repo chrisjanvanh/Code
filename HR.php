@@ -25,7 +25,7 @@ $producten = $stmt->get_result();
 </head>
 <body>
 <header>
-    <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
+    <img src="img/menu.png" alt="Menu button" class="menu-button" onclick="toggleMenu()">
     <img src="img/logo.svg" alt="VDL Groep Logo">
     <a href="index.php">Homepagina</a>
     <a href="HuidigeToegangen.php">Medewerkers</a>
