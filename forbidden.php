@@ -7,16 +7,20 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 
+require_once "backend/db.php"; // als je dit nog niet had
+
 $stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
 $stmt->bind_param("s", $gebruikerEmail);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Maak een lijst van alle afdelingen
 $afdelingen = [];
 while ($row = $result->fetch_assoc()) {
     $afdelingen[] = $row['Afdeling'];
 }
 
+// Maak tekst voor weergave
 $afdelingenTekst = empty($afdelingen)
     ? "Geen afdelingen gevonden"
     : implode(", ", $afdelingen);
