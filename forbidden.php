@@ -7,14 +7,20 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 
-// 3. Controleer of gebruiker toegang heeft tot deze afdeling
 $stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
 $stmt->bind_param("s", $gebruikerEmail);
 $stmt->execute();
 $result = $stmt->get_result();
 
-?>
+$afdelingen = [];
+while ($row = $result->fetch_assoc()) {
+    $afdelingen[] = $row['Afdeling'];
+}
 
+$afdelingenTekst = empty($afdelingen)
+    ? "Geen afdelingen gevonden"
+    : implode(", ", $afdelingen);
+?>
 
 <!DOCTYPE html>
 <html lang="nl">
@@ -67,13 +73,9 @@ $result = $stmt->get_result();
         <div class="forbidden-box">
             <h1>❌ Geen toegang</h1>
             <p>Je hebt geen toestemming om deze pagina te bekijken.</p>
-            <p>Je huidige afdelingen: <?= htmlspecialchars($afdeling) ?></p>
+            <p>Je huidige afdelingen: <?= htmlspecialchars($afdelingenTekst) ?></p>
             <a href="index.php">Terug naar homepagina</a>
         </div>
     </div>
-
-    <script>
-        document.getElementById('currentRole').textContent = localStorage.getItem('userRole') || 'onbekend';
-    </script>
 </body>
 </html>
