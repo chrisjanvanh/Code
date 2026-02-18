@@ -20,6 +20,8 @@ $producten = $stmt->get_result();
     <script src="javascript/auth.js"></script>
     <script src="javascript/HR.js"></script>
     <script src="javascript/main.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
 <header>
@@ -30,6 +32,8 @@ $producten = $stmt->get_result();
     <a href="HardwareToewijzen.php"> Hardware</a>
     <a href="Verantwoordelijke.php">Producten</a>
     <a href="HR.php" class="current">HR</a>
+
+
 </header>
 
 <div class="content">
