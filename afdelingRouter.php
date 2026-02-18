@@ -29,7 +29,7 @@ if (empty($afdelingen)) {
 // 2. Eén afdeling → direct doorsturen
 if (count($afdelingen) === 1) {
     $afdeling = urlencode($afdelingen[0]);
-    header("Location: Afdeling.php?naam=$afdeling");
+    header("Location: Afdeling.php?afdeling=$afdeling");
     exit;
 }
 
