@@ -1,13 +1,11 @@
-.afdeling-btn {
-    display: block;
-    margin: 10px 0;
-    padding: 12px;
-    background: #667eea;
+a {
     color: white;
     text-decoration: none;
-    border-radius: 6px;
-}
-
-.afdeling-btn:hover {
-    background: #556cd6;
+    margin-left: 20px;
+    font-size: 18px;
+    padding: 5px;
+    background-color: #167ff7;
+    border-radius: 5px;
+    border: 1px solid #0c66cc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
