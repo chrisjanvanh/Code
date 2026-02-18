@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
         $waarde = 2;
     }
 
-    $stmt = $conn->prepare("UPDATE Medewerker SET $veld = ? WHERE Naam = ?");
+    $stmt = $conn->prepare("UPDATE Medewerker SET `$veld` = ? WHERE Naam = ?");
     $stmt->bind_param("is", $waarde, $naam);
     $stmt->execute();
 
