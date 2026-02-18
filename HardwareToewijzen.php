@@ -107,6 +107,7 @@ if (isset($_POST['verwijder'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HardwareToewijzen.css">
     <script src="javascript/main.js"></script>
+    <script src="javascript/HardwareToewijzen.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -118,7 +119,18 @@ if (isset($_POST['verwijder'])) {
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php" class="current"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
-        <script src="javascript/HardwareToewijzen.js"></script>
+        <div style="
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        ">
+            <a href="logout.php" 
+            style="padding: 8px 15px; background: #e74c3c; color: white; 
+                    border-radius: 5px; text-decoration: none;">
+                Uitloggen
+            </a>
+        </div>
+
     </header>
 
     <div class="content">

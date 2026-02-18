@@ -73,6 +73,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="HuidigeToegangen.php">Medewerkers</a>
         <a href="HardwareToewijzen.php" class="current"> Hardware</a>
         <a href="Verantwoordelijke.php">Producten</a>
+        <div style="
+            position: absolute;
+            right: 20px;
+            top: 15px;
+        ">
+            <a href="logout.php" 
+            style="padding: 8px 15px; background: #e74c3c; color: white; 
+                    border-radius: 5px; text-decoration: none;">
+                Uitloggen
+            </a>
+        </div>
+        
     </header>
 
     <div class="content">
