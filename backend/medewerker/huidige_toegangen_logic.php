@@ -5,7 +5,7 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-require 'config.php';
+require __DIR__ . '/../config.php';
 
 // Medewerkers ophalen
 $medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);

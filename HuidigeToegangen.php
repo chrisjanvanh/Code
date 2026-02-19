@@ -1,4 +1,4 @@
-<?php require 'backend/huidige_toegangen_logic.php'; ?>
+<?php require 'backend/medewerker/huidige_toegangen_logic.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
