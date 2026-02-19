@@ -1,4 +1,4 @@
-a {
+.content a {
     color: white;
     text-decoration: none;
     margin-left: 20px;
@@ -12,5 +12,5 @@ a {
     display: flex;
     justify-content: center;
     margin-top: 8px;
-    width: auto;
+    width: 20%;
 }
