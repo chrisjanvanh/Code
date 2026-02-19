@@ -74,7 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     $stmt->execute();
 
     $melding = "Gegevens succesvol opgeslagen!";
-    echo "<script>alert('$melding');</script>";
 
     header("Location: HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
     exit;
