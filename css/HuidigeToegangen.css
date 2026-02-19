@@ -19,7 +19,7 @@ form input[type=submit], .button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 2px 2px 2px ;
+    box-shadow: 2px 2px 2px;
     color: white;
     margin-right: 25px;
     text-decoration: none;
@@ -58,10 +58,6 @@ table button {
     margin-left: 25%;
 }
 
-#MedewerkerVerlaat {
-    margin-top: 50px;;
-}
-
 .Toevoegen {
     background-color: green;
 }
@@ -76,4 +72,13 @@ table button {
 
 .Verwijderen:hover {
     background-color: darkred;
+}
+
+.melding {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
 }
