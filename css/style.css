@@ -1,8 +1,16 @@
+/* ------------------------------
+   Algemene layout
+------------------------------ */
+
 body {
     font-family: sans-serif;
-    margin: 0px;
+    margin: 0;
     background-color: #F2F2F2;
 }
+
+/* ------------------------------
+   Header
+------------------------------ */
 
 header {
     background-color: #3795ed;
@@ -34,16 +42,36 @@ header a {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.current {
-    background-color: #509cf2;
-    border: 1px solid #000000;
-    border-width: 2px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
 header a:hover {
     background-color: #509cf2;
 }
+
+.current {
+    background-color: #509cf2;
+    border: 2px solid #000;
+}
+
+/* ------------------------------
+   Logout button
+------------------------------ */
+
+.logout-container {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+}
+
+.logout-button {
+    padding: 8px 15px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* ------------------------------
+   Content container
+------------------------------ */
 
 .content {
     background-color: white;
@@ -57,19 +85,14 @@ header a:hover {
     box-sizing: border-box;
 }
 
+/* ------------------------------
+   Responsive layout
+------------------------------ */
+
 @media (max-width: 900px) {
     .content {
         margin-left: 20%;
         margin-right: 20%;
-    }
-
-    .username, .userrole, .No-Mobile {
-        display: none;
-    }
-
-    .header a {
-        margin-left: 5px;
-        padding: 3px 10px;
     }
 }
 
@@ -80,7 +103,10 @@ header a:hover {
     }
 }
 
-/* Mobiel menu standaard verborgen */
+/* ------------------------------
+   Mobiel menu
+------------------------------ */
+
 @media (max-width: 760px) {
 
     header {
@@ -98,47 +124,16 @@ header a:hover {
 
     header a {
         display: none;
-        flex-direction: column;
-        width: 100%;
-        text-align: center;
-        margin-top: 10px;
-        gap: 10px;
-    }
-
-    header.open {
-        display: flex;
-    }
-
-    header a {
         width: 80%;
-        margin: 0 auto;
+        text-align: center;
+        margin: 10px auto 0;
         font-size: 20px;
     }
 
     header.open a {
         display: block;
-        /* transition: display 1.3s ease; */
     }
 
-    .No-Mobile {
-        display: none !important;
-    }
-
-    .content h1 {
-        font-size: 24px;
-    }
-}
-
-
-@media (max-width: 760px) {
-    header a {
-        margin: 5px;
-        width: 35%;
-        font-size: 20px;
-    }
-}
-
-@media (max-width: 760px) {
     header img {
         height: 8vh;
         margin-left: 5px;
