@@ -7,11 +7,12 @@
     border-radius: 5px;
     border: 1px solid #0c66cc;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    /* align-items: center; */
-    display: inline-block;
-    /* justify-content: center; */
+    align-items: center;
+    display: flex;
+    justify-content: center;
     margin: 8px auto;
     width: auto;
+    flex: 0 0 auto;
 }
 
 .content a:hover {
