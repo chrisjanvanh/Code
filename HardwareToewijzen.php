@@ -82,7 +82,9 @@
             <tr>
                 <td><?= htmlspecialchars($row['Naam']) ?></td>
                 <td><?= htmlspecialchars($row['Serienummer']) ?></td>
-                <td><?= date("d-m-Y", strtotime($row['Uitgiftedatum'])) ?></td>
+                <td>
+                    <?= $row['Uitgiftedatum'] ? date("d-m-Y", strtotime($row['Uitgiftedatum'])) : '-' ?>
+                </td>
                 <td>
                     <form method="POST" onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?')">
                         <button class="button" name="verwijder" value="<?= $row['Serienummer'] ?>">Verwijderen</button>
