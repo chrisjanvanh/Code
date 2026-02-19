@@ -70,7 +70,7 @@ if (count($afdelingen) === 1) {
     </header>
     
     <div class="content">
-        <h2>Kies jouw afdeling</h2><br><br>
+        <h2>Kies jouw afdeling</h2><br>
 
         <?php foreach ($afdelingen as $afd): ?>
             <a class="afdeling-btn" href="Afdeling.php?afdeling=<?= urlencode($afd) ?>">
