@@ -1,205 +1,78 @@
-<?php
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-    exit;
-}
-
-require 'backend/config.php';
-
-// Haal alle kolommen op van de tabel Medewerker
-$columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
-$columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
-
-// Kolommen die GEEN checkbox zijn
-$exclude = [
-    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie"
-];
-
-$melding = "";
-
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    $naam = $_POST['naam'];
-    $functie = $_POST['functie'];
-    $locatie = $_POST['locatie'];
-    $leidinggevende = $_POST['leidinggevende'];
-    $bedrijf = $_POST['bedrijf'];
-    $referentie = $_POST['referentie'];
-
-    // Dynamisch checkbox‑waarden verzamelen
-    $values = [];
-    foreach ($columns as $col) {
-        $kolom = $col['Field'];
-        if (in_array($kolom, $exclude)) continue;
-
-        // Checkbox: aangevinkt = 0, niet aangevinkt = NULL
-        $values[$kolom] = isset($_POST[$kolom]) ? 0 : NULL;
-    }
-
-    // 1. Check of medewerker al bestaat
-    $check = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
-    $check->bind_param("s", $naam);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows > 0) {
-        $melding = "Deze medewerker bestaat al.";
-        echo "<script>alert('$melding');</script>";
-        $check->close();
-    } else {
-        $check->close();
-
-        // 2. Dynamische INSERT opbouwen
-        $kolomnamen = array_keys($values);
-        $kolomnamen_sql = implode(", ", array_map(fn($c) => "`$c`", $kolomnamen));
-        $placeholders = implode(", ", array_fill(0, count($kolomnamen), "?"));
-
-        $sql = "
-            INSERT INTO Medewerker 
-            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, $kolomnamen_sql)
-            VALUES (?, ?, ?, ?, ?, ?, $placeholders)
-        ";
-
-        $stmt = $conn->prepare($sql);
-
-        // Typestring opbouwen
-        $types = "ssssss" . str_repeat("i", count($values));
-
-        // Parameters samenvoegen
-        $params = array_merge(
-            [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie],
-            array_values($values)
-        );
-
-        // Dynamisch binden
-        $stmt->bind_param($types, ...$params);
-
-        if ($stmt->execute()) {
-            $melding = "Nieuwe medewerker succesvol toegevoegd!";
-
-                                            // Check of er een productveld op 0 staat
-                                $trigger = false;
-                                foreach ($values as $kolom => $waarde) {
-                                    if ($waarde === 0) {
-                                        $trigger = true;
-                                        break;
-                                    }
-                                }
-
-                                if ($trigger) {
-                                    // Make.com webhook URL
-                                    $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
-
-                                    // Webhook versturen
-                                    $ch = curl_init($url);
-                                    curl_setopt($ch, CURLOPT_POST, true);
-                                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                                    curl_exec($ch);
-                                    curl_close($ch);
-                                }
-
-        } else {
-            error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
-            $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
-            echo "<script>alert('$melding');</script>";
-        }
-
-        $stmt->close();
-    }
-}
-?>
-
+<?php require 'backend/medewerker/nieuwe_medewerker_logic.php'; ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VDL Bus & Coach</title>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/NieuweMedewerker.css">
-    <script src="javascript/HuidigeToegang.js"></script>
-    <script src="javascript/main.js"></script>
+
+    <script src="javascript/main.js" defer></script>
+    <script src="javascript/NieuweMedewerker.js" defer></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
-    <script>
-        // Laad de opgeslagen naam in het naam veld
-        window.addEventListener("load", function() {
-            const naamOpgeslagen = localStorage.getItem("naamNieuweMedewerker");
-            if (naamOpgeslagen) {
-                document.getElementById("naam").value = naamOpgeslagen;
-                localStorage.removeItem("naamNieuweMedewerker"); // Wis na gebruik
-            }
-        });
-    </script>
-    <header>
-        <img src="img/menu.png" alt="Menu button" class="menu-button" set onclick="toggleMenu()">
-        <img src="img/logo.svg" alt="VDL Groep Logo">
-        <a href="index.php">Homepagina</a>
-        <a href="HuidigeToegangen.php" class="current">Medewerkers</a>
-        <a href="HardwareToewijzen.php"> Hardware</a>
-        <a href="Verantwoordelijke.php">Producten</a>
-        <a href="afdelingRouter.php">Taken</a>
-        <div style="
-            position: absolute;
-            right: 20px;
-            top: 15px;
-        ">
-            <a href="logout.php" 
-            style="padding: 8px 15px; background: #e74c3c; color: white; 
-                    border-radius: 5px; text-decoration: none;">
-                Uitloggen
-            </a>
-        </div>
 
-    </header>
+<header>
+    <img src="img/menu.png" alt="Menu button" class="menu-button" onclick="toggleMenu()">
+    <img src="img/logo.svg" alt="VDL Groep Logo">
 
-    <div class="content">
+    <a href="index.php">Homepagina</a>
+    <a href="HuidigeToegangen.php" class="current">Medewerkers</a>
+    <a href="HardwareToewijzen.php">Hardware</a>
+    <a href="Verantwoordelijke.php">Producten</a>
+    <a href="afdelingRouter.php">Taken</a>
+
+    <div class="logout-container">
+        <a href="logout.php" class="logout-button">Uitloggen</a>
+    </div>
+</header>
+
+<div class="content">
 
     <?php if (!empty($melding)): ?>
-        <div class="melding">
-            <?= $melding ?>
-        </div>
+        <div class="melding"><?= $melding ?></div>
     <?php endif; ?>
 
-    <form action="" method="POST">
+    <form method="POST">
         <h2>Nieuwe medewerker</h2>
-        <div id="inputvelden"></div>
-        Naam: <br>
-        <input type="text" id="naam" name="naam" required><br>
-        Functie: <br>
-        <input type="text" id="functie" name="functie" required><br>
-        Locatie: <br>
-        <input type="text" id="locatie" name="locatie" required><br>
-        Leidinggevende: <br>
-        <input type="text" id="leidinggevende" name="leidinggevende" required><br>
-        Bedrijf: <br>
-        <input type="text" id="bedrijf" name="bedrijf" required><br><br>
+
+        Naam:
+        <input type="text" id="naam" name="naam" required>
+
+        Functie:
+        <input type="text" id="functie" name="functie" required>
+
+        Locatie:
+        <input type="text" id="locatie" name="locatie" required>
+
+        Leidinggevende:
+        <input type="text" id="leidinggevende" name="leidinggevende" required>
+
+        Bedrijf:
+        <input type="text" id="bedrijf" name="bedrijf" required>
+
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
         <h3>Software & Hardware</h3>
 
-            <?php
-            foreach ($columns as $col) {
-                $kolom = $col['Field'];
+        <?php foreach ($columns as $col): ?>
+            <?php if (!in_array($col['Field'], $exclude)): ?>
+                <input type="checkbox" id="<?= $col['Field'] ?>" name="<?= $col['Field'] ?>">
+                <label for="<?= $col['Field'] ?>"><?= $col['Field'] ?></label><br>
+            <?php endif; ?>
+        <?php endforeach; ?>
 
-                // Sla velden over die geen checkbox moeten zijn
-                if (in_array($kolom, $exclude)) continue;
+        <br><br>
 
-                $label = $kolom;
+        Referentie:
+        <input type="text" id="referentie" name="referentie">
 
-                echo '
-                    <input type="checkbox" id="'.$kolom.'" name="'.$kolom.'">
-                    <label for="'.$kolom.'"> '.$label.'</label><br>
-                ';
-            }
-            ?>
-<br><br>
-        Referentie: <br>
-        <input type="text" id="referentie" name="referentie"><br>
         <input type="submit" value="Opslaan">
     </form>
-    </div>
+
+</div>
 </body>
 </html>
