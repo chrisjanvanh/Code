@@ -1,7 +1,6 @@
 .content a {
     color: white;
     text-decoration: none;
-    margin-left: 20px;
     font-size: 18px;
     padding: 5px;
     background-color: #167ff7;
@@ -12,5 +11,5 @@
     display: flex;
     justify-content: center;
     margin-top: 8px;
-    width: 20%;
+    width: 32%;
 }
