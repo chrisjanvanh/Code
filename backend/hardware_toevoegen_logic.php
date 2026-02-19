@@ -15,7 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $merk = trim($_POST['merk']);
     $model = trim($_POST['model']);
     $prijs = trim($_POST['prijs']);
-    $aankoopdatum = $_POST['aankoopdatum'];
+    $aankoopdatum = trim($_POST['aankoopdatum']);
+    if ($aankoopdatum === "") {
+        $aankoopdatum = NULL;
+    }
+
 
     // Prijs normaliseren
     $prijs = trim($_POST['prijs']);
