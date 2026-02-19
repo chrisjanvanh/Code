@@ -118,11 +118,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
 
 <div class="content">
 
-    <?php if (!empty($melding)): ?>
-        <div class="melding">
-            <?= $melding ?>
-        </div>
-    <?php endif; ?>
+        <?php if (!empty($_SESSION['melding'])): ?>
+            <div class="melding">
+                <?= $_SESSION['melding'] ?>
+            </div>
+            <?php unset($_SESSION['melding']); ?>
+        <?php endif; ?>
 
     <h2>Medewerker zoeken</h2>
     <form method="GET">
