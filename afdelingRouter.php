@@ -44,6 +44,7 @@ if (count($afdelingen) === 1) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/afdelingRouter.css">
 
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
     <header>

@@ -10,6 +10,7 @@ a {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     align-items: center;
     display: flex;
+    justify-content: center;
     margin-top: 8px;
-    width: 80px;
+    width: auto;
 }
