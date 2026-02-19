@@ -10,10 +10,6 @@ require 'config.php';
 $medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
 $hardware = $conn->query("SELECT Serienummer FROM Hardware ORDER BY Serienummer ASC")->fetch_all(MYSQLI_ASSOC);
 
-// Tabel vullen
-$result = $conn->query("SELECT * FROM Gebruikname ORDER BY uitgiftedatum DESC");
-$toegewezen = $result->fetch_all(MYSQLI_ASSOC);
-
 $melding = "";
 
 /* ---------------------------------------------------
@@ -94,3 +90,22 @@ if (isset($_POST['verwijder'])) {
     header("Location: ../HardwareToewijzen.php");
     exit;
 }
+
+
+// Niet-toegewezen hardware ophalen
+$voorraad = $conn->query("
+    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum
+    FROM Hardware
+    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
+    ORDER BY Serienummer ASC
+")->fetch_all(MYSQLI_ASSOC);
+
+// Toegewezen hardware ophalen
+$toegewezen = $conn->query("
+    SELECT Serienummer, Naam, Uitgiftedatum
+    FROM Gebruikname
+    ORDER BY Uitgiftedatum DESC
+")->fetch_all(MYSQLI_ASSOC);
+
+// Voorraad bovenaan
+$alle_regels = array_merge($voorraad, $toegewezen);

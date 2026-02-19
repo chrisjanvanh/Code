@@ -79,7 +79,7 @@
             <?php endwhile; ?>
         <?php endwhile; ?>
     </table>
-
+                            <br><br>
     <h2>Mailadressen voor deze afdeling</h2>
 
     <table>

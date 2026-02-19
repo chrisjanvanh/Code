@@ -78,7 +78,7 @@
             <th>Verwijderen</th>
         </tr>
 
-        <?php foreach ($toegewezen as $row): ?>
+        <?php foreach ($alle_regels as $row): ?>
             <tr>
                 <td><?= htmlspecialchars($row['Naam']) ?></td>
                 <td><?= htmlspecialchars($row['Serienummer']) ?></td>
