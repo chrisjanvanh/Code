@@ -11,4 +11,5 @@ a {
     align-items: center;
     display: flex;
     margin-top: 8px;
+    width: 80px;
 }
