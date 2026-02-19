@@ -110,10 +110,10 @@ $voorraad = $conn->query("
 ")->fetch_all(MYSQLI_ASSOC);
 
 // Toegewezen hardware ophalen
-$voorraad = $conn->query("
-    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
-    FROM Hardware
-    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
+$toegewezen = $conn->query("
+    SELECT Serienummer, Naam, Uitgiftedatum, 'toegewezen' AS type
+    FROM Gebruikname
+    ORDER BY Uitgiftedatum DESC
 ")->fetch_all(MYSQLI_ASSOC);
 
 // Voorraad bovenaan
