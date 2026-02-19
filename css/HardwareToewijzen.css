@@ -2,14 +2,13 @@ form input[type=text], input[type=date], input[list] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    line-height: 1.6;
     border-radius: 5px;
     border: 1px solid #ccc;
     margin-bottom: 20px;
     box-sizing: border-box;
 }
 
-form input[type=submit], .button {
+.button {
     display: inline-block;
     background-color: #3795ed;
     padding: 10px 20px;
@@ -19,14 +18,14 @@ form input[type=submit], .button {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    box-shadow: 2px 2px 2px ;
+    box-shadow: 2px 2px 2px;
     color: white;
-    margin-right: 25px;
     text-decoration: none;
+    margin-right: 25px;
     margin-bottom: 5px;
 }
 
-form input[type=submit]:hover, .button:hover {
+.button:hover {
     background-color: #167ff7;
 }
 
@@ -45,11 +44,7 @@ th, td {
 
 table .button {
     background-color: red;
-    border: none;
     padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 table .button:hover {
@@ -60,4 +55,13 @@ table .button:hover {
     table {
         font-size: 14px;
     }
+}
+
+.melding {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
 }

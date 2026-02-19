@@ -1,26 +1,20 @@
 function naamzoeken() {
-  var naamInput, serienummerInput, naamFilter, serienummerFilter, table, tr, td, i, naamValue, serienummerValue;
-  naamInput = document.getElementById("naam");
-  serienummerInput = document.getElementById("serienummer");
-  naamFilter = naamInput.value.toUpperCase();
-  serienummerFilter = serienummerInput.value.toUpperCase();
-  table = document.getElementById("Toegewezen");
-  tr = table.getElementsByTagName("tr");
-  
-  for (i = 1; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td");
-    if (td.length > 1) {
-      naamValue = (td[0].textContent || td[0].innerText).toUpperCase();
-      serienummerValue = (td[1].textContent || td[1].innerText).toUpperCase();
-      
-      var naamMatch = naamFilter === "" || naamValue.indexOf(naamFilter) > -1;
-      var serienummerMatch = serienummerFilter === "" || serienummerValue.indexOf(serienummerFilter) > -1;
-      
-      if (naamMatch && serienummerMatch) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
+    const naamFilter = document.getElementById("naam").value.toUpperCase();
+    const serienummerFilter = document.getElementById("serienummer").value.toUpperCase();
+
+    const table = document.getElementById("Toegewezen");
+    const rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        const cols = rows[i].getElementsByTagName("td");
+        if (cols.length > 1) {
+            const naamValue = cols[0].innerText.toUpperCase();
+            const serienummerValue = cols[1].innerText.toUpperCase();
+
+            const naamMatch = naamFilter === "" || naamValue.includes(naamFilter);
+            const serienummerMatch = serienummerFilter === "" || serienummerValue.includes(serienummerFilter);
+
+            rows[i].style.display = (naamMatch && serienummerMatch) ? "" : "none";
+        }
+    }
 }
