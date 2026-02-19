@@ -18,14 +18,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $aankoopdatum = $_POST['aankoopdatum'];
 
     // Prijs normaliseren
+    $prijs = trim($_POST['prijs']);
     $prijs = str_replace(',', '.', $prijs);
 
-    if (!is_numeric($prijs)) {
-        $melding = "Prijs is geen geldige waarde.";
-        $_SESSION['melding'] = $melding;
+    // Prijs mag leeg zijn
+    if ($prijs === "") {
+        $prijs = NULL;
+    } elseif (!is_numeric($prijs)) {
+        $_SESSION['melding'] = "Prijs is geen geldige waarde.";
         header("Location: ../HardwareToevoegen.php");
         exit;
     }
+
 
     // Check of serienummer al bestaat
     $check = $conn->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
