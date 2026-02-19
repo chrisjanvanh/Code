@@ -62,11 +62,21 @@ header a:hover {
 }
 
 .logout-button {
+    all: unset;
     padding: 8px 15px;
     background: #e74c3c;
     color: white;
     border-radius: 5px;
     text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    display: inline-block;
+}
+
+.logout-button:hover {
+    background: #c0392b;
 }
 
 /* ------------------------------
