@@ -1,4 +1,4 @@
-<?php require 'backend/afdeling_logic.php'; ?>
+<?php require 'backend/afdeling/afdeling_logic.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>

@@ -1,4 +1,4 @@
-<?php require 'backend/afdelingRouter_logic.php'; ?>
+<?php require 'backend/afdeling/afdelingRouter_logic.php'; ?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
