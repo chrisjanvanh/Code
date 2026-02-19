@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require __DIR__ . '/../config.php';
 
 if (!isset($_POST['naam'], $_POST['kolom'], $_POST['waarde'])) {
     echo "FOUT: ontbrekende parameters";

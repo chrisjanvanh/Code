@@ -5,7 +5,7 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-require_once "config.php";
+require_once __DIR__ . '/../config.php';
 
 $gebruikerEmail = $_SESSION['email'];
 
