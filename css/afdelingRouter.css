@@ -1,8 +1,8 @@
-.content a {
+.afdeling-btn {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    padding: 5px;
+    padding: 10px;
     background-color: #167ff7;
     border-radius: 5px;
     border: 1px solid #0c66cc;
@@ -14,27 +14,18 @@
     width: 32%;
 }
 
+.afdeling-btn:hover {
+    background-color: #509cf2;
+}
+
 @media (max-width: 1024px) {
-    .content a {
+    .afdeling-btn {
         width: 50%;
     }
 }
 
 @media (max-width: 600px) {
-    .content a {
+    .afdeling-btn {
         width: 80%;
     }
 }
-
-
-.content a:hover {
-    background-color: #167ff7;
-}
-
-/* 
-.content {
-    display: flex;
-    flex direction: column;
-    align-items: center;
-    justify-content: center;
-} */
