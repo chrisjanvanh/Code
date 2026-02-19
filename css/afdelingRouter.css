@@ -13,6 +13,11 @@
     margin: 8px auto;
     width: 32%;
 }
+
+.content a:hover {
+    background-color: #167ff7;
+}
+
 /* 
 .content {
     display: flex;
