@@ -1,0 +1,35 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.button {
+    background-color: #3795ed;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #167ff7;
+}
+
+.delete {
+    background-color: #ff4d4d;
+}
+
+.delete:hover {
+    background-color: #cc0000;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}

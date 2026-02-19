@@ -8,9 +8,6 @@ if (!isset($_POST['action'])) {
 
 $action = $_POST['action'];
 
-// -----------------------------
-// VERWIJDEREN
-// -----------------------------
 if ($action === "delete") {
 
     if (!isset($_POST['id'])) {
@@ -22,18 +19,10 @@ if ($action === "delete") {
 
     $stmt = $conn->prepare("DELETE FROM AfdelingEmails WHERE ID = ?");
     $stmt->bind_param("i", $id);
-
-    if ($stmt->execute()) echo "OK";
-    else echo "FOUT: " . $stmt->error;
-
-    $stmt->close();
+    echo $stmt->execute() ? "OK" : "FOUT: " . $stmt->error;
     exit;
 }
 
-
-// -----------------------------
-// TOEVOEGEN
-// -----------------------------
 if ($action === "add") {
 
     if (!isset($_POST['email'], $_POST['afdeling'])) {
@@ -46,11 +35,7 @@ if ($action === "add") {
 
     $stmt = $conn->prepare("INSERT INTO AfdelingEmails (Afdeling, Email) VALUES (?, ?)");
     $stmt->bind_param("ss", $afdeling, $email);
-
-    if ($stmt->execute()) echo "OK";
-    else echo "FOUT: " . $stmt->error;
-
-    $stmt->close();
+    echo $stmt->execute() ? "OK" : "FOUT: " . $stmt->error;
     exit;
 }
 
