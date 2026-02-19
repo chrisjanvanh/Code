@@ -87,6 +87,7 @@
                 </td>
                 <td>
                     <form method="POST" onsubmit="return confirm('Weet je zeker dat je dit wilt verwijderen?')">
+                        <input type="hidden" name="type" value="<?= $row['type'] ?>">
                         <button class="button" name="verwijder" value="<?= $row['Serienummer'] ?>">Verwijderen</button>
                     </form>
                 </td>

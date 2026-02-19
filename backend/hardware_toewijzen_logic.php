@@ -82,29 +82,38 @@ if (isset($_POST['opslaan'])) {
 if (isset($_POST['verwijder'])) {
 
     $sn = $_POST['verwijder'];
+    $type = $_POST['type'];
 
-    $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
-    $del->bind_param("s", $sn);
-    $del->execute();
+    if ($type === "toegewezen") {
+        // Verwijder uit Gebruikname
+        $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
+        $del->bind_param("s", $sn);
+        $del->execute();
+    }
+
+    if ($type === "voorraad") {
+        // Verwijder uit Hardware
+        $del = $conn->prepare("DELETE FROM Hardware WHERE Serienummer = ?");
+        $del->bind_param("s", $sn);
+        $del->execute();
+    }
 
     header("Location: ../HardwareToewijzen.php");
     exit;
 }
 
-
 // Niet-toegewezen hardware ophalen
 $voorraad = $conn->query("
-    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum
+    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
     FROM Hardware
     WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
-    ORDER BY Serienummer ASC
 ")->fetch_all(MYSQLI_ASSOC);
 
 // Toegewezen hardware ophalen
-$toegewezen = $conn->query("
-    SELECT Serienummer, Naam, Uitgiftedatum
-    FROM Gebruikname
-    ORDER BY Uitgiftedatum DESC
+$voorraad = $conn->query("
+    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
+    FROM Hardware
+    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
 ")->fetch_all(MYSQLI_ASSOC);
 
 // Voorraad bovenaan
