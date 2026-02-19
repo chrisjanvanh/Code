@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum)
         VALUES (?, ?, ?, ?, ?)
     ");
-    $stmt->bind_param("sssds", $serienummer, $merk, $model, $prijs, $aankoopdatum);
+    $stmt->bind_param("sssss", $serienummer, $merk, $model, $prijs, $aankoopdatum);
 
     if ($stmt->execute()) {
         $_SESSION['melding'] = "Hardware succesvol toegevoegd!";
