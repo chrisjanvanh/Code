@@ -7,6 +7,19 @@ if (!isset($_SESSION['email'])) {
 
 require 'config.php';
 
+$gebruikerEmail = $_SESSION['email'];
+
+// 3. Controleer of gebruiker toegang heeft tot deze afdeling
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", Business IT, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header("Location: forbidden.php");
+    exit;
+}
+
 $melding = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
