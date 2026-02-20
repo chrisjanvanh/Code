@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
     $payload = [
         "naam" => $naam,
         "actie" => $actie,
-        "producten" => $veld,
+        "producten" => [$veld],
         "emails" => $emails
     ];
 
