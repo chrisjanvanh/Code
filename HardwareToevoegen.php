@@ -45,16 +45,16 @@
         <input type="text" name="serienummer" required>
 
         Merk:<br>
-        <input type="text" name="merk">
+        <input type="text" name="merk" required>
 
         Model:<br>
-        <input type="text" name="model">
+        <input type="text" name="model" required>
 
         Prijs:<br>
-        <input type="text" name="prijs">
+        <input type="text" name="prijs" required>
 
         Aankoopdatum:<br>
-        <input type="date" name="aankoopdatum">
+        <input type="date" name="aankoopdatum" required>
 
         <input type="submit" value="Opslaan">
     </form>
