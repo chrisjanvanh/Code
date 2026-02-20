@@ -37,7 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
 
     $veld = $_POST['veld'];   // productnaam
     $naam = $_POST['naam'];   // medewerker
-    $actie = $_POST['actie']; // toevoegen of verwijderen
+    $actie = $_POST['actie'];
+
+    // Actie herschrijven naar voltooid Nederlands
+    $actieTekst = ($actie === "toevoegen") ? "toegevoegd" : "verwijderd";
 
     // Nieuwe waarde bepalen
     // toevoegen → 0 (taak)
