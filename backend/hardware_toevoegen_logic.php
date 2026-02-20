@@ -7,11 +7,13 @@ if (!isset($_SESSION['email'])) {
 
 require 'config.php';
 
+$afdeling = "Business IT";
+
 $gebruikerEmail = $_SESSION['email'];
 
 // 3. Controleer of gebruiker toegang heeft tot deze afdeling
 $stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", Business IT, $gebruikerEmail);
+$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
 $stmt->execute();
 $result = $stmt->get_result();
 
