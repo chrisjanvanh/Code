@@ -35,6 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $locatie = $_POST['locatie'];
     $leidinggevende = $_POST['leidinggevende'];
     $bedrijf = $_POST['bedrijf'];
+    $email = $_POST['email'];
     $referentie = $_POST['referentie'];
 
     // Dynamisch checkbox‑waarden verzamelen
@@ -63,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $sql = "
             INSERT INTO Medewerker 
-            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, $kolomnamen_sql)
-            VALUES (?, ?, ?, ?, ?, ?, $placeholders)
+            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, Email, $kolomnamen_sql)
+            VALUES (?, ?, ?, ?, ?, ?, ?, $placeholders)
         ";
 
         $stmt = $conn->prepare($sql);
@@ -72,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $types = "ssssss" . str_repeat("i", count($values));
 
         $params = array_merge(
-            [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie],
+            [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email],
             array_values($values)
         );
 

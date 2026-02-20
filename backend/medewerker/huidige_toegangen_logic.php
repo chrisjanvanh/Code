@@ -111,15 +111,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
 
     $stmt = $conn->prepare("
         UPDATE Medewerker 
-        SET Functie=?, Locatie=?, Leidinggevende=?, Bedrijf=? 
+        SET Functie=?, Locatie=?, Leidinggevende=?, Bedrijf=?, Email=?
         WHERE Naam=?
     ");
     $stmt->bind_param(
-        "sssss",
+        "ssssss",
         $_POST['functie'],
         $_POST['locatie'],
         $_POST['leidinggevende'],
         $_POST['bedrijf'],
+        $_POST['email'],
         $_POST['naam']
     );
     $stmt->execute();
