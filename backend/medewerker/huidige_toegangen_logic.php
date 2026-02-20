@@ -35,15 +35,54 @@ if (isset($_GET['naam'])) {
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
 
-    $veld = $_POST['veld'];
-    $naam = $_POST['naam'];
+    $veld = $_POST['veld'];   // productnaam
+    $naam = $_POST['naam'];   // medewerker
+    $actie = $_POST['actie']; // toevoegen of verwijderen
 
-    $waarde = ($_POST['actie'] === "toevoegen") ? 0 : 2;
+    // Nieuwe waarde bepalen
+    // toevoegen → 0 (taak)
+    // verwijderen → 2 (verwijderd)
+    $waarde = ($actie === "toevoegen") ? 0 : 2;
 
+    // Update uitvoeren
     $stmt = $conn->prepare("UPDATE Medewerker SET `$veld` = ? WHERE Naam = ?");
     $stmt->bind_param("is", $waarde, $naam);
     $stmt->execute();
+    $stmt->close();
 
+    // Verantwoordelijke mailadressen ophalen
+    $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
+    $stmtProd->bind_param("s", $veld);
+    $stmtProd->execute();
+    $res = $stmtProd->get_result();
+
+    $emails = [];
+    if ($row = $res->fetch_assoc()) {
+        if (!empty($row['Contactpersoon'])) {
+            $emails[] = $row['Contactpersoon'];
+        }
+    }
+    $stmtProd->close();
+
+    // Webhook payload
+    $payload = [
+        "naam" => $naam,
+        "actie" => $actie,
+        "producten" => $veld,
+        "emails" => $emails
+    ];
+
+    // Webhook call
+    $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    curl_close($ch);
+
+    // Terug naar medewerker
     header("Location: ../HuidigeToegangen.php?naam=" . urlencode($naam));
     exit;
 }

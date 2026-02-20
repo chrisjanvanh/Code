@@ -101,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     // Webhook aanroepen met mailadressen + medewerker info
                     $payload = [
                         "naam" => $naam,
-                        "bedrijf" => $bedrijf,
+                        "actie" => "toevoegen",
                         "producten" => $geselecteerdeProducten,
                         "emails" => $emails
                     ];
