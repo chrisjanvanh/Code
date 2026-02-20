@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
     // Webhook payload
     $payload = [
         "naam" => $naam,
-        "actie" => $actie,
+        "actie" => $actieTekst,
         "producten" => [$veld],
         "emails" => $emails
     ];
