@@ -72,7 +72,7 @@
                             <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 1)'>Afronden</button>
                         <?php else: ?>
                             Verwijderen
-                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 0)'>Afronden</button>
+                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", "null")'>Afronden</button>
                         <?php endif; ?>
                     </td>
                 </tr>
