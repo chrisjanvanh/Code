@@ -23,7 +23,7 @@ $columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
 
 // Kolommen die GEEN checkbox zijn
 $exclude = [
-    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email"
+    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email", "Bestandnaam", "BestandType", "BestandData"
 ];
 
 $melding = "";
