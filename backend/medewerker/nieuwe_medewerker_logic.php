@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt = $conn->prepare($sql);
 
-        $types = "ssssss" . str_repeat("i", count($values));
+        $types = "sssssss" . str_repeat("i", count($values));
 
         $params = array_merge(
             [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email],
