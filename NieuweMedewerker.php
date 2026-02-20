@@ -44,16 +44,19 @@
         <input type="text" id="naam" name="naam" required>
 
         Functie:
-        <input type="text" id="functie" name="functie">
+        <input type="text" id="functie" name="functie" required>
 
         Locatie:
-        <input type="text" id="locatie" name="locatie">
+        <input type="text" id="locatie" name="locatie" required>
 
         Leidinggevende:
-        <input type="text" id="leidinggevende" name="leidinggevende">
+        <input type="text" id="leidinggevende" name="leidinggevende" required>
 
         Bedrijf:
         <input type="text" id="bedrijf" name="bedrijf" required>
+
+        Email:
+        <input type="text" id="email" name="email" required>
 
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
         <h3>Software & Hardware</h3>
