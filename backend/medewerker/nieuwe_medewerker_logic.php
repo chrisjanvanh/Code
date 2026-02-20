@@ -68,16 +68,54 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $melding = "Nieuwe medewerker succesvol toegevoegd!";
 
             // Check of er een productveld op 0 staat
-            $trigger = in_array(0, $values, true);
+            // Zoek alle geselecteerde producten (waarde = 0)
+                $geselecteerdeProducten = [];
+                foreach ($values as $product => $v) {
+                    if ($v === 0) {
+                        $geselecteerdeProducten[] = $product;
+                    }
+                }
 
-            if ($trigger) {
-                $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_exec($ch);
-                curl_close($ch);
-            }
+                if (!empty($geselecteerdeProducten)) {
+
+                    // Mailadressen ophalen van verantwoordelijken
+                    $emails = [];
+
+                    $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
+                    foreach ($geselecteerdeProducten as $prod) {
+                        $stmtProd->bind_param("s", $prod);
+                        $stmtProd->execute();
+                        $res = $stmtProd->get_result();
+
+                        if ($row = $res->fetch_assoc()) {
+                            if (!empty($row['Contactpersoon'])) {
+                                $emails[] = $row['Contactpersoon'];
+                            }
+                        }
+                    }
+                    $stmtProd->close();
+
+                    // Dubbele mailadressen verwijderen
+                    $emails = array_unique($emails);
+
+                    // Webhook aanroepen met mailadressen + medewerker info
+                    $payload = [
+                        "naam" => $naam,
+                        "bedrijf" => $bedrijf,
+                        "producten" => $geselecteerdeProducten,
+                        "emails" => $emails
+                    ];
+
+                    $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
+                    $ch = curl_init($url);
+                    curl_setopt($ch, CURLOPT_POST, true);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_exec($ch);
+                    curl_close($ch);
+                }
+
 
         } else {
             error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
