@@ -56,7 +56,7 @@
         <input type="text" id="bedrijf" name="bedrijf" required>
 
         Email:
-        <input type="text" id="email" name="email" required>
+        <input type="email" id="email" name="email" required>
 
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
         <h3>Software & Hardware</h3>

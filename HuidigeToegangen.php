@@ -72,7 +72,7 @@
             <input type="text" name="bedrijf" value="<?= $medewerker['Bedrijf'] ?>"><br>
 
             Email:<br>
-            <input type="text" name="email" value="<?= $medewerker['Email'] ?>"><br>
+            <input type="email" name="email" value="<?= $medewerker['Email'] ?>"><br>
 
             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
 
