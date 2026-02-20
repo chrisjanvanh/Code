@@ -3,6 +3,20 @@ session_start();
 
 require_once __DIR__ . '/../config.php';
 
+$afdeling = "HR";
+
+$gebruikerEmail = $_SESSION['email'];
+
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header("Location: forbidden.php");
+    exit;
+}
+
 // Haal alle kolommen op van de tabel Medewerker
 $columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
 $columns = $columnsResult->fetch_all(MYSQLI_ASSOC);

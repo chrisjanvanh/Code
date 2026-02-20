@@ -7,6 +7,20 @@ if (!isset($_SESSION['email'])) {
 
 require __DIR__ . '/../config.php';
 
+$afdeling = "HR";
+
+$gebruikerEmail = $_SESSION['email'];
+
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header("Location: forbidden.php");
+    exit;
+}
+
 // Medewerkers ophalen
 $medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
 
