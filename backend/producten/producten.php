@@ -2,10 +2,22 @@
 session_start();
 require_once __DIR__ . '/../config.php';
 
-// --- VEILIGHEID ---
 if (!isset($_SESSION['email'])) {
-    http_response_code(403);
-    echo "NIET INGELOGD";
+    header("Location: login.php");
+    exit;
+}
+
+$afdeling = "Business IT";
+
+$gebruikerEmail = $_SESSION['email'];
+
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header("Location: forbidden.php");
     exit;
 }
 
