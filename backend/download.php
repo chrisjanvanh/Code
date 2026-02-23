@@ -10,8 +10,8 @@ $email = $_GET['email'];
 // Haal bestand op uit database
 $stmt = $conn->prepare("
     SELECT BestandNaam, BestandType, BestandData 
-    FROM Medewerker 
-    WHERE Email = ?
+    FROM MedewerkerBestanden 
+    WHERE MedewerkerEmail = ?
 ");
 $stmt->bind_param("s", $email);
 $stmt->execute();
