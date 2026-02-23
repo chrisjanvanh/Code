@@ -44,6 +44,21 @@ if (isset($_GET['naam'])) {
     $medewerker = $result->fetch_assoc();
 }
 
+$bestanden = [];
+
+if ($medewerker) {
+    $stmt = $conn->prepare("
+        SELECT ID, BestandNaam, BestandType, OCTET_LENGTH(BestandData) AS Grootte, UploadDatum
+        FROM MedewerkerBestanden
+        WHERE MedewerkerEmail = ?
+        ORDER BY UploadDatum DESC
+    ");
+    $stmt->bind_param("s", $medewerker['Email']);
+    $stmt->execute();
+    $bestanden = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
+
+
 /* ---------------------------------------------------
    1. Toevoegen / Verwijderen van toegang
 --------------------------------------------------- */

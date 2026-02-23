@@ -89,7 +89,7 @@
                     <th>Bestandsnaam</th>
                     <th>Type</th>
                     <th>Grootte</th>
-                    <th>Upload‑datum</th>
+                    <th>Upload datum</th>
                     <th>Download</th>
                 </tr>
 
