@@ -20,7 +20,7 @@ require 'backend/medewerker/huidige_toegangen_logic.php';
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'medewerkers'); // 'home' vervangen door de juiste pagina
+toonMenu($rechten, 'medewerkers');
 ?>
 
 <div class="content">

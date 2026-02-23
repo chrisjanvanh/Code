@@ -23,7 +23,7 @@ if (!isset($_SESSION['email'])) {
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'producten'); // 'home' vervangen door de juiste pagina
+toonMenu($rechten, 'producten');
 ?>
 
     <div class="content">

@@ -1,24 +1,22 @@
 function VerwijderProduct(id) {
     if (!confirm("Weet je zeker dat je dit product wilt verwijderen?")) return;
 
-    fetch("backend/verwijder_product.php", {
+    fetch("backend/producten/producten.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id=" + id
+        body: `action=delete&id=${id}`
     })
     .then(res => res.text())
     .then(data => {
-        if (data === "OK") {
-            location.reload();
-        } else {
-            alert("Verwijderen mislukt");
-        }
+        if (data === "OK") location.reload();
+        else alert("Verwijderen mislukt");
     });
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    // --- TOEVOEGEN ---
+    // --- PRODUCT TOEVOEGEN ---
     const btn = document.querySelector(".Toevoegen");
     if (btn) {
         btn.addEventListener("click", () => {
@@ -28,21 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const contact = prompt("Contactpersoon:");
             const afdeling = prompt("Afdeling:");
 
-            fetch("backend/toevoegen_product.php", {
+            fetch("backend/producten/producten.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `product=${encodeURIComponent(product)}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
+                body: `action=add&product=${encodeURIComponent(product)}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
             })
             .then(res => res.text())
             .then(data => {
-                if (data === "OK") {
-                    location.reload();
-                } else {
-                    alert("Toevoegen mislukt");
-                }
+                if (data === "OK") location.reload();
+                else alert("Toevoegen mislukt");
             });
         });
     }
+
 
     // --- ENTER OPSLAAN ---
     document.querySelectorAll("input[id^='contact_'], input[id^='afdeling_']").forEach(input => {
@@ -56,10 +52,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const contact = document.getElementById("contact_" + id).value;
                 const afdeling = document.getElementById("afdeling_" + id).value;
 
-                fetch("backend/update_product.php", {
+                fetch("backend/producten/producten.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: `id=${id}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
+                    body: `action=update&id=${id}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
                 })
                 .then(res => res.text())
                 .then(data => {
