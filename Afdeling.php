@@ -1,4 +1,6 @@
-<?php require 'backend/afdeling/afdeling_logic.php'; ?>
+<?php 
+require 'backend/afdeling/afdeling_logic.php'; 
+?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -16,20 +18,10 @@
 </head>
 <body>
 
-<header>
-    <img src="img/menu.png" alt="Menu button" class="menu-button" onclick="toggleMenu()">
-    <img src="img/logo.svg" alt="VDL Groep Logo">
-
-    <a href="index.php">Homepagina</a>
-    <a href="HuidigeToegangen.php">Medewerkers</a>
-    <a href="HardwareToewijzen.php">Hardware</a>
-    <a href="Verantwoordelijke.php">Producten</a>
-    <a href="afdelingRouter.php" class="current">Taken</a>
-
-    <div class="logout-container">
-        <a href="logout.php" class="logout-button">Uitloggen</a>
-    </div>
-</header>
+<?php
+require_once 'backend/auth/rechten.php';
+toonMenu($rechten, 'home'); // 'home' vervangen door de juiste pagina
+?>
 
 <script>
     const afdeling = "<?= htmlspecialchars($afdeling) ?>";
