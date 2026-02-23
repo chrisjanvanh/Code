@@ -1,7 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
+require_once 'backend/config.php';
+
+// Alleen Business IT mag deze pagina zien
+$gebruikerEmail = $_SESSION['email'];
+$afdelingRecht = "Business IT";
+
+$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->bind_param("ss", $afdelingRecht, $gebruikerEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header("Location: forbidden.php");
     exit;
 }
 ?>

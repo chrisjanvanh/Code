@@ -2,32 +2,16 @@
 session_start();
 require_once __DIR__ . '/../config.php';
 
-// --- LOGIN CHECK ---
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
 
-// --- RECHTEN CHECK: alleen Business IT ---
-$gebruikerEmail = $_SESSION['email'];
-$afdelingRecht = "Business IT";
-
-$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", $afdelingRecht, $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
-    header("Location: forbidden.php");
-    exit;
-}
-
-// --- INPUTS ---
-$action   = $_POST['action'] ?? '';
-$id       = intval($_POST['id'] ?? 0);
-$product  = $_POST['product'] ?? '';
-$contact  = $_POST['contact'] ?? '';
-$afdelingInput = $_POST['afdeling'] ?? ''; // <-- BELANGRIJK: andere naam
+$action = $_POST['action'] ?? '';
+$id      = intval($_POST['id'] ?? 0);
+$product = $_POST['product'] ?? '';
+$contact = $_POST['contact'] ?? '';
+$afdeling = $_POST['afdeling'] ?? '';
 
 $ok = true;
 
@@ -41,7 +25,7 @@ if ($action === "add") {
 
     // 1. Product toevoegen
     $stmt = $conn->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $product, $contact, $afdelingInput);
+    $stmt->bind_param("sss", $product, $contact, $afdeling);
     if (!$stmt->execute()) $ok = false;
     $stmt->close();
 
@@ -54,6 +38,8 @@ if ($action === "add") {
     exit;
 }
 
+
+
 // --- ACTIE: PRODUCT UPDATEN ---
 if ($action === "update") {
 
@@ -63,12 +49,14 @@ if ($action === "update") {
     }
 
     $stmt = $conn->prepare("UPDATE Product SET Contactpersoon = ?, Afdeling = ? WHERE ID = ?");
-    $stmt->bind_param("ssi", $contact, $afdelingInput, $id);
+    $stmt->bind_param("ssi", $contact, $afdeling, $id);
 
     echo $stmt->execute() ? "OK" : "FOUT";
     $stmt->close();
     exit;
 }
+
+
 
 // --- ACTIE: PRODUCT VERWIJDEREN ---
 if ($action === "delete") {
@@ -106,6 +94,8 @@ if ($action === "delete") {
     echo $ok ? "OK" : "FOUT";
     exit;
 }
+
+
 
 // --- ONBEKENDE ACTIE ---
 echo "FOUT: onbekende actie";
