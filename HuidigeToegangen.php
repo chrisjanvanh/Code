@@ -87,7 +87,6 @@
             <table class="bestanden">
                 <tr>
                     <th>Bestandsnaam</th>
-                    <th>Type</th>
                     <th>Grootte</th>
                     <th>Upload datum</th>
                     <th>Download</th>

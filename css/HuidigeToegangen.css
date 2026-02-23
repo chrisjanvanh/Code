@@ -84,6 +84,6 @@ table button {
     border: 1px solid #c3e6cb;
 }
 
-.bestanden {
-    color: black; 
+.bestanden td {
+    color: black; !important;
 }
