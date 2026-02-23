@@ -25,10 +25,10 @@ header {
     top: 0;
 }
 
-header img {
+/* header img {
     height: 80%;
     margin-left: 25px;
-}
+} */
 
 header a {
     color: white;
@@ -83,6 +83,9 @@ header a.logo-btn {
     all: unset;
     height: 80%;
     margin-left: 25px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 }
 
 /* ------------------------------
