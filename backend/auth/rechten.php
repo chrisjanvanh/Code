@@ -27,7 +27,7 @@ function toonMenu($rechten, $current = "")
     ?>
     <header>
         <img src="img/menu.png" alt="Menu button" class="menu-button" onclick="toggleMenu()">
-        <img src="img/logo.svg" alt="VDL Groep Logo">
+        <a href="index.php" class="logo-btn"><img src="img/logo.svg" alt="VDL Groep Logo"></a>
 
         <a href="index.php" class="<?= $current === 'index' ? 'current' : '' ?>">Homepagina</a>
 

@@ -79,6 +79,12 @@ header a.current {
     background: #c0392b;
 }
 
+header a.logo-btn {
+    all: unset;
+    height: 80%;
+    margin-left: 25px;
+}
+
 /* ------------------------------
    Content container
 ------------------------------ */
