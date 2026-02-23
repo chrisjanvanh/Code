@@ -87,7 +87,6 @@
             <table class="bestanden">
                 <tr>
                     <th>Bestandsnaam</th>
-                    <th>Grootte</th>
                     <th>Upload datum</th>
                     <th>Download</th>
                 </tr>
@@ -95,7 +94,6 @@
                 <?php foreach ($bestanden as $b): ?>
                     <tr>
                         <td><?= htmlspecialchars($b['BestandNaam']) ?></td>
-                        <td><?= round($b['Grootte'] / 1024, 1) ?> KB</td>
                         <td><?= $b['UploadDatum'] ?></td>
                         <td>
                             <a class="button" href="backend/download.php?id=<?= $b['ID'] ?>">
