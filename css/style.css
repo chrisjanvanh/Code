@@ -134,16 +134,16 @@ header a.logo-btn {
         height: 10vh;
         transition: height 0.3s ease;
         overflow: hidden;
-        margin-bottom: 2vh;
     }
 
     header.open {
         height: auto;
+        margin-bottom: 2vh;
     }
 
     header a {
         display: none;
-        width: 80%;
+        width: 60%;
         text-align: center;
         margin: 10px auto 0;
         font-size: 20px;
