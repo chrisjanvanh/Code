@@ -99,7 +99,7 @@ toonMenu($rechten, 'medewerkers');
                         <form action="backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="email" value="<?= $medewerker['Email'] ?>">
 
-                            <label for="upload">Upload een bestand voor <?= htmlspecialchars($medewerker['Naam']) ?></label>
+                            <label for="upload">Upload een bestand </label>
                             <input type="file" id="upload" name="upload" required>
 
                             <button type="submit" class="button">Upload</button>
