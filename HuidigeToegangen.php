@@ -79,6 +79,36 @@
             <input type="submit" value="Opslaan">
         </form>
 
+        <h2>Bestanden</h2>
+
+        <?php if (empty($bestanden)): ?>
+            <p>Geen bestanden gevonden voor deze medewerker.</p>
+        <?php else: ?>
+            <table>
+                <tr>
+                    <th>Bestandsnaam</th>
+                    <th>Type</th>
+                    <th>Grootte</th>
+                    <th>Upload‑datum</th>
+                    <th>Download</th>
+                </tr>
+
+                <?php foreach ($bestanden as $b): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($b['BestandNaam']) ?></td>
+                        <td><?= htmlspecialchars($b['BestandType']) ?></td>
+                        <td><?= round($b['Grootte'] / 1024, 1) ?> KB</td>
+                        <td><?= $b['UploadDatum'] ?></td>
+                        <td>
+                            <a class="button" href="backend/download.php?id=<?= $b['ID'] ?>">
+                                Download
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+
         <h2>Huidige toegangen</h2>
 
         <table>
