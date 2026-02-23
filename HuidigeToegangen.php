@@ -152,9 +152,9 @@
             <?php endforeach; ?>
         </table>
 
+        <br><br>
+        <input type="button" name="verwijderen" value="Verwijderen" class="button delete" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">
     <?php endif; ?>
-    
-    <input type="button" name="verwijderen" value="Verwijderen" class="button delete" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">
 
 </div>
 </body>
