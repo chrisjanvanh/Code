@@ -78,7 +78,7 @@
 
             <input type="submit" value="Opslaan">
         </form>
-
+            <br><br>
         <h2>Bestanden</h2>
 
         <?php if (empty($bestanden)): ?>
@@ -104,7 +104,7 @@
                 <?php endforeach; ?>
             </table>
         <?php endif; ?>
-
+            <br><br>
         <h2>Huidige toegangen</h2>
 
         <table>
