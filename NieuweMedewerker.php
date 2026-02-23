@@ -58,9 +58,9 @@
         Email:
         <input type="email" id="email" name="email" required>
 
-        Komt de medewerker contractueel in dienst?
+        <h2>Komt de medewerker contractueel in dienst?</h2>
         <input type="radio" id="ja" name="radiogroep" value="Ja" required>
-        <label for="ja">Ja</label> 
+        <label for="ja">Ja</label> <br>
         <input type="radio" id="nee" name="radiogroep" value="Nee" required>
         <label for="nee">Nee</label>
 
