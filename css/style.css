@@ -58,7 +58,7 @@ header a.current {
 .logout-container {
     position: absolute;
     right: 20px;
-    top: 15px;
+    top: 35px;
 }
 
 .logout-button {
@@ -72,8 +72,7 @@ header a.current {
     font-size: 18px;
     font-weight: bold;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
+    display: inline-block;
 }
 
 .logout-button:hover {
