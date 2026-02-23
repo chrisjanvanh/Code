@@ -57,12 +57,13 @@
 
         Email:
         <input type="email" id="email" name="email" required>
+        <br>
 
         <h2>Komt de medewerker contractueel in dienst?</h2>
         <input type="radio" id="ja" name="radiogroep" value="Ja" required>
         <label for="ja">Ja</label> <br>
         <input type="radio" id="nee" name="radiogroep" value="Nee" required>
-        <label for="nee">Nee</label>
+        <label for="nee">Nee</label><br><br>
 
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
         <h3>Software & Hardware</h3>
