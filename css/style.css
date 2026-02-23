@@ -140,6 +140,7 @@ header a.logo-btn {
     header.open {
         margin-bottom: 2vh;
         height: auto;
+        padding-bottom: 2vh;
     }
 
     header a {
