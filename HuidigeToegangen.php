@@ -94,6 +94,19 @@ toonMenu($rechten, 'medewerkers');
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                <tr>
+                    <td colspan="3">
+                        <form action="backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="email" value="<?= $medewerker['Email'] ?>">
+
+                            <label for="upload">Upload een bestand voor <?= htmlspecialchars($medewerker['Naam']) ?></label>
+                            <input type="file" id="upload" name="upload" required>
+
+                            <button type="submit" class="button">Upload</button>
+                        </form>
+                    </td>
+                </tr>
+
             </table>
         <?php endif; ?>
             <br><br>
