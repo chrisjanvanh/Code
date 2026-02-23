@@ -29,7 +29,7 @@ $columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
 $columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
 
 // Kolommen die GEEN toegang zijn
-$exclude = ["Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email", "BestandNaam", "BestandType", "BestandData"];
+$exclude = ["Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email"];
 
 // Medewerker ophalen
 $medewerker = null;
