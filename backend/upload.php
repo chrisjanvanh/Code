@@ -30,15 +30,13 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-// Update medewerker met bestand
-$update = $conn->prepare("
-    UPDATE Medewerker 
-    SET BestandNaam = ?, BestandType = ?, BestandData = ?
-    WHERE Email = ?
+$insert = $conn->prepare("
+    INSERT INTO MedewerkerBestanden (MedewerkerEmail, BestandNaam, BestandType, BestandData)
+    VALUES (?, ?, ?, ?)
 ");
 
-$update->bind_param("ssss", $filename, $mimetype, $fileData, $email);
-$update->execute();
+$insert->bind_param("ssss", $email, $filename, $mimetype, $fileData);
+$insert->execute();
 
 echo json_encode([
     "success" => true,
