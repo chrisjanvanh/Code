@@ -35,6 +35,7 @@ table {
     border-collapse: collapse;
     overflow-x: auto;
     display: block;
+    margin-top: 20px;
 }
 
 th, td {
@@ -81,4 +82,8 @@ table button {
     border-radius: 5px;
     margin-bottom: 20px;
     border: 1px solid #c3e6cb;
+}
+
+.bestanden {
+    color: black; 
 }

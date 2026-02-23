@@ -84,7 +84,7 @@
         <?php if (empty($bestanden)): ?>
             <p>Geen bestanden gevonden voor deze medewerker.</p>
         <?php else: ?>
-            <table>
+            <table class="bestanden">
                 <tr>
                     <th>Bestandsnaam</th>
                     <th>Type</th>
@@ -96,7 +96,6 @@
                 <?php foreach ($bestanden as $b): ?>
                     <tr>
                         <td><?= htmlspecialchars($b['BestandNaam']) ?></td>
-                        <td><?= htmlspecialchars($b['BestandType']) ?></td>
                         <td><?= round($b['Grootte'] / 1024, 1) ?> KB</td>
                         <td><?= $b['UploadDatum'] ?></td>
                         <td>
