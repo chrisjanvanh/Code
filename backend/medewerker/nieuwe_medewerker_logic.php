@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+// Login check
+if (!isset($_SESSION['email'])) {
+    header("Location: /login.php");
+    exit;
+}
+
 require_once __DIR__ . '/../config.php';
 
 $afdeling = "HR";
@@ -23,7 +29,8 @@ $columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
 
 // Kolommen die GEEN checkbox zijn
 $exclude = [
-    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email", "BestandNaam", "BestandType", "BestandData"
+    "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email",
+    "BestandNaam", "BestandType", "BestandData"
 ];
 
 $melding = "";
@@ -82,55 +89,67 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($stmt->execute()) {
             $melding = "Nieuwe medewerker succesvol toegevoegd!";
 
-            // Check of er een productveld op 0 staat
-            // Zoek alle geselecteerde producten (waarde = 0)
-                $geselecteerdeProducten = [];
-                foreach ($values as $product => $v) {
-                    if ($v === 0) {
-                        $geselecteerdeProducten[] = $product;
-                    }
+            // 1. Webhook sturen met het ingevulde e‑mailadres
+            if (!empty($email)) {
+                $payloadEmail = [
+                    "email" => $email,
+                    "naam" => $naam
+                ];
+
+                $urlEmail = "https://hook.eu1.make.com/ve7v2yrp6w7x0tfm250ptn88f8hn17f6";
+                $chEmail = curl_init($urlEmail);
+                curl_setopt($chEmail, CURLOPT_POST, true);
+                curl_setopt($chEmail, CURLOPT_POSTFIELDS, json_encode($payloadEmail));
+                curl_setopt($chEmail, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+                curl_setopt($chEmail, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($chEmail);
+                curl_close($chEmail);
+            }
+
+            // 2. Bestaande product‑webhook
+            $geselecteerdeProducten = [];
+            foreach ($values as $product => $v) {
+                if ($v === 0) {
+                    $geselecteerdeProducten[] = $product;
                 }
+            }
 
-                if (!empty($geselecteerdeProducten)) {
+            if (!empty($geselecteerdeProducten)) {
 
-                    // Mailadressen ophalen van verantwoordelijken
-                    $emails = [];
+                $emails = [];
 
-                    $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
-                    foreach ($geselecteerdeProducten as $prod) {
-                        $stmtProd->bind_param("s", $prod);
-                        $stmtProd->execute();
-                        $res = $stmtProd->get_result();
+                $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
+                foreach ($geselecteerdeProducten as $prod) {
+                    $stmtProd->bind_param("s", $prod);
+                    $stmtProd->execute();
+                    $res = $stmtProd->get_result();
 
-                        if ($row = $res->fetch_assoc()) {
-                            if (!empty($row['Contactpersoon'])) {
-                                $emails[] = $row['Contactpersoon'];
-                            }
+                    if ($row = $res->fetch_assoc()) {
+                        if (!empty($row['Contactpersoon'])) {
+                            $emails[] = $row['Contactpersoon'];
                         }
                     }
-                    $stmtProd->close();
-
-                    // Dubbele mailadressen verwijderen
-                    $emails = array_unique($emails);
-
-                    // Webhook aanroepen met mailadressen + medewerker info
-                    $payload = [
-                        "naam" => $naam,
-                        "actie" => "toegevoegd",
-                        "producten" => $geselecteerdeProducten,
-                        "emails" => $emails
-                    ];
-
-                    $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
-                    $ch = curl_init($url);
-                    curl_setopt($ch, CURLOPT_POST, true);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                    curl_exec($ch);
-                    curl_close($ch);
                 }
+                $stmtProd->close();
 
+                $emails = array_unique($emails);
+
+                $payload = [
+                    "naam" => $naam,
+                    "actie" => "toegevoegd",
+                    "producten" => $geselecteerdeProducten,
+                    "emails" => $emails
+                ];
+
+                $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_exec($ch);
+                curl_close($ch);
+            }
 
         } else {
             error_log("Medewerker insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
