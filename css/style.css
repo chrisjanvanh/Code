@@ -46,7 +46,7 @@ header a:hover {
     background-color: #509cf2;
 }
 
-.current {
+header a.current {
     background-color: #509cf2;
     border: 2px solid #000;
 }

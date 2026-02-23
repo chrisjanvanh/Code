@@ -20,7 +20,7 @@ require 'backend/hardware_toevoegen_logic.php';
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'home'); // 'home' vervangen door de juiste pagina
+toonMenu($rechten, 'hardware'); // 'home' vervangen door de juiste pagina
 ?>
 
 <div class="content">

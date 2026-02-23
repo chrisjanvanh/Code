@@ -20,10 +20,10 @@ if (!isset($_SESSION['email'])) {
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
-    
+
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'home'); // 'home' vervangen door de juiste pagina
+toonMenu($rechten, 'producten'); // 'home' vervangen door de juiste pagina
 ?>
 
     <div class="content">

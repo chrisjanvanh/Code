@@ -19,7 +19,7 @@ require 'backend/afdeling/afdelingRouter_logic.php';
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'home'); // 'home' vervangen door de juiste pagina
+toonMenu($rechten, 'taken'); // 'home' vervangen door de juiste pagina
 ?>
 
 <div class="content">
