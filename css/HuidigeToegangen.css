@@ -44,9 +44,9 @@ th, td {
     border-radius: 8px;
 }
 
-td {
+/* td {
     color: white;
-}
+} */
 
 table button {
     background-color: #3795ed;
@@ -84,6 +84,6 @@ table button {
     border: 1px solid #c3e6cb;
 }
 
-.bestanden td {
+/* .bestanden td {
     color: black !important;
-}
+} */
