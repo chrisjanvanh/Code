@@ -23,7 +23,7 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-// Haal alle kolommen op van de tabel Medewerker
+// Kolommen ophalen
 $columnsResult = $conn->query("SHOW COLUMNS FROM Medewerker");
 $columns = $columnsResult->fetch_all(MYSQLI_ASSOC);
 
@@ -36,15 +36,16 @@ $melding = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $naam = $_POST['naam'];
-    $functie = $_POST['functie'];
-    $locatie = $_POST['locatie'];
-    $leidinggevende = $_POST['leidinggevende'];
-    $bedrijf = $_POST['bedrijf'];
-    $email = $_POST['email'];
-    $referentie = $_POST['referentie'];
+    $naam          = $_POST['naam'];
+    $functie       = $_POST['functie'];
+    $locatie       = $_POST['locatie'];
+    $leidinggevende= $_POST['leidinggevende'];
+    $bedrijf       = $_POST['bedrijf'];
+    $email         = $_POST['email'];
+    $referentie    = $_POST['referentie'];
+    $contractueel  = ($_POST['radiogroep'] ?? '') === 'Ja'; // Ja = contractueel
 
-    // Dynamisch checkbox‑waarden verzamelen
+    // 1. Basis: alle aangevinkte producten → 0, anders NULL
     $values = [];
     foreach ($columns as $col) {
         $kolom = $col['Field'];
@@ -53,7 +54,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $values[$kolom] = isset($_POST[$kolom]) ? 0 : NULL;
     }
 
-    // Check of medewerker al bestaat
+    // 2. Business rules voor nieuwe medewerker
+
+    // Zorg dat deze kolomnamen exact overeenkomen met je DB:
+    $colVDLAD = 'VDL AD Account';
+    $colMyVDL = 'MyVDL';
+    $colKelio = 'Kelio';
+
+    if ($contractueel) {
+        // Contractueel:
+        // VDL AD Account → 0
+        $values[$colVDLAD] = 0;
+
+        // MyVDL → altijd 3
+        $values[$colMyVDL] = 3;
+
+        // Alle andere aangevinkte producten → 3 (behalve VDL AD Account)
+        foreach ($values as $product => $v) {
+            if ($product === $colVDLAD || $product === $colMyVDL) continue;
+            if ($v === 0) {
+                $values[$product] = 3;
+            }
+        }
+
+        // Webhook: alleen VDL AD Account
+        $geselecteerdeProductenWebhook = [$colVDLAD];
+
+    } else {
+        // Niet‑contractueel:
+        // Kelio → 0
+        $values[$colKelio] = 0;
+
+        // MyVDL: alleen 3 als aangevinkt
+        if (isset($values[$colMyVDL]) && $values[$colMyVDL] === 0) {
+            $values[$colMyVDL] = 3;
+        }
+
+        // Alle andere aangevinkte producten → 3 (behalve Kelio)
+        foreach ($values as $product => $v) {
+            if ($product === $colKelio) continue;
+            if ($v === 0) {
+                $values[$product] = 3;
+            }
+        }
+
+        // Webhook: alleen Kelio
+        $geselecteerdeProductenWebhook = [$colKelio];
+    }
+
+    // 3. Check of medewerker al bestaat
     $check = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
     $check->bind_param("s", $naam);
     $check->execute();
@@ -63,10 +112,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $melding = "Deze medewerker bestaat al.";
     } else {
 
-        // Dynamische INSERT opbouwen
-        $kolomnamen = array_keys($values);
+        // 4. Dynamische INSERT
+        $kolomnamen     = array_keys($values);
         $kolomnamen_sql = implode(", ", array_map(fn($c) => "`$c`", $kolomnamen));
-        $placeholders = implode(", ", array_fill(0, count($kolomnamen), "?"));
+        $placeholders   = implode(", ", array_fill(0, count($kolomnamen), "?"));
 
         $sql = "
             INSERT INTO Medewerker 
@@ -76,8 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt = $conn->prepare($sql);
 
-        $types = "sssssss" . str_repeat("i", count($values));
-
+        $types  = "sssssss" . str_repeat("i", count($values));
         $params = array_merge(
             [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email],
             array_values($values)
@@ -88,11 +136,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($stmt->execute()) {
             $melding = "Nieuwe medewerker succesvol toegevoegd!";
 
-            // 1. Webhook sturen met het ingevulde e‑mailadres
+            // 1. Webhook met e‑mail van medewerker
             if (!empty($email)) {
                 $payloadEmail = [
                     "email" => $email,
-                    "naam" => $naam
+                    "naam"  => $naam
                 ];
 
                 $urlEmail = "https://hook.eu1.make.com/ve7v2yrp6w7x0tfm250ptn88f8hn17f6";
@@ -105,20 +153,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 curl_close($chEmail);
             }
 
-            // 2. Bestaande product‑webhook
-            $geselecteerdeProducten = [];
-            foreach ($values as $product => $v) {
-                if ($v === 0) {
-                    $geselecteerdeProducten[] = $product;
-                }
-            }
-
-            if (!empty($geselecteerdeProducten)) {
+            // 2. Product‑webhook: alleen VDL AD Account of Kelio
+            if (!empty($geselecteerdeProductenWebhook)) {
 
                 $emails = [];
 
                 $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
-                foreach ($geselecteerdeProducten as $prod) {
+                foreach ($geselecteerdeProductenWebhook as $prod) {
                     $stmtProd->bind_param("s", $prod);
                     $stmtProd->execute();
                     $res = $stmtProd->get_result();
@@ -134,10 +175,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $emails = array_unique($emails);
 
                 $payload = [
-                    "naam" => $naam,
-                    "actie" => "toegevoegd",
-                    "producten" => $geselecteerdeProducten,
-                    "emails" => $emails
+                    "naam"      => $naam,
+                    "actie"     => "toegevoegd",
+                    "producten" => $geselecteerdeProductenWebhook,
+                    "emails"    => $emails
                 ];
 
                 $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
