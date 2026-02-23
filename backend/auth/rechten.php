@@ -47,7 +47,7 @@ function toonMenu($rechten, $current = "")
             <a href="afdelingRouter.php" class="<?= $current === 'taken' ? 'current' : '' ?>">Taken</a>
         <?php endif; ?>
 
-        <div style="position: absolute; right: 20px; top: 15px;">
+        <div style="position: absolute; right: 20px; display: flex; align-items: center;">
             <a href="logout.php"
                style="padding: 8px 15px; background: #e74c3c; color: white;
                       border-radius: 5px; text-decoration: none;">
