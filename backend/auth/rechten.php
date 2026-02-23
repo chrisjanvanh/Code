@@ -39,7 +39,9 @@ function toonMenu($rechten, $current = "")
             <a href="HardwareToewijzen.php" class="<?= $current === 'hardware' ? 'current' : '' ?>">Hardware</a>
         <?php endif; ?>
 
+        <?php if (in_array("Business IT", $rechten)): ?>
         <a href="Verantwoordelijke.php" class="<?= $current === 'producten' ? 'current' : '' ?>">Producten</a>
+        <?php endif; ?>
 
         <?php if (!empty($rechten)): ?>
             <a href="afdelingRouter.php" class="<?= $current === 'taken' ? 'current' : '' ?>">Taken</a>
