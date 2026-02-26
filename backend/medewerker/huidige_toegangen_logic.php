@@ -161,6 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     $_SESSION['melding'] = "Bestand succesvol verwijderd!";
 
     // Terug naar medewerker
-    header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['Naam']));
+    header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
     exit;
 }
