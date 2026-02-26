@@ -9,7 +9,7 @@ form input[type=text], input[list], input[type=email] {
     box-sizing: border-box;
 }
 
-form input[type=submit], .button, input[type=file] {
+form input[type=submit], .button, ::file-selector-button {
     display: inline-block;
     background-color: #3795ed;
     padding: 10px 20px;
@@ -25,7 +25,7 @@ form input[type=submit], .button, input[type=file] {
     margin-bottom: 5px;
 }
 
-form input[type=submit]:hover, .button:hover, input[type=file] {
+form input[type=submit]:hover, .button:hover {
     background-color: #167ff7;
 }
 
