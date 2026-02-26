@@ -177,6 +177,7 @@ header a.logo-btn {
 
     .logout-button {
         width: auto;
+        font-size: 12px;
     }
 }
 
