@@ -134,9 +134,13 @@ header a.logo-btn {
         justify-content: flex-start;
         align-items: center;
         height: 10vh;
-        transition: height 0.3s ease;
+        transition: transform 0.3s ease;
         overflow: hidden;
         width: 100%;
+    }
+
+    header.hide {
+        transform: translateY(-100%);
     }
 
     header.open {

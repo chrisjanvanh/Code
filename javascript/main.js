@@ -1,15 +1,17 @@
-var lastScrollTop = 0;
+let lastScrollTop = 0;
 
-$(window).scroll(function () {
-  
-var st = $(this).scrollTop();
-        if (st < lastScrollTop){
-            $('header').slideDown();
-        } else {
-          $('header').slideUp();
-        }
-        lastScrollTop = st;
-  })
+window.addEventListener("scroll", function () {
+    let st = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (st > lastScrollTop) {
+        document.querySelector("header").classList.add("hide");   // scroll omlaag → verbergen
+    } else {
+        document.querySelector("header").classList.remove("hide"); // scroll omhoog → tonen
+    }
+
+    lastScrollTop = st <= 0 ? 0 : st;
+});
+
 
 function toggleMenu() {
     const header = document.querySelector('header');
