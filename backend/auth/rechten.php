@@ -48,10 +48,7 @@ function toonMenu($rechten, $current = "")
         <?php endif; ?>
 
         <div class="logout-container"> 
-        <!-- style="position: absolute; right: 15px; display: flex; align-items: center;"> -->
             <a href="logout.php" class="logout-button">
-               <!-- style="padding: 8px 15px; background: #e74c3c; color: white;
-                      border-radius: 5px; text-decoration: none;" -->
                 Uitloggen
             </a>
         </div>
