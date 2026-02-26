@@ -58,12 +58,13 @@ header a.current {
 header .logout-container {
     all: unset;
     position: absolute;
-    right: 15px;
+    right: 10px;
     display: flex;
     align-items: center;
+    width: auto;
 }
 
-header a .logout-button {
+header .logout-button {
     all: unset;
     padding: 8px 15px;
     background: #e74c3c;
@@ -71,6 +72,7 @@ header a .logout-button {
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
+    width: auto;
 }
 
 header a .logout-button:hover {
