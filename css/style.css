@@ -143,10 +143,6 @@ header a.logo-btn {
         transform: translateY(-110%);
     }
 
-    .content.hide {
-        transform: translateY(-10vh);
-    }
-
     header.open {
         margin-bottom: 2vh;
         height: auto;
