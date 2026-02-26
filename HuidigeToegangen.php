@@ -92,6 +92,13 @@ toonMenu($rechten, 'medewerkers');
                                 Download
                             </a>
                         </td>
+                        <td>
+                            <form method="POST" onsubmit="return confirm('Weet je zeker dat je dit bestand wilt verwijderen?')">
+                                <input type="hidden" name="actie" value="verwijderen_bestand">
+                                <input type="hidden" name="bestand_id" value="<?= $b['ID'] ?>">
+                                <button type="submit" class="button delete">Verwijderen</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 <tr>

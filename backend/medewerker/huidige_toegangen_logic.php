@@ -145,3 +145,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
     header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
     exit;
 }
+
+/* ---------------------------------------------------
+   3. Verwijderen van een bestand
+--------------------------------------------------- */
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['actie'] === "verwijderen_bestand") {
+
+    $bestandId = $_POST['bestand_id'];
+
+    // Bestand verwijderen
+    $stmt = $conn->prepare("DELETE FROM MedewerkerBestanden WHERE ID = ?");
+    $stmt->bind_param("i", $bestandId);
+    $stmt->execute();
+
+    $_SESSION['melding'] = "Bestand succesvol verwijderd!";
+
+    // Terug naar medewerker
+    header("Location: ../HuidigeToegangen.php?naam=" . urlencode($medewerker['Naam']));
+    exit;
+}
