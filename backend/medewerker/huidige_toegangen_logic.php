@@ -62,7 +62,7 @@ if ($medewerker) {
 /* ---------------------------------------------------
    1. Toevoegen / Verwijderen van toegang
 --------------------------------------------------- */
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['actie'] === "toevoegen" || $_POST['actie'] === "verwijderen")) {
 
     $veld = $_POST['veld'];   // productnaam
     $naam = $_POST['naam'];   // medewerker
@@ -161,6 +161,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     $_SESSION['melding'] = "Bestand succesvol verwijderd!";
 
     // Terug naar medewerker
-    header("Location: ../HuidigeToegangen.php?naam=" . urlencode($medewerker['Naam']));
+    header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['Naam']));
     exit;
 }
