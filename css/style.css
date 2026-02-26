@@ -134,13 +134,13 @@ header a.logo-btn {
         justify-content: flex-start;
         align-items: center;
         height: 10vh;
-        transition: transform 0.3s ease;
+        transition: transform 3.3s ease;
         overflow: hidden;
         width: 100%;
     }
 
     header.hide {
-        transform: translateY(-100%);
+        transform: translateY(-105%);
     }
 
     header.open {
