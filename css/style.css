@@ -127,7 +127,7 @@ header a.logo-btn {
    Mobiel menu
 ------------------------------ */
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
 
     header {
         flex-direction: column;
@@ -187,7 +187,7 @@ header a.logo-btn {
     }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 801px) {
     .menu-button {
         display: none;
     }
