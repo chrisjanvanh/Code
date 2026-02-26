@@ -79,3 +79,12 @@ table button {
     margin-bottom: 20px;
     border: 1px solid #c3e6cb;
 }
+
+button.button.delete {
+    background-color: red;
+    margin-left: -25px;
+}
+
+button.button.delete:hover {
+    background-color: darkred;
+}
