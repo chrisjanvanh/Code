@@ -170,18 +170,9 @@ header a.logo-btn {
         height: 30px;
         cursor: pointer;
     }
-
-    .logout-container {
-        width: auto;
-    }
-
-    .logout-button {
-        width: auto;
-        font-size: 12px;
-    }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 901px) {
     .menu-button {
         display: none;
     }
