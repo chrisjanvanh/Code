@@ -109,7 +109,7 @@ header a.logo-btn {
    Responsive layout
 ------------------------------ */
 
-@media (max-width: 900px) {
+@media (max-width: 850px) {
     .content {
         margin-left: 20%;
         margin-right: 20%;
@@ -127,7 +127,7 @@ header a.logo-btn {
    Mobiel menu
 ------------------------------ */
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
     header {
         flex-direction: column;
@@ -187,7 +187,7 @@ header a.logo-btn {
     }
 }
 
-@media (min-width: 801px) {
+@media (min-width: 851px) {
     .menu-button {
         display: none;
     }
