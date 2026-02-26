@@ -68,6 +68,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
     $naam = $_POST['naam'];   // medewerker
     $actie = $_POST['actie'];
 
+    // Huidige waarde ophalen
+    $stmtCheck = $conn->prepare("SELECT `$veld` FROM Medewerker WHERE Naam = ?");
+    $stmtCheck->bind_param("s", $naam);
+    $stmtCheck->execute();
+    $stmtCheck->bind_result($huidigeWaarde);
+    $stmtCheck->fetch();
+    $stmtCheck->close();
+
+    // Validatie
+    if ($actie === "toevoegen" && $huidigeWaarde !== NULL) {
+        echo "FOUT: kan niet toevoegen, waarde is niet NULL";
+        exit;
+    }
+
+    if ($actie === "verwijderen" && $huidigeWaarde !== 1) {
+        echo "FOUT: kan niet verwijderen, waarde is niet 1";
+        exit;
+    }
+
     // Actie herschrijven naar voltooid Nederlands
     $actieTekst = ($actie === "toevoegen") ? "toegevoegd" : "verwijderd";
 

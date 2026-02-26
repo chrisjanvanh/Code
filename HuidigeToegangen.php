@@ -146,21 +146,26 @@ toonMenu($rechten, 'medewerkers');
                     <td style="background-color: <?= $kleur ?>; color: <?= $tekst ?>"><?= $kolom ?></td>
 
                     <td>
+                        <?php if ($waarde === NULL): ?>
+                            <span style="color: orange; font-weight: bold;">Al toegang</span>
                         <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt toevoegen?')">
                             <input type="hidden" name="actie" value="toevoegen">
                             <input type="hidden" name="veld" value="<?= $kolom ?>">
                             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
                             <button type="submit" class="Toevoegen">Toevoegen</button>
                         </form>
+                        <?php endif; ?>
                     </td>
 
                     <td>
+                        <?php if ($waarde === 1): ?>
                         <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt verwijderen?')">
                             <input type="hidden" name="actie" value="verwijderen">
                             <input type="hidden" name="veld" value="<?= $kolom ?>">
                             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
                             <button type="submit" class="Verwijderen">Verwijderen</button>
                         </form>
+                        <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
