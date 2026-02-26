@@ -147,7 +147,6 @@ toonMenu($rechten, 'medewerkers');
 
                     <td>
                         <?php if ($waarde === NULL): ?>
-                            <span style="color: orange; font-weight: bold;">Al toegang</span>
                         <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt toevoegen?')">
                             <input type="hidden" name="actie" value="toevoegen">
                             <input type="hidden" name="veld" value="<?= $kolom ?>">
