@@ -51,7 +51,6 @@ table button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* margin-left: 25%; */
 }
 
 .Toevoegen {
@@ -62,11 +61,11 @@ table button {
     background-color: #03ab03;
 }
 
-.Verwijderen {
+.Verwijderen, button.button.delete, input.button.medewerkerverwijderen {
     background-color: red;
 }
 
-.Verwijderen:hover {
+.Verwijderen:hover, button.button.delete:hover, input.button.medewerkerverwijderen:hover {
     background-color: darkred;
 }
 
@@ -77,21 +76,4 @@ table button {
     border-radius: 5px;
     margin-bottom: 20px;
     border: 1px solid #c3e6cb;
-}
-
-button.button.delete {
-    background-color: red;
-    margin-left: -10px;
-}
-
-button.button.delete:hover {
-    background-color: darkred;
-}
-
-input.button.medewerkerverwijderen {
-    background-color: red;
-}
-
-input.button.medewerkerverwijderen:hover {
-    background-color: darkred;
 }
