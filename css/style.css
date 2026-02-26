@@ -66,16 +66,17 @@ header .logout-container {
 
 header .logout-button {
     all: unset;
-    padding: 8px 15px;
+    padding: 5px;
     background: #e74c3c;
     color: white;
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
     width: auto;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-header a .logout-button:hover {
+header .logout-button:hover {
     background: #c0392b;
 }
 
@@ -149,6 +150,14 @@ header a.logo-btn {
         text-align: center;
         margin: 10px auto 0;
         font-size: 20px;
+    }
+
+    header .logout-button {
+        display: none;
+    }
+
+    header.open .logout-button {
+        display: block;
     }
 
     header.open a {
