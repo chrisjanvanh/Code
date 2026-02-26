@@ -51,7 +51,7 @@ table button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 25%;
+    /* margin-left: 25%; */
 }
 
 .Toevoegen {
@@ -85,13 +85,5 @@ button.button.delete {
 }
 
 button.button.delete:hover {
-    background-color: darkred;
-}
-
-.MedewerkerVerwijderen {
-    background-color: red;
-}
-
-.MedewerkerVerwijderen:hover {
     background-color: darkred;
 }
