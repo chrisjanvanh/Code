@@ -87,3 +87,11 @@ button.button.delete {
 button.button.delete:hover {
     background-color: darkred;
 }
+
+.MedewerkerVerwijderen {
+    background-color: red;
+}
+
+.MedewerkerVerwijderen:hover {
+    background-color: darkred;
+}
