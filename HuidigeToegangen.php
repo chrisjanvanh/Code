@@ -171,7 +171,7 @@ toonMenu($rechten, 'medewerkers');
         </table>
 
         <br><br>
-        <input type="button" class="MedewerkerVerwijderen" name="verwijderen" value="Verwijderen" class="button delete" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">
+        <input type="button" name="verwijderen" value="Verwijderen" class="button medewerkerverwijderen" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">
     <?php endif; ?>
 
 </div>
