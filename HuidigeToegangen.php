@@ -111,7 +111,7 @@ toonMenu($rechten, 'medewerkers');
                             <label for="upload">Upload een bestand </label>
                             <input type="file" id="upload" name="upload" required>
 
-                            <button type="submit" class="button">Upload</button>
+                            <button type="submit" class="button">Verstuur</button>
                         </form>
                     </td>
                 </tr>
