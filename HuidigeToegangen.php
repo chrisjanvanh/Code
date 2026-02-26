@@ -81,6 +81,7 @@ toonMenu($rechten, 'medewerkers');
                     <th>Bestandsnaam</th>
                     <th>Upload datum</th>
                     <th>Download</th>
+                    <th>Verwijderen</th>
                 </tr>
 
                 <?php foreach ($bestanden as $b): ?>
@@ -102,7 +103,7 @@ toonMenu($rechten, 'medewerkers');
                     </tr>
                 <?php endforeach; ?>
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <form action="backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="email" value="<?= $medewerker['Email'] ?>">
 
