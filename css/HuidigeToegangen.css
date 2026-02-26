@@ -88,10 +88,10 @@ button.button.delete:hover {
     background-color: darkred;
 }
 
-button.button.medewerkerverwijderen {
+input.button.medewerkerverwijderen {
     background-color: red;
 }
 
-button.button.medewerkerverwijderen:hover {
+input.button.medewerkerverwijderen:hover {
     background-color: darkred;
 }
