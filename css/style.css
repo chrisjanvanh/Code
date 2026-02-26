@@ -134,7 +134,7 @@ header a.logo-btn {
         justify-content: flex-start;
         align-items: center;
         height: 10vh;
-        transition: transform 1.8s ease;
+        transition: transform 1.3s ease;
         overflow: hidden;
         width: 100%;
     }
