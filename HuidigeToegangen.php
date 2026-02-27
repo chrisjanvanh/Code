@@ -87,7 +87,7 @@ toonMenu($rechten, 'medewerkers');
                 <?php foreach ($bestanden as $b): ?>
                     <tr>
                         <td><?= htmlspecialchars($b['BestandNaam']) ?></td>
-                        <td><?= $b['UploadDatum'] ?></td>
+                        <td><?= date("d-m-Y",strtotime($b['UploadDatum'])) ?></td>
                         <td>
                             <a class="button" href="backend/download.php?id=<?= $b['ID'] ?>">
                                 Download
