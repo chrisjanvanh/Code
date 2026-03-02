@@ -129,6 +129,10 @@ header a.logo-btn {
 
 @media (max-width: 850px) {
 
+    .content h1 {
+        font-size: 1.5em;
+    }
+
     header {
         flex-direction: column;
         justify-content: flex-start;
