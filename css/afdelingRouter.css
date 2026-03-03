@@ -18,7 +18,7 @@
     background-color: #509cf2;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
     .afdeling-btn {
         width: 50%;
     }
