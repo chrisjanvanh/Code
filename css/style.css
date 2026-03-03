@@ -30,6 +30,10 @@ header img {
     margin-left: 25px;
 }
 
+header img:hover {
+    height: 85%;
+}
+
 header a {
     color: white;
     text-decoration: none;
