@@ -27,13 +27,8 @@ header {
 
 header img {
     height: 80%;
-    margin-left: 5%;
+    margin-left: 25px;
     transition: transform 1.5s ease;
-}
-
-header img:hover {
-    height: 82%;
-    margin-left: 4%;
 }
 
 header a {
@@ -94,10 +89,6 @@ header a.logo-btn {
     align-items: center;
     cursor: pointer;
     transition: transform 1.5s ease;
-}
-
-header a.logo-btn:hover {
-    height: 82%;
 }
 
 /* ------------------------------
