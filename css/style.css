@@ -93,6 +93,10 @@ header a.logo-btn {
     cursor: pointer;
 }
 
+header a.logo-btn:hover {
+    height: 85%;
+}
+
 /* ------------------------------
    Content container
 ------------------------------ */
