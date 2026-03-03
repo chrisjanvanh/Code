@@ -91,10 +91,11 @@ header a.logo-btn {
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: transform 1.5s ease;
 }
 
 header a.logo-btn:hover {
-    height: 85%;
+    height: 82%;
 }
 
 /* ------------------------------
