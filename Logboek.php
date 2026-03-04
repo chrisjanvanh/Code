@@ -37,6 +37,7 @@ toonMenu($rechten, 'index');
         <?php foreach ($actie as $a): ?>
             <tr>
                 <td><?= $a['Actie'] ?></td>
+                <td><?= $a['Soort'] ?></td>
                 <td><?= date("H:i:s d-m-Y", strtotime($a['Timestamp'])) ?></td>
             </tr>
         <?php endforeach ?>

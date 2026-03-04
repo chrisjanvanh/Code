@@ -2,7 +2,7 @@
 require "config2.php";
 
 $stmt = $pdo->prepare("
-    SELECT Actie, Timestamp
+    SELECT Actie, Soort, Timestamp
     FROM Logboek
     ORDER BY Timestamp DESC
     LIMIT 50
