@@ -28,3 +28,7 @@ th, td {
 .logboek table td {
     margin-left: 5%;
 }
+
+label {
+    font-weight: 400;
+}
