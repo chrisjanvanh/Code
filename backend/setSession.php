@@ -1,5 +1,5 @@
 <?php
-require "config2.php"
+require "config2.php";
 session_start();
 
 if (!isset($_POST['email'])) {
@@ -10,6 +10,8 @@ if (!isset($_POST['email'])) {
 
 $_SESSION['email'] = $_POST['email'];
 $_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
+
+$gebruikernaam = $_POST['gebruikernaam'] ?? '';
 
 $stmt = $pdo->prepare("INSERT INTO Logboek (Actie) VALUES (?)");
 $stmt->execute(["$gebruikernaam is ingelogd"]);
