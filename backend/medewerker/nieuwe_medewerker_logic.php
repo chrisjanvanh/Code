@@ -144,11 +144,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         /* -----------------------------------------------------------
            8. Logboek
         ----------------------------------------------------------- */
+        
+        $productenMee = [];
+
+        foreach ($values as $product => $v) {
+            if ($v === 3) {
+                $productenMee[] = $product;
+            }
+        }
+
+        $productenTekst = empty($productenMee)
+            ? "geen producten"
+            : implode(", ", $productenMee);
 
         $log = $pdo->prepare("INSERT INTO Logboek (Actie) VALUES (?)");
-        $log->execute(["$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam"]);
-
-        $melding = "Nieuwe medewerker succesvol toegevoegd!";
+        $log->execute([
+            "$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam — producten: $productenTekst"
+        ]);
 
         /* -----------------------------------------------------------
            9. Webhook 1: e‑mail medewerker
