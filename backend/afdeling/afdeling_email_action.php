@@ -7,7 +7,7 @@ if (!isset($_POST['action'])) {
     exit;
 }
 
-$gebruikerNaam = $_POST['gebruikernaam'] ?? "Onbekend";
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 $action = $_POST['action'];
 
 /* ---------------- DELETE ---------------- */
