@@ -29,7 +29,7 @@ th, td {
 }
 
 .delete:hover {
-    background-color: #cc0000;
+    background-color: darkred;
 }
 
 h1, h2 {
