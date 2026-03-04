@@ -80,8 +80,9 @@ function handleGoogleLogin(response) {
 
     const user = JSON.parse(jsonPayload);
     const email = user.email;
+    const gebruikernaam = user.name;
 
-    setSession(email);
+    setSession(email, gebruikernaam);
 }
 
 /* ---------------- MICROSOFT LOGIN ---------------- */
@@ -105,17 +106,19 @@ function loginMicrosoft() {
         .then(res => res.json())
         .then(user => {
             const email = user.mail || user.userPrincipalName;
-            setSession(email);
+            const gebruikernaam = user.displayName;
+            setSession(email, gebruikernaam);
         });
     });
 }
 
 /* ---------------- SESSIE ZETTEN ---------------- */
-function setSession(email) {
+function setSession(email, gebruikernaam) {
     fetch("backend/setSession.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "email=" + encodeURIComponent(email)
+        body: "email=" + encodeURIComponent(email) +
+              "&gebruikernaam=" + encodeURIComponent(gebruikernaam)
     })
     .then(() => {
         window.location.href = "index.php";

@@ -8,6 +8,10 @@ if (!isset($_POST['email'])) {
 }
 
 $_SESSION['email'] = $_POST['email'];
+$_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
+
+$stmt = $pdo->prepare("INSERT INTO Logboek (Actie) VALUES (?)");
+$stmt->execute(["$gebruikernaam is ingelogd"]);
 
 echo "OK";
 ?>
