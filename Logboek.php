@@ -34,8 +34,8 @@ toonMenu($rechten, 'logboek');
         <input type="checkbox" id="Inloggen" name="Inloggen" value="Inloggen">
         <label for="Inloggen">Inloggen</label><br>
 
-        <input type="checkbox" id="NieuweMedewerker" name="NieuweMedewerker" value="NieuweMedewerker">
-        <label for="NieuweMedewerker">Nieuwe Medewerker</label>
+        <input type="checkbox" id="Nieuwe Medewerker" name="Nieuwe Medewerker" value="Nieuwe Medewerker">
+        <label for="Nieuwe Medewerker">Nieuwe Medewerker</label>
 
         <br><br>
         <h2>Logboek</h2>
