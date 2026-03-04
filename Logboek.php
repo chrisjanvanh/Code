@@ -24,7 +24,7 @@ require "backend/logboek.php";
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'index');
+toonMenu($rechten, 'logboek');
 ?>
 
     <div class="content">
