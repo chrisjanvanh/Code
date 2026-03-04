@@ -17,6 +17,7 @@ require "backend/logboek.php";
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/Logboek.css">
     <script src="javascript/main.js"></script>
+    <script src="javascript/Logboek.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -46,7 +47,7 @@ toonMenu($rechten, 'logboek');
             <th>Datum en Tijd</th>
         </tr>
         <?php foreach ($actie as $a): ?>
-            <tr>
+            <tr class="logrow" data-soort="<?= $a['Soort'] ?>">
                 <td><?= $a['Actie'] ?></td>
                 <td><?= $a['Soort'] ?></td>
                 <td><?= date("H:i:s d-m-Y", strtotime($a['Timestamp'])) ?></td>
