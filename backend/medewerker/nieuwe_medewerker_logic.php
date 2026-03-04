@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         /* -----------------------------------------------------------
            8. Logboek
         ----------------------------------------------------------- */
-        
+
         $productenMee = [];
 
         foreach ($values as $product => $v) {
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $log = $pdo->prepare("INSERT INTO Logboek (Actie) VALUES (?)");
         $log->execute([
-            "$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam — producten: $productenTekst"
+            "$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam met de producten $productenTekst"
         ]);
 
         /* -----------------------------------------------------------
