@@ -68,7 +68,7 @@ header .logout-container {
 header .logout-button {
     all: unset;
     padding: 5px;
-    background: #e74c3c;
+    background: red;
     color: white;
     border-radius: 5px;
     text-decoration: none;
