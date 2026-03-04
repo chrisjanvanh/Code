@@ -30,7 +30,8 @@ toonMenu($rechten, 'logboek');
 
     <div class="content">
 
-    <h2>Soorten</h2>
+    <h2>Logboek</h2>
+    <h4>Soorten</h4>
         <input type="checkbox" id="Inloggen" name="Inloggen" value="Inloggen">
         <label for="Inloggen">Inloggen</label><br>
 
@@ -39,7 +40,6 @@ toonMenu($rechten, 'logboek');
 
         <br><br>
         <div class="Logboek">
-            <h2>Logboek</h2>
             <table>
                 <tr>
                     <th>Actie</th>
