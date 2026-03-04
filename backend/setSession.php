@@ -1,4 +1,5 @@
 <?php
+require "config2.php"
 session_start();
 
 if (!isset($_POST['email'])) {
