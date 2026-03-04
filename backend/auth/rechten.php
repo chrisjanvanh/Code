@@ -47,7 +47,9 @@ function toonMenu($rechten, $current = "")
             <a href="afdelingRouter.php" class="<?= $current === 'taken' ? 'current' : '' ?>">Taken</a>
         <?php endif; ?>
 
-        <a href="logboek.php" class="<?= $current === 'logboek' ? 'current' : '' ?>">Logboek</a>
+        <?php if (in_array("Business IT", $rechten)): ?>
+        <a href="Logboek.php" class="<?= $current === 'logboek' ? 'current' : '' ?>">Logboek</a>
+        <?php endif; ?>
 
         <div class="logout-container"> 
             <a href="logout.php" class="logout-button">
