@@ -11,10 +11,11 @@ if (!isset($_POST['email'])) {
 $_SESSION['email'] = $_POST['email'];
 $_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
 
+$email = $_POST['email'] ?? '';
 $gebruikernaam = $_POST['gebruikernaam'] ?? '';
 
 $stmt = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-$stmt->execute(["$gebruikernaam is ingelogd met het mailadres $email", "Inlog"]);
+$stmt->execute(["$gebruikernaam is ingelogd met het mailadres $email", "Inloggen"]);
 
 echo "OK";
 ?>
