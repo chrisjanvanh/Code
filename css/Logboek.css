@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.Logboek {
+    width: 100%;
+}
+
+.Logboek table{
+    width: 100%;
+}
+
+.logboek table td {
+    margin-left: 5%;
+}
