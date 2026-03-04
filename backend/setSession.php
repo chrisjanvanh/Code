@@ -15,7 +15,7 @@ $email = $_POST['email'] ?? '';
 $gebruikernaam = $_POST['gebruikernaam'] ?? '';
 
 $stmt = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-$stmt->execute(["$gebruikernaam is ingelogd met het emailadres $email", "Inloggen"]);
+$stmt->execute(["$gebruikernaam is ingelogd met het E-mailadres $email", "Inloggen"]);
 
 echo "OK";
 ?>
