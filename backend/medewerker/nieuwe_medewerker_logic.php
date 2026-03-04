@@ -157,9 +157,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             ? "geen producten"
             : implode(", ", $productenMee);
 
-        $log = $pdo->prepare("INSERT INTO Logboek (Actie) VALUES (?)");
+        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?)");
         $log->execute([
-            "$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam met de producten $productenTekst"
+            "$naam is aangemaakt als nieuwe medewerker door $gebruikerNaam met de producten $productenTekst",
+            "Nieuwe Medewerker"
         ]);
 
         /* -----------------------------------------------------------
