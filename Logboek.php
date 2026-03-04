@@ -32,6 +32,7 @@ toonMenu($rechten, 'index');
     <table>
         <tr>
             <th>Actie</th>
+            <th>Soort</th>
             <th>Datum en Tijd</th>
         </tr>
         <?php foreach ($actie as $a): ?>
