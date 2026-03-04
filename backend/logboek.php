@@ -5,7 +5,6 @@ $stmt = $pdo->prepare("
     SELECT Actie, Soort, Timestamp
     FROM Logboek
     ORDER BY Timestamp DESC
-    LIMIT 50
 ");
 $stmt->execute();
 
