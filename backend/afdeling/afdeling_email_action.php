@@ -6,6 +6,7 @@ if (!isset($_POST['action'])) {
     exit;
 }
 
+$_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
 $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 $action = $_POST['action'];

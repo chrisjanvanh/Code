@@ -11,6 +11,7 @@ require_once __DIR__ . '/../config2.php'; // bevat $pdo
 
 $afdeling = "HR";
 
+$_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
 $gebruikerEmail = $_SESSION['email'];
 $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
