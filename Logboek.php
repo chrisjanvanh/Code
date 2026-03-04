@@ -38,21 +38,23 @@ toonMenu($rechten, 'logboek');
         <label for="Nieuwe Medewerker">Nieuwe Medewerker</label>
 
         <br><br>
-        <h2>Logboek</h2>
-            <div class="Logboek">
-    <table>
-        <tr>
-            <th>Actie</th>
-            <th>Soort</th>
-            <th>Datum en Tijd</th>
-        </tr>
-        <?php foreach ($actie as $a): ?>
-            <tr class="logrow" data-soort="<?= $a['Soort'] ?>">
-                <td><?= $a['Actie'] ?></td>
-                <td><?= $a['Soort'] ?></td>
-                <td><?= date("H:i:s d-m-Y", strtotime($a['Timestamp'])) ?></td>
-            </tr>
-        <?php endforeach ?>
+        <div class="Logboek">
+            <h2>Logboek</h2>
+            <table>
+                <tr>
+                    <th>Actie</th>
+                    <th>Soort</th>
+                    <th>Datum en Tijd</th>
+                </tr>
+                <?php foreach ($actie as $a): ?>
+                    <tr class="logrow" data-soort="<?= $a['Soort'] ?>">
+                        <td><?= $a['Actie'] ?></td>
+                        <td><?= $a['Soort'] ?></td>
+                        <td><?= date("H:i:s d-m-Y", strtotime($a['Timestamp'])) ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
+        </div>
     </div>
 </body>
 </html>
