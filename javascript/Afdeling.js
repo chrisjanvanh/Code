@@ -4,6 +4,7 @@ function afronden(naam, kolom, waarde) {
     fetch("backend/afdeling/afronden.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "include",
         body: `naam=${encodeURIComponent(naam)}&kolom=${encodeURIComponent(kolom)}&waarde=${waarde}`
     })
     .then(r => r.text())
@@ -19,6 +20,7 @@ function verwijderEmail(id) {
     fetch("backend/afdeling/afdeling_email_action.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "include",
         body: `action=delete&id=${id}`
     })
     .then(r => r.text())
@@ -35,6 +37,7 @@ function voegEmailToe() {
     fetch("backend/afdeling/afdeling_email_action.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "include",
         body: `action=add&email=${encodeURIComponent(email)}&afdeling=${encodeURIComponent(afdeling)}`
     })
     .then(r => r.text())
