@@ -1,4 +1,5 @@
 <?php
+session_start();
 require __DIR__ . '/../config2.php';
 
 if (!isset($_POST['action'])) {
@@ -6,11 +7,10 @@ if (!isset($_POST['action'])) {
     exit;
 }
 
-$_SESSION['gebruikernaam'] = $_POST['gebruikernaam'];
-$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
-
+$gebruikerNaam = $_POST['gebruikernaam'] ?? "Onbekend";
 $action = $_POST['action'];
 
+/* ---------------- DELETE ---------------- */
 if ($action === "delete") {
 
     if (!isset($_POST['id'])) {
@@ -20,12 +20,30 @@ if ($action === "delete") {
 
     $id = intval($_POST['id']);
 
+    // Email + afdeling ophalen voor logboek
+    $stmtInfo = $pdo->prepare("SELECT Email, Afdeling FROM AfdelingEmails WHERE ID = ?");
+    $stmtInfo->execute([$id]);
+    $info = $stmtInfo->fetch(PDO::FETCH_ASSOC);
+
+    if (!$info) {
+        echo "FOUT: record niet gevonden";
+        exit;
+    }
+
+    $email = $info['Email'];
+    $afdeling = $info['Afdeling'];
+
     try {
+        // Verwijderen
         $stmt = $pdo->prepare("DELETE FROM AfdelingEmails WHERE ID = ?");
         $stmt->execute([$id]);
 
+        // Logboek
         $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-        $log->execute(["Email $email verwijderd aan afdeling $afdeling door $gebruikerNaam", "Afdelingen"]);
+        $log->execute([
+            "Email $email verwijderd uit afdeling $afdeling door $gebruikerNaam",
+            "Afdelingen"
+        ]);
 
         echo "OK";
     } catch (PDOException $e) {
@@ -35,6 +53,7 @@ if ($action === "delete") {
     exit;
 }
 
+/* ---------------- ADD ---------------- */
 if ($action === "add") {
 
     if (!isset($_POST['email'], $_POST['afdeling'])) {
@@ -46,11 +65,16 @@ if ($action === "add") {
     $afdeling = $_POST['afdeling'];
 
     try {
+        // Toevoegen
         $stmt = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email) VALUES (?, ?)");
         $stmt->execute([$afdeling, $email]);
 
+        // Logboek
         $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-        $log->execute(["Email $email toegevoegd aan afdeling $afdeling door $gebruikerNaam", "Afdelingen"]);
+        $log->execute([
+            "Email $email toegevoegd aan afdeling $afdeling door $gebruikerNaam",
+            "Afdelingen"
+        ]);
 
         echo "OK";
     } catch (PDOException $e) {
