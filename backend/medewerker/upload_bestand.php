@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config2.php';
 
 if (!isset($_SESSION['email'])) {
     die("Niet ingelogd");
@@ -18,14 +18,18 @@ $naam = $bestand['name'];
 $type = $bestand['type'];
 $data = file_get_contents($bestand['tmp_name']);
 
-// Opslaan in database
-$stmt = $conn->prepare("
-    INSERT INTO MedewerkerBestanden (MedewerkerEmail, BestandNaam, BestandType, BestandData, UploadDatum)
-    VALUES (?, ?, ?, ?, NOW())
-");
-$stmt->bind_param("ssss", $email, $naam, $type, $data);
-$stmt->execute();
-$stmt->close();
+try {
+    $stmt = $pdo->prepare("
+        INSERT INTO MedewerkerBestanden 
+        (MedewerkerEmail, BestandNaam, BestandType, BestandData, UploadDatum)
+        VALUES (?, ?, ?, ?, NOW())
+    ");
+
+    $stmt->execute([$email, $naam, $type, $data]);
+
+} catch (PDOException $e) {
+    die("Database fout: " . $e->getMessage());
+}
 
 // Terug naar medewerkerpagina
 header("Location: ../../HuidigeToegangen.php?naam=" . urlencode($_GET['naam'] ?? ''));
