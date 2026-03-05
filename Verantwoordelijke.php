@@ -1,17 +1,15 @@
 <?php
 session_start();
-require_once 'backend/config.php';
+require_once 'backend/config2.php';
 
 // Alleen Business IT mag deze pagina zien
 $gebruikerEmail = $_SESSION['email'];
 $afdelingRecht = "Business IT";
 
-$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", $afdelingRecht, $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->execute([$afdelingRecht, $gebruikerEmail]);
 
-if ($result->num_rows === 0) {
+if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
     exit;
 }
@@ -37,50 +35,51 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'producten');
 ?>
 
-    <div class="content">
+<div class="content">
 
-        <?php
-        require 'backend/config.php';
-        $result = $conn->query("SELECT * FROM Product ORDER BY ID ASC");
-        ?>
+    <?php
+    // Producten ophalen via PDO
+    $stmt = $pdo->query("SELECT * FROM Product ORDER BY ID ASC");
+    $producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    ?>
 
-        <table>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Contactpersoon</th>
+            <th>Afdeling</th>
+            <th>Product verwijderen</th>
+        </tr>
+
+        <?php foreach ($producten as $row): ?>
             <tr>
-                <th>Product</th>
-                <th>Contactpersoon</th>
-                <th>Afdeling</th>
-                <th>Product verwijderen</th>
-            </tr>
+                <td><?= htmlspecialchars($row['Product']) ?></td>
 
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['Product']) ?></td>
+                <td>
+                    <input type="text"
+                           id="contact_<?= $row['ID'] ?>"
+                           value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
+                </td>
 
-                    <td>
-                        <input type="text"
-                               id="contact_<?= $row['ID'] ?>"
-                               value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
-                    </td>
+                <td>
+                    <input type="text"
+                           id="afdeling_<?= $row['ID'] ?>"
+                           value="<?= htmlspecialchars($row['Afdeling']) ?>">
+                </td>
 
-                    <td>
-                        <input type="text"
-                               id="afdeling_<?= $row['ID'] ?>"
-                               value="<?= htmlspecialchars($row['Afdeling']) ?>">
-                    </td>
-
-                    <td>
-                        <button onclick="VerwijderProduct(<?= $row['ID'] ?>)"
-                                class="button">Verwijder</button>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-
-            <tr>
-                <td colspan="4">
-                    <button type="button" class="Toevoegen">Toevoegen product</button>
+                <td>
+                    <button onclick="VerwijderProduct(<?= $row['ID'] ?>)"
+                            class="button">Verwijder</button>
                 </td>
             </tr>
-        </table>
-    </div>
+        <?php endforeach; ?>
+
+        <tr>
+            <td colspan="4">
+                <button type="button" class="Toevoegen">Toevoegen product</button>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>
