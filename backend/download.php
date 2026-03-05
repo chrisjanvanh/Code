@@ -1,5 +1,5 @@
 <?php
-require_once "config.php";
+require_once "config2.php";
 
 if (!isset($_GET['id'])) {
     die("Geen ID opgegeven.");
@@ -7,21 +7,21 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-$stmt = $conn->prepare("
+$stmt = $pdo->prepare("
     SELECT BestandNaam, BestandType, BestandData
     FROM MedewerkerBestanden
     WHERE ID = ?
 ");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$stmt->store_result();
+$stmt->execute([$id]);
+$bestand = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($stmt->num_rows === 0) {
+if (!$bestand) {
     die("Geen bestand gevonden.");
 }
 
-$stmt->bind_result($naam, $type, $data);
-$stmt->fetch();
+$naam = $bestand['BestandNaam'];
+$type = $bestand['BestandType'];
+$data = $bestand['BestandData'];
 
 header("Content-Type: $type");
 header("Content-Disposition: attachment; filename=\"$naam\"");
