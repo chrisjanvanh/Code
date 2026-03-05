@@ -42,21 +42,25 @@ toonMenu($rechten, 'taken');
             <th>Taak</th>
         </tr>
 
-        <?php while ($product = $producten->fetch_assoc()): ?>
+        <?php foreach ($producten as $product): ?>
             <?php
                 $kolom = $product['Product'];
-                $medewerkers = $conn->query("SELECT * FROM Medewerker WHERE `$kolom` IN (0,2)");
+
+                // Medewerkers ophalen via PDO
+                $stmtM = $pdo->prepare("SELECT * FROM Medewerker WHERE `$kolom` IN (0,2)");
+                $stmtM->execute();
+                $medewerkers = $stmtM->fetchAll(PDO::FETCH_ASSOC);
             ?>
 
-            <?php while ($m = $medewerkers->fetch_assoc()): ?>
+            <?php foreach ($medewerkers as $m): ?>
                 <tr>
-                    <td><?= $product['Product'] ?></td>
-                    <td><?= $m['Naam'] ?></td>
-                    <td><?= $m['Functie'] ?></td>
-                    <td><?= $m['Locatie'] ?></td>
-                    <td><?= $m['Leidinggevende'] ?></td>
-                    <td><?= $m['Bedrijf'] ?></td>
-                    <td><?= $m['Referentie'] ?></td>
+                    <td><?= htmlspecialchars($product['Product']) ?></td>
+                    <td><?= htmlspecialchars($m['Naam']) ?></td>
+                    <td><?= htmlspecialchars($m['Functie']) ?></td>
+                    <td><?= htmlspecialchars($m['Locatie']) ?></td>
+                    <td><?= htmlspecialchars($m['Leidinggevende']) ?></td>
+                    <td><?= htmlspecialchars($m['Bedrijf']) ?></td>
+                    <td><?= htmlspecialchars($m['Referentie']) ?></td>
 
                     <td>
                         <?php if ($m[$kolom] == 0): ?>
@@ -68,10 +72,12 @@ toonMenu($rechten, 'taken');
                         <?php endif; ?>
                     </td>
                 </tr>
-            <?php endwhile; ?>
-        <?php endwhile; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
     </table>
-                            <br><br>
+
+    <br><br>
+
     <h2>Mailadressen voor deze afdeling</h2>
 
     <table>
@@ -80,14 +86,14 @@ toonMenu($rechten, 'taken');
             <th>Actie</th>
         </tr>
 
-        <?php while ($e = $emails->fetch_assoc()): ?>
+        <?php foreach ($emails as $e): ?>
             <tr>
-                <td><?= $e['Email'] ?></td>
+                <td><?= htmlspecialchars($e['Email']) ?></td>
                 <td>
                     <button class="button delete" onclick="verwijderEmail(<?= $e['ID'] ?>)">Verwijderen</button>
                 </td>
             </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
 
         <tr>
             <td colspan="2">
