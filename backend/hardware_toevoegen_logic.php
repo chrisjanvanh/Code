@@ -1,77 +1,86 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config2.php';
+
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
 
-require 'config.php';
-
 $afdeling = "Business IT";
-
 $gebruikerEmail = $_SESSION['email'];
 
-$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
+/* ---------------------------------------------------
+   1. Controle: heeft gebruiker toegang?
+--------------------------------------------------- */
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->execute([$afdeling, $gebruikerEmail]);
 
-if ($result->num_rows === 0) {
+if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
     exit;
 }
 
 $melding = "";
 
+/* ---------------------------------------------------
+   2. POST verwerking
+--------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $serienummer = trim($_POST['serienummer']);
-    $merk = trim($_POST['merk']);
-    $model = trim($_POST['model']);
-    $prijs = trim($_POST['prijs']);
+    $serienummer  = trim($_POST['serienummer']);
+    $merk         = trim($_POST['merk']);
+    $model        = trim($_POST['model']);
+    $prijs        = trim($_POST['prijs']);
     $aankoopdatum = trim($_POST['aankoopdatum']);
+
     if ($aankoopdatum === "") {
-        $aankoopdatum = NULL;
+        $aankoopdatum = null;
     }
 
-
     // Prijs normaliseren
-    $prijs = trim($_POST['prijs']);
     $prijs = str_replace(',', '.', $prijs);
 
-    // Prijs mag leeg zijn
     if ($prijs === "") {
-        $prijs = NULL;
+        $prijs = null;
     } elseif (!is_numeric($prijs)) {
         $_SESSION['melding'] = "Prijs is geen geldige waarde.";
         header("Location: ../HardwareToevoegen.php");
         exit;
     }
 
+    /* ---------------------------------------------------
+       3. Serienummer moet uniek zijn
+    --------------------------------------------------- */
+    $check = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
+    $check->execute([$serienummer]);
 
-    // Check of serienummer al bestaat
-    $check = $conn->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
-    $check->bind_param("s", $serienummer);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows > 0) {
+    if ($check->rowCount() > 0) {
         $_SESSION['melding'] = "Dit serienummer bestaat al. Kies een uniek serienummer.";
         header("Location: ../HardwareToevoegen.php");
         exit;
     }
 
-    // INSERT uitvoeren
-    $stmt = $conn->prepare("
+    /* ---------------------------------------------------
+       4. INSERT uitvoeren
+    --------------------------------------------------- */
+    $stmt = $pdo->prepare("
         INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum)
         VALUES (?, ?, ?, ?, ?)
     ");
-    $stmt->bind_param("sssss", $serienummer, $merk, $model, $prijs, $aankoopdatum);
 
-    if ($stmt->execute()) {
+    $ok = $stmt->execute([
+        $serienummer,
+        $merk,
+        $model,
+        $prijs,
+        $aankoopdatum
+    ]);
+
+    if ($ok) {
         $_SESSION['melding'] = "Hardware succesvol toegevoegd!";
     } else {
-        error_log("Insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+        error_log("Insert error: " . implode(" | ", $stmt->errorInfo()), 3, __DIR__ . "/error.log");
         $_SESSION['melding'] = "Er is iets fout gegaan bij het opslaan. Probeer het opnieuw.";
     }
 
