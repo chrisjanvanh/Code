@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config2.php';
 
 // Rechten ophalen
 $rechten = [];
@@ -11,14 +11,11 @@ $rechten = [];
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
 
-    $stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $res = $stmt->get_result();
+    $stmt = $pdo->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
+    $stmt->execute([$email]);
 
-    while ($row = $res->fetch_assoc()) {
-        $rechten[] = $row['Afdeling'];
-    }
+    // Haal alleen de kolom 'Afdeling' op als simpele array
+    $rechten = $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
 
 // Functie om menu te tonen
@@ -40,7 +37,7 @@ function toonMenu($rechten, $current = "")
         <?php endif; ?>
 
         <?php if (in_array("Business IT", $rechten)): ?>
-        <a href="Verantwoordelijke.php" class="<?= $current === 'producten' ? 'current' : '' ?>">Producten</a>
+            <a href="Verantwoordelijke.php" class="<?= $current === 'producten' ? 'current' : '' ?>">Producten</a>
         <?php endif; ?>
 
         <?php if (!empty($rechten)): ?>
@@ -48,7 +45,7 @@ function toonMenu($rechten, $current = "")
         <?php endif; ?>
 
         <?php if (in_array("Business IT", $rechten)): ?>
-        <a href="Logboek.php" class="<?= $current === 'logboek' ? 'current' : '' ?>">Logboek</a>
+            <a href="Logboek.php" class="<?= $current === 'logboek' ? 'current' : '' ?>">Logboek</a>
         <?php endif; ?>
 
         <div class="logout-container"> 
