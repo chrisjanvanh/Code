@@ -1,38 +1,44 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config2.php';
+
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
 
-require 'config.php';
-
 $afdeling = "Business IT";
-
 $gebruikerEmail = $_SESSION['email'];
 
-$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
+/* ---------------------------------------------------
+   1. Controle: heeft gebruiker toegang?
+--------------------------------------------------- */
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->execute([$afdeling, $gebruikerEmail]);
 
-if ($result->num_rows === 0) {
+if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
     exit;
 }
 
-$medewerkers = $conn->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")->fetch_all(MYSQLI_ASSOC);
-$hardware = $conn->query("SELECT Serienummer FROM Hardware ORDER BY Serienummer ASC")->fetch_all(MYSQLI_ASSOC);
+/* ---------------------------------------------------
+   2. Medewerkers + hardware ophalen
+--------------------------------------------------- */
+$medewerkers = $pdo->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")
+                   ->fetchAll(PDO::FETCH_ASSOC);
+
+$hardware = $pdo->query("SELECT Serienummer FROM Hardware ORDER BY Serienummer ASC")
+                ->fetchAll(PDO::FETCH_ASSOC);
 
 $melding = "";
 
 /* ---------------------------------------------------
-   OPSLAAN VAN NIEUWE TOEWĲZING
+   3. OPSLAAN VAN NIEUWE TOEWĲZING
 --------------------------------------------------- */
 if (isset($_POST['opslaan'])) {
 
-    $naam = trim($_POST['naam']);
-    $serienummer = trim($_POST['serienummer']);
+    $naam         = trim($_POST['naam']);
+    $serienummer  = trim($_POST['serienummer']);
     $uitgiftedatum = $_POST['uitgiftedatum'];
 
     if ($naam === "" || $serienummer === "" || $uitgiftedatum === "") {
@@ -40,48 +46,43 @@ if (isset($_POST['opslaan'])) {
     } else {
 
         // Check medewerker
-        $checkNaam = $conn->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
-        $checkNaam->bind_param("s", $naam);
-        $checkNaam->execute();
-        $checkNaam->store_result();
+        $checkNaam = $pdo->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
+        $checkNaam->execute([$naam]);
 
-        if ($checkNaam->num_rows == 0) {
+        if ($checkNaam->rowCount() === 0) {
             $melding = "Deze medewerker bestaat niet.";
         } else {
 
             // Check hardware
-            $checkHW = $conn->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
-            $checkHW->bind_param("s", $serienummer);
-            $checkHW->execute();
-            $checkHW->store_result();
+            $checkHW = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
+            $checkHW->execute([$serienummer]);
 
-            if ($checkHW->num_rows == 0) {
+            if ($checkHW->rowCount() === 0) {
                 $melding = "Dit serienummer bestaat niet in de hardwarelijst.";
             } else {
 
                 // Check of al toegewezen
-                $checkSN = $conn->prepare("SELECT 1 FROM Gebruikname WHERE Serienummer = ?");
-                $checkSN->bind_param("s", $serienummer);
-                $checkSN->execute();
-                $checkSN->store_result();
+                $checkSN = $pdo->prepare("SELECT 1 FROM Gebruikname WHERE Serienummer = ?");
+                $checkSN->execute([$serienummer]);
 
-                if ($checkSN->num_rows > 0) {
+                if ($checkSN->rowCount() > 0) {
                     $melding = "Dit serienummer is al toegewezen.";
                 } else {
 
                     // INSERT
-                    $stmt = $conn->prepare("
+                    $stmt = $pdo->prepare("
                         INSERT INTO Gebruikname (Serienummer, Naam, Uitgiftedatum)
                         VALUES (?, ?, ?)
                     ");
-                    $stmt->bind_param("sss", $serienummer, $naam, $uitgiftedatum);
 
-                    if ($stmt->execute()) {
+                    $ok = $stmt->execute([$serienummer, $naam, $uitgiftedatum]);
+
+                    if ($ok) {
                         $_SESSION['melding'] = "Hardware succesvol toegewezen!";
                         header("Location: ../HardwareToewijzen.php");
                         exit;
                     } else {
-                        error_log("Insert error: " . $stmt->error, 3, __DIR__ . "/error.log");
+                        error_log("Insert error: " . implode(" | ", $stmt->errorInfo()), 3, __DIR__ . "/error.log");
                         $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
                     }
                 }
@@ -91,44 +92,46 @@ if (isset($_POST['opslaan'])) {
 }
 
 /* ---------------------------------------------------
-   VERWIJDEREN
+   4. VERWIJDEREN
 --------------------------------------------------- */
 if (isset($_POST['verwijder'])) {
 
-    $sn = $_POST['verwijder'];
+    $sn   = $_POST['verwijder'];
     $type = $_POST['type'];
 
     if ($type === "toegewezen") {
-        // Verwijder uit Gebruikname
-        $del = $conn->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
-        $del->bind_param("s", $sn);
-        $del->execute();
+        $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
+        $del->execute([$sn]);
     }
 
     if ($type === "voorraad") {
-        // Verwijder uit Hardware
-        $del = $conn->prepare("DELETE FROM Hardware WHERE Serienummer = ?");
-        $del->bind_param("s", $sn);
-        $del->execute();
+        $del = $pdo->prepare("DELETE FROM Hardware WHERE Serienummer = ?");
+        $del->execute([$sn]);
     }
 
     header("Location: ../HardwareToewijzen.php");
     exit;
 }
 
-// Niet-toegewezen hardware ophalen
-$voorraad = $conn->query("
+/* ---------------------------------------------------
+   5. Niet-toegewezen hardware ophalen
+--------------------------------------------------- */
+$voorraad = $pdo->query("
     SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
     FROM Hardware
     WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
-")->fetch_all(MYSQLI_ASSOC);
+")->fetchAll(PDO::FETCH_ASSOC);
 
-// Toegewezen hardware ophalen
-$toegewezen = $conn->query("
+/* ---------------------------------------------------
+   6. Toegewezen hardware ophalen
+--------------------------------------------------- */
+$toegewezen = $pdo->query("
     SELECT Serienummer, Naam, Uitgiftedatum, 'toegewezen' AS type
     FROM Gebruikname
     ORDER BY Uitgiftedatum DESC
-")->fetch_all(MYSQLI_ASSOC);
+")->fetchAll(PDO::FETCH_ASSOC);
 
-// Voorraad bovenaan
+/* ---------------------------------------------------
+   7. Voorraad bovenaan
+--------------------------------------------------- */
 $alle_regels = array_merge($voorraad, $toegewezen);
