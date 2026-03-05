@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config2.php';
+require 'config.php';
 
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
@@ -17,7 +17,7 @@ $stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Emai
 $stmt->execute([$afdeling, $gebruikerEmail]);
 
 if ($stmt->rowCount() === 0) {
-    header("Location: forbidden.php");
+    header("Location: ../forbidden.php");
     exit;
 }
 
