@@ -1,21 +1,23 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config2.php';
 
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
 
-$action = $_POST['action'] ?? '';
-$id      = intval($_POST['id'] ?? 0);
-$product = $_POST['product'] ?? '';
-$contact = $_POST['contact'] ?? '';
+$action   = $_POST['action'] ?? '';
+$id       = intval($_POST['id'] ?? 0);
+$product  = $_POST['product'] ?? '';
+$contact  = $_POST['contact'] ?? '';
 $afdeling = $_POST['afdeling'] ?? '';
 
 $ok = true;
 
-// --- ACTIE: PRODUCT TOEVOEGEN ---
+/* ---------------------------------------------------
+   PRODUCT TOEVOEGEN
+--------------------------------------------------- */
 if ($action === "add") {
 
     if ($product === '') {
@@ -24,23 +26,23 @@ if ($action === "add") {
     }
 
     // 1. Product toevoegen
-    $stmt = $conn->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling) VALUES (?, ?, ?)");
-    $stmt->bind_param("sss", $product, $contact, $afdeling);
-    if (!$stmt->execute()) $ok = false;
-    $stmt->close();
+    $stmt = $pdo->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling) VALUES (?, ?, ?)");
+    if (!$stmt->execute([$product, $contact, $afdeling])) $ok = false;
 
     // 2. Kolom toevoegen aan Medewerker
-    $stmt2 = $conn->prepare("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL");
-    if (!$stmt2->execute()) $ok = false;
-    $stmt2->close();
+    try {
+        $pdo->exec("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL");
+    } catch (PDOException $e) {
+        $ok = false;
+    }
 
     echo $ok ? "OK" : "FOUT";
     exit;
 }
 
-
-
-// --- ACTIE: PRODUCT UPDATEN ---
+/* ---------------------------------------------------
+   PRODUCT UPDATEN
+--------------------------------------------------- */
 if ($action === "update") {
 
     if ($id === 0) {
@@ -48,17 +50,14 @@ if ($action === "update") {
         exit;
     }
 
-    $stmt = $conn->prepare("UPDATE Product SET Contactpersoon = ?, Afdeling = ? WHERE ID = ?");
-    $stmt->bind_param("ssi", $contact, $afdeling, $id);
-
-    echo $stmt->execute() ? "OK" : "FOUT";
-    $stmt->close();
+    $stmt = $pdo->prepare("UPDATE Product SET Contactpersoon = ?, Afdeling = ? WHERE ID = ?");
+    echo $stmt->execute([$contact, $afdeling, $id]) ? "OK" : "FOUT";
     exit;
 }
 
-
-
-// --- ACTIE: PRODUCT VERWIJDEREN ---
+/* ---------------------------------------------------
+   PRODUCT VERWIJDEREN
+--------------------------------------------------- */
 if ($action === "delete") {
 
     if ($id === 0) {
@@ -67,12 +66,9 @@ if ($action === "delete") {
     }
 
     // Productnaam ophalen
-    $stmt = $conn->prepare("SELECT Product FROM Product WHERE ID = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->bind_result($productnaam);
-    $stmt->fetch();
-    $stmt->close();
+    $stmt = $pdo->prepare("SELECT Product FROM Product WHERE ID = ?");
+    $stmt->execute([$id]);
+    $productnaam = $stmt->fetchColumn();
 
     if (!$productnaam) {
         echo "FOUT";
@@ -80,14 +76,13 @@ if ($action === "delete") {
     }
 
     // 1. Product verwijderen uit Product-tabel
-    $stmt = $conn->prepare("DELETE FROM Product WHERE ID = ?");
-    $stmt->bind_param("i", $id);
-    if (!$stmt->execute()) $ok = false;
-    $stmt->close();
+    $stmt = $pdo->prepare("DELETE FROM Product WHERE ID = ?");
+    if (!$stmt->execute([$id])) $ok = false;
 
     // 2. Kolom verwijderen uit Medewerker
-    $sql = "ALTER TABLE `Medewerker` DROP COLUMN `$productnaam`";
-    if (!$conn->query($sql)) {
+    try {
+        $pdo->exec("ALTER TABLE `Medewerker` DROP COLUMN `$productnaam`");
+    } catch (PDOException $e) {
         $ok = false;
     }
 
@@ -95,8 +90,8 @@ if ($action === "delete") {
     exit;
 }
 
-
-
-// --- ONBEKENDE ACTIE ---
+/* ---------------------------------------------------
+   ONBEKENDE ACTIE
+--------------------------------------------------- */
 echo "FOUT: onbekende actie";
 exit;
