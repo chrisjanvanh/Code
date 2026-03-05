@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/../config.php';
+session_start();
+require __DIR__ . '/../config2.php';
 
 if (!isset($_POST['naam'], $_POST['kolom'], $_POST['waarde'])) {
     echo "FOUT: ontbrekende parameters";
@@ -10,7 +11,7 @@ $naam   = $_POST['naam'];
 $kolom  = $_POST['kolom'];
 $waarde = $_POST['waarde'];
 
-// Kolomnamen die nooit automatisch worden aangepast
+// Kolommen die nooit automatisch worden aangepast
 $exclude = ["Naam","Functie","Locatie","Leidinggevende","Bedrijf","Referentie","Email"];
 
 // Speciale kolommen
@@ -20,50 +21,54 @@ $colKelio = "Kelio";
 
 // NULL correct verwerken
 if ($waarde === "null") {
-    $waarde = NULL;
+    $waarde = null;
 }
 
-// Huidige medewerker ophalen
-$stmt = $conn->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
-$stmt->bind_param("s", $naam);
-$stmt->execute();
-$res = $stmt->get_result();
-$medewerker = $res->fetch_assoc();
-$stmt->close();
+/* ---------------------------------------------------
+   1. Medewerker ophalen
+--------------------------------------------------- */
+$stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
+$stmt->execute([$naam]);
+$medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$medewerker) {
     echo "FOUT: medewerker niet gevonden";
     exit;
 }
 
-// 1. BASISUPDATE: kolom op 1 of NULL zetten
-$update = $conn->prepare("UPDATE Medewerker SET `$kolom` = ? WHERE Naam = ?");
-$update->bind_param("ss", $waarde, $naam);
-$update->execute();
-$update->close();
+/* ---------------------------------------------------
+   2. BASISUPDATE
+--------------------------------------------------- */
+$stmt = $pdo->prepare("UPDATE Medewerker SET `$kolom` = ? WHERE Naam = ?");
+$stmt->execute([$waarde, $naam]);
 
-// 2. AUTOMATISCHE LOGICA
-$productenNaarNul = []; // producten die 3 → 0 gaan
+$productenNaarNul = [];
+
+/* ---------------------------------------------------
+   3. AUTOMATISCHE LOGICA
+--------------------------------------------------- */
 
 // A. VDL AD Account afgerond → MyVDL 3 → 0
 if ($kolom === $colVDLAD && $waarde == 1) {
     if ($medewerker[$colMyVDL] == 3) {
-        $conn->query("UPDATE Medewerker SET `$colMyVDL` = 0 WHERE Naam = '$naam'");
+        $pdo->prepare("UPDATE Medewerker SET `$colMyVDL` = 0 WHERE Naam = ?")->execute([$naam]);
         $productenNaarNul[] = $colMyVDL;
     }
 }
 
 // B. MyVDL afgerond → alle 3 → 0
 if ($kolom === $colMyVDL && $waarde == 1) {
-    $cols = $conn->query("SHOW COLUMNS FROM Medewerker")->fetch_all(MYSQLI_ASSOC);
+
+    $cols = $pdo->query("SHOW COLUMNS FROM Medewerker")->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($cols as $c) {
         $field = $c['Field'];
+
         if (in_array($field, $exclude)) continue;
         if ($field === $colMyVDL) continue;
 
         if ($medewerker[$field] == 3) {
-            $conn->query("UPDATE Medewerker SET `$field` = 0 WHERE Naam = '$naam'");
+            $pdo->prepare("UPDATE Medewerker SET `$field` = 0 WHERE Naam = ?")->execute([$naam]);
             $productenNaarNul[] = $field;
         }
     }
@@ -71,38 +76,39 @@ if ($kolom === $colMyVDL && $waarde == 1) {
 
 // C. Kelio afgerond → alle 3 → 0
 if ($kolom === $colKelio && $waarde == 1) {
-    $cols = $conn->query("SHOW COLUMNS FROM Medewerker")->fetch_all(MYSQLI_ASSOC);
+
+    $cols = $pdo->query("SHOW COLUMNS FROM Medewerker")->fetchAll(PDO::FETCH_ASSOC);
 
     foreach ($cols as $c) {
         $field = $c['Field'];
+
         if (in_array($field, $exclude)) continue;
         if ($field === $colKelio) continue;
 
         if ($medewerker[$field] == 3) {
-            $conn->query("UPDATE Medewerker SET `$field` = 0 WHERE Naam = '$naam'");
+            $pdo->prepare("UPDATE Medewerker SET `$field` = 0 WHERE Naam = ?")->execute([$naam]);
             $productenNaarNul[] = $field;
         }
     }
 }
 
-// 3. WEBHOOK versturen (alleen voor producten die 0 zijn geworden)
+/* ---------------------------------------------------
+   4. WEBHOOK versturen
+--------------------------------------------------- */
 if (!empty($productenNaarNul)) {
 
     $emails = [];
 
-    $stmtProd = $conn->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
-    foreach ($productenNaarNul as $prod) {
-        $stmtProd->bind_param("s", $prod);
-        $stmtProd->execute();
-        $res = $stmtProd->get_result();
+    $stmtProd = $pdo->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
 
-        if ($row = $res->fetch_assoc()) {
-            if (!empty($row['Contactpersoon'])) {
-                $emails[] = $row['Contactpersoon'];
-            }
+    foreach ($productenNaarNul as $prod) {
+        $stmtProd->execute([$prod]);
+        $row = $stmtProd->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($row['Contactpersoon'])) {
+            $emails[] = $row['Contactpersoon'];
         }
     }
-    $stmtProd->close();
 
     $emails = array_unique($emails);
 
