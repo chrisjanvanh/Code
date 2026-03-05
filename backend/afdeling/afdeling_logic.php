@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../config2.php';
 
 // 1. Check of afdeling is meegegeven
 if (!isset($_GET['afdeling'])) {
@@ -19,24 +19,20 @@ if (!isset($_SESSION['email'])) {
 $gebruikerEmail = $_SESSION['email'];
 
 // 3. Controleer of gebruiker toegang heeft tot deze afdeling
-$stmt = $conn->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->bind_param("ss", $afdeling, $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->execute([$afdeling, $gebruikerEmail]);
 
-if ($result->num_rows === 0) {
+if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
     exit;
 }
 
 // 4. Haal producten op
-$stmt = $conn->prepare("SELECT * FROM Product WHERE Afdeling = ?");
-$stmt->bind_param("s", $afdeling);
-$stmt->execute();
-$producten = $stmt->get_result();
+$stmt = $pdo->prepare("SELECT * FROM Product WHERE Afdeling = ?");
+$stmt->execute([$afdeling]);
+$producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 5. Haal emailadressen op
-$emailQuery = $conn->prepare("SELECT * FROM AfdelingEmails WHERE Afdeling = ?");
-$emailQuery->bind_param("s", $afdeling);
-$emailQuery->execute();
-$emails = $emailQuery->get_result();
+$stmt2 = $pdo->prepare("SELECT * FROM AfdelingEmails WHERE Afdeling = ?");
+$stmt2->execute([$afdeling]);
+$emails = $stmt2->fetchAll(PDO::FETCH_ASSOC);
