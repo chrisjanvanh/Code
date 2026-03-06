@@ -27,7 +27,9 @@ if ($stmt->rowCount() === 0) {
 $medewerkers = $pdo->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")
                    ->fetchAll(PDO::FETCH_ASSOC);
 
-$hardware = $pdo->query("SELECT Serienummer FROM Hardware ORDER BY Serienummer ASC")
+$hardware = $pdo->query("SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
+    FROM Hardware
+    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)")
                 ->fetchAll(PDO::FETCH_ASSOC);
 
 $melding = "";
