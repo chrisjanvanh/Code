@@ -13,7 +13,7 @@ $afdeling = "HR";
 
 $_SESSION['gebruikernaam'] = $_POST['gebruikernaam'] ?? "Onbekend";
 $gebruikerEmail = $_SESSION['email'];
-$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* -----------------------------------------------------------
    1. Controleer of gebruiker toegang heeft tot deze afdeling
