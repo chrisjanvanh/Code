@@ -56,6 +56,9 @@ toonMenu($rechten, 'logboek');
         <input type="checkbox" id="Afdelingen" name="Afdelingen" value="Afdelingen">
         <label for="Afdelingen">Afdelingen</label>
 
+        <input type="checkbox" id="Email" name="Email" value="Email">
+        <label for="Email">Email</label>
+
         <br><br>
         <div class="Logboek">
             <table>

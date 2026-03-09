@@ -46,6 +46,13 @@ $ok = $insert->execute([
     $fileData
 ]);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$email heeft een bestand geupload voor zichzelf"
+        "Email"
+    ]);
+
 if (!$ok) {
     echo json_encode([
         "success" => false,
