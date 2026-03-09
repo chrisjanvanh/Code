@@ -41,7 +41,7 @@ if ($action === "add") {
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft een $product toegevoegd aan producten",
+        "$gebruikerNaam heeft het product $product toegevoegd aan producten",
         "Producten"
     ]);
 
@@ -62,10 +62,14 @@ if ($action === "update") {
     $stmt = $pdo->prepare("UPDATE Product SET Contactpersoon = ?, Afdeling = ? WHERE ID = ?");
     echo $stmt->execute([$contact, $afdeling, $id]) ? "OK" : "FOUT";
 
+    $stmt2 = $pdo->prepare("SELECT Product FROM Product WHERE ID = ?");
+    $stmt2->execute([$id]);
+    $productnaam = $stmt2->fetchColumn();
+
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft het product $product gewijzigd naar $contact en $afdeling",
+        "$gebruikerNaam heeft het product $productnaam gewijzigd naar $contact en $afdeling",
         "Producten"
     ]);
 
@@ -106,7 +110,7 @@ if ($action === "delete") {
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft het product $product verwijderd",
+        "$gebruikerNaam heeft het product $productnaam verwijderd",
         "Producten"
     ]);
 
