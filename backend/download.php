@@ -17,6 +17,14 @@ $stmt = $pdo->prepare("
 $stmt->execute([$id]);
 $bestand = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        $gebruikerNaam . " heeft het bestand van " . urlencode($_POST['naam']) . " genaamd " . $bestand['BestandNaam'] . " gedownload",
+        "Huidige Medewerker"
+    ]);
+
+
 if (!$bestand) {
     die("Geen bestand gevonden.");
 }
