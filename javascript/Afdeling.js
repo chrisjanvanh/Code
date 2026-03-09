@@ -1,7 +1,7 @@
 function afronden(naam, kolom, waarde) {
     if (!confirm(`Weet je zeker dat je deze taak van ${naam} wilt afronden?`)) return;
 
-    fetch("backend/afdeling/afronden.php", {
+    fetch("/backend/afdeling/afronden.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
@@ -17,7 +17,7 @@ function afronden(naam, kolom, waarde) {
 function verwijderEmail(id) {
     if (!confirm("Weet je zeker dat je dit e-mailadres wilt verwijderen?")) return;
 
-    fetch("backend/afdeling/afdeling_email_action.php", {
+    fetch("/backend/afdeling/afdeling_email_action.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
@@ -34,7 +34,7 @@ function voegEmailToe() {
     const email = prompt("Voer een e-mailadres in:");
     if (!email) return;
 
-    fetch("backend/afdeling/afdeling_email_action.php", {
+    fetch("/backend/afdeling/afdeling_email_action.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
