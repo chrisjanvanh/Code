@@ -47,7 +47,7 @@ $ok = $insert->execute([
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$email heeft een bestand geupload voor zichzelf"
+        "$email heeft een bestand geupload voor zichzelf",
         "Email"
     ]);
 
