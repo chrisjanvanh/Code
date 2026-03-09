@@ -47,7 +47,7 @@ $stmt->execute([$waarde, $naam]);
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        $gebruikerNaam . " heeft de $kolom afgerond voor $naam",
+        $gebruikerNaam . " heeft de taak $kolom naar $waarde afgerond voor $naam",
         "Afdelingen"
     ]);
 
