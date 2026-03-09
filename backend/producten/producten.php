@@ -13,6 +13,8 @@ $product  = $_POST['product'] ?? '';
 $contact  = $_POST['contact'] ?? '';
 $afdeling = $_POST['afdeling'] ?? '';
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 $ok = true;
 
 /* ---------------------------------------------------

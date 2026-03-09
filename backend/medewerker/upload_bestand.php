@@ -13,6 +13,8 @@ if (!isset($_POST['email']) || !isset($_FILES['upload'])) {
 $email = $_POST['email'];
 $bestand = $_FILES['upload'];
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 // Bestand uitlezen
 $naam = $bestand['name'];
 $type = $bestand['type'];

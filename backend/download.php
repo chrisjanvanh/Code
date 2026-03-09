@@ -7,6 +7,8 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 $stmt = $pdo->prepare("
     SELECT BestandNaam, BestandType, BestandData
     FROM MedewerkerBestanden

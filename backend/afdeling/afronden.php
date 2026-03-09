@@ -11,6 +11,8 @@ $naam   = $_POST['naam'];
 $kolom  = $_POST['kolom'];
 $waarde = $_POST['waarde'];
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 // Kolommen die nooit automatisch worden aangepast
 $exclude = ["Naam","Functie","Locatie","Leidinggevende","Bedrijf","Referentie","Email"];
 

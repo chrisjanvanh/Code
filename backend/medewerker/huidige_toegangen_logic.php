@@ -10,6 +10,8 @@ if (!isset($_SESSION['email'])) {
 $afdeling = "HR";
 $gebruikerEmail = $_SESSION['email'];
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 /* ---------------------------------------------------
    1. Controle: heeft gebruiker toegang tot deze afdeling?
 --------------------------------------------------- */

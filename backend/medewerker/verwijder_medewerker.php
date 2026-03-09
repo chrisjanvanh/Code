@@ -9,6 +9,8 @@ if (!isset($_GET['naam'])) {
 
 $naam = $_GET['naam'];
 
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 // 2. Check of medewerker bestaat
 $stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
 $stmt->execute([$naam]);
