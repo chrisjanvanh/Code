@@ -1,5 +1,5 @@
 <?php
-require_once "config.php";
+require_once "config2.php"; // bevat $pdo
 
 if (!isset($_POST['email']) || !isset($_FILES['file'])) {
     echo json_encode([
@@ -9,20 +9,19 @@ if (!isset($_POST['email']) || !isset($_FILES['file'])) {
     exit;
 }
 
-$email = $_POST['email'];
-$filename = $_POST['filename'] ?? $_FILES['file']['name'];
-$mimetype = $_POST['mimetype'] ?? $_FILES['file']['type'];
+$email     = $_POST['email'];
+$filename  = $_POST['filename'] ?? $_FILES['file']['name'];
+$mimetype  = $_POST['mimetype'] ?? $_FILES['file']['type'];
+$fileData  = file_get_contents($_FILES['file']['tmp_name']);
 
-// Lees bestand in
-$fileData = file_get_contents($_FILES['file']['tmp_name']);
+/* ---------------------------------------------------
+   1. Medewerker zoeken
+--------------------------------------------------- */
+$stmt = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Email = ?");
+$stmt->execute([$email]);
+$medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Zoek medewerker
-$stmt = $conn->prepare("SELECT Naam FROM Medewerker WHERE Email = ?");
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result->num_rows === 0) {
+if (!$medewerker) {
     echo json_encode([
         "success" => false,
         "message" => "Geen medewerker gevonden met dit e-mailadres."
@@ -30,18 +29,35 @@ if ($result->num_rows === 0) {
     exit;
 }
 
-$insert = $conn->prepare("
+/* ---------------------------------------------------
+   2. Bestand opslaan
+--------------------------------------------------- */
+$insert = $pdo->prepare("
     INSERT INTO MedewerkerBestanden (MedewerkerEmail, BestandNaam, BestandType, BestandData)
     VALUES (?, ?, ?, ?)
 ");
 
-$insert->bind_param("ssss", $email, $filename, $mimetype, $fileData);
-$insert->execute();
+$ok = $insert->execute([
+    $email,
+    $filename,
+    $mimetype,
+    $fileData
+]);
 
+if (!$ok) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Opslaan mislukt: " . implode(" | ", $insert->errorInfo())
+    ]);
+    exit;
+}
+
+/* ---------------------------------------------------
+   3. Succesmelding
+--------------------------------------------------- */
 echo json_encode([
     "success" => true,
     "message" => "Bestand succesvol opgeslagen in de database.",
     "email" => $email,
     "filename" => $filename
 ]);
-?>
