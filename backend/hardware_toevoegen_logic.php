@@ -79,6 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $aankoopdatum
     ]);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam heeft hardware met als serienummer $serienummer aangemaakt",
+        "Nieuwe Hardware"
+    ]);
+
     if ($ok) {
         $_SESSION['melding'] = "Hardware succesvol toegevoegd!";
     } else {

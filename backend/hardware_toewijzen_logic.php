@@ -81,6 +81,13 @@ if (isset($_POST['opslaan'])) {
 
                     $ok = $stmt->execute([$serienummer, $naam, $uitgiftedatum]);
 
+                        // Logboek
+                        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+                        $log->execute([
+                            "$gebruikerNaam heeft hardware met als serienummer $serienummer toegewezen aan $naam",
+                            "Toewijzen Hardware"
+                        ]);
+
                     if ($ok) {
                         $_SESSION['melding'] = "Hardware succesvol toegewezen!";
                         header("Location: ../HardwareToewijzen.php");
