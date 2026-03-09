@@ -84,7 +84,7 @@ if (isset($_POST['opslaan'])) {
                         // Logboek
                         $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
                         $log->execute([
-                            "$gebruikerNaam heeft hardware met als serienummer $serienummer toegewezen aan $naam",
+                            "$gebruikerNaam heeft de hardware met als serienummer $serienummer toegewezen aan $naam",
                             "Toewijzen Hardware"
                         ]);
 
@@ -113,11 +113,25 @@ if (isset($_POST['verwijder'])) {
     if ($type === "toegewezen") {
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
         $del->execute([$sn]);
+
+            // Logboek
+            $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+            $log->execute([
+                "$gebruikerNaam heeft de toegewezen hardware met als serienummer $serienummer verplaatst naar de voorraad",
+                "Toewijzen Hardware"
+            ]);
     }
 
     if ($type === "voorraad") {
         $del = $pdo->prepare("DELETE FROM Hardware WHERE Serienummer = ?");
         $del->execute([$sn]);
+
+            // Logboek
+            $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+            $log->execute([
+                "$gebruikerNaam heeft de hardware met als serienummer $serienummer verwijderd",
+                "Nieuwe Hardware"
+            ]);
     }
 
     header("Location: ../HardwareToewijzen.php");

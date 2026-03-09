@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft hardware met als serienummer $serienummer aangemaakt",
+        "$gebruikerNaam heeft de hardware met als serienummer $serienummer aangemaakt",
         "Nieuwe Hardware"
     ]);
 
