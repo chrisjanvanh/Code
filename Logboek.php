@@ -41,8 +41,8 @@ toonMenu($rechten, 'logboek');
         <input type="checkbox" id="Huidige Medewerker" name="Huidige Medewerker" value="Huidige Medewerker">
         <label for="Huidige Medewerker">Huidige Medewerker</label><br>
 
-        <input type="checkbox" id="Nieuwe Hardware" name="Nieuwe Hardware" value="Nieuwe Hardware">
-        <label for="Nieuwe Hardware">Hardware</label><br>
+        <input type="checkbox" id="Hardware" name="Hardware" value="Hardware">
+        <label for="Hardware">Hardware</label><br>
 
         <input type="checkbox" id="Toewijzen Hardware" name="Toewijzen Hardware" value="Toewijzen Hardware">
         <label for="Toewijzen Hardware">Toewijzen Hardware</label><br>

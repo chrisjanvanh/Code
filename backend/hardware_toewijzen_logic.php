@@ -130,7 +130,7 @@ if (isset($_POST['verwijder'])) {
             $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
             $log->execute([
                 "$gebruikerNaam heeft de hardware met als serienummer $sn verwijderd",
-                "Nieuwe Hardware"
+                "Hardware"
             ]);
     }
 
