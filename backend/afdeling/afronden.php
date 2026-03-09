@@ -44,6 +44,13 @@ if (!$medewerker) {
 $stmt = $pdo->prepare("UPDATE Medewerker SET `$kolom` = ? WHERE Naam = ?");
 $stmt->execute([$waarde, $naam]);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        $gebruikerNaam . " heeft de $kolom afgerond voor $naam",
+        "Afdelingen"
+    ]);
+
 $productenNaarNul = [];
 
 /* ---------------------------------------------------
