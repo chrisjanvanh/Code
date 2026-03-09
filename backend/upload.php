@@ -14,8 +14,6 @@ $filename  = $_POST['filename'] ?? $_FILES['file']['name'];
 $mimetype  = $_POST['mimetype'] ?? $_FILES['file']['type'];
 $fileData  = file_get_contents($_FILES['file']['tmp_name']);
 
-$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
-
 /* ---------------------------------------------------
    1. Medewerker zoeken
 --------------------------------------------------- */
