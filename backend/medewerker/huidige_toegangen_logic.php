@@ -10,8 +10,6 @@ if (!isset($_SESSION['email'])) {
 $afdeling = "HR";
 $gebruikerEmail = $_SESSION['email'];
 
-$medewerkernaam = $_POST['naam'] ?? 'Onbekend'
-
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
@@ -167,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft een bestand verwijderd voor $medewerkernaam",
+        "$gebruikerNaam heeft een bestand verwijderd voor $email",
         "Huidige Medewerker"
     ]);
 
