@@ -10,6 +10,8 @@ if (!isset($_SESSION['email'])) {
 $afdeling = "HR";
 $gebruikerEmail = $_SESSION['email'];
 
+$medewerkernaam = $_POST['naam'] ?? 'Onbekend'
+
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
@@ -162,7 +164,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     $stmt = $pdo->prepare("DELETE FROM MedewerkerBestanden WHERE ID = ?");
     $stmt->execute([$_POST['bestand_id']]);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam heeft een bestand verwijderd voor $medewerkernaam",
+        "Huidige Medewerker"
+    ]);
+
     $_SESSION['melding'] = "Bestand succesvol verwijderd!";
     header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
+
     exit;
 }

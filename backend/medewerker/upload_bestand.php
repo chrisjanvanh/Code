@@ -14,6 +14,8 @@ if (!isset($_POST['email']) || !isset($_FILES['upload'])) {
 $email = $_POST['email'];
 $bestand = $_FILES['upload'];
 
+$medewerkernaam = $_POST['naam'] ?? 'Onbekend'
+
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 // Bestand uitlezen
@@ -33,7 +35,7 @@ try {
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft een bestand geupload voor $email",
+        "$gebruikerNaam heeft een bestand geupload voor $medewerkernaam",
         "Huidige Medewerker"
     ]);
 
