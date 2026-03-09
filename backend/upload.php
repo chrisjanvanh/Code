@@ -39,6 +39,13 @@ $insert = $pdo->prepare("
     VALUES (?, ?, ?, ?)
 ");
 
+// Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam heeft een bestand geupload voor $email",
+        "Huidige Medewerker"
+    ]);
+
 $ok = $insert->execute([
     $email,
     $filename,
@@ -63,10 +70,3 @@ echo json_encode([
     "email" => $email,
     "filename" => $filename
 ]);
-
-// Logboek
-    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-    $log->execute([
-        "$gebruikerNaam heeft een bestand geupload voor $email",
-        "Huidige Medewerker"
-    ]);
