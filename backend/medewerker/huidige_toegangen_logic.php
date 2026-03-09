@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft een bestand verwijderd voor " . $urlencode($_POST['naam']),
+        "$gebruikerNaam heeft een bestand verwijderd voor " . urlencode($_POST['naam']),
         "Huidige Medewerker"
     ]);
 
