@@ -149,6 +149,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
         $_POST['naam']
     ]);
 
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam de gegevens van $_POST['naam'] aangepast",
+        "Huidige Medewerker"
+    ]);
+
     $_SESSION['melding'] = "Gegevens succesvol opgeslagen!";
     header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
     exit;
