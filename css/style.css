@@ -110,10 +110,15 @@ header a.logo-btn {
    Responsive layout
 ------------------------------ */
 
-@media (max-width: 850px) {
+@media (max-width: 950px) {
     .content {
         margin-left: 20%;
         margin-right: 20%;
+    }
+
+    header a {
+        margin-left: 5px;
+        padding: 5px;
     }
 }
 
