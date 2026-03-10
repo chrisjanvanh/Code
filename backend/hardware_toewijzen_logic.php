@@ -111,6 +111,13 @@ if (isset($_POST['verwijder'])) {
     $type = $_POST['type'];
 
     if ($type === "toegewezen") {
+        $oph = $pdo->prepare("SELECT Naam, Uitgiftedatum FROM Gebruikname WHERE Serienummer = ?");
+        $oph->execute([$sn]);
+        $opgehaald = $oph->fetch(PDO::FETCH_ASSOC);
+
+        $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum, Einddatum) VALUES (?, ?, ?, ?)");
+        $ges->execute([$sn, $opgehaald['Naam'], $opgehaald['Uitgiftedatum']]);
+
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
         $del->execute([$sn]);
 
