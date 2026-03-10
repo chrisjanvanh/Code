@@ -185,8 +185,9 @@ header a.logo-btn {
 
     header img {
         all: unset;
+        position: absolute;
         height: 8vh;
-        margin-top: 2vh;
+        top: 2vh;
         display: flex;
         justify-content: center;
         align-items: center;
