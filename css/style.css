@@ -37,8 +37,8 @@ header a {
     margin-left: 20px;
     font-size: 18px;
     padding: 5px;
-    /* background-color: #167ff7;
     border-radius: 5px;
+    /* background-color: #167ff7;
     border: 1px solid #0c66cc;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
 }
@@ -48,8 +48,8 @@ header a:hover {
 }
 
 header a.current {
-    background-color: #509cf2;
-    border: 2px solid #000;
+    border-bottom: 1px solid red;
+
 }
 
 /* ------------------------------
