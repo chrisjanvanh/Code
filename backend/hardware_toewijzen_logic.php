@@ -115,7 +115,7 @@ if (isset($_POST['verwijder'])) {
         $oph->execute([$sn]);
         $opgehaald = $oph->fetch(PDO::FETCH_ASSOC);
 
-        $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum, Einddatum) VALUES (?, ?, ?, ?)");
+        $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum) VALUES (?, ?, ?)");
         $ges->execute([$sn, $opgehaald['Naam'], $opgehaald['Uitgiftedatum']]);
 
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
