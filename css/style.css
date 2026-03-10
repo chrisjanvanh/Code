@@ -30,7 +30,7 @@ header img {
     height: 6vh;
     left: 2vh;
     position: absolute;
-    transition: transform 1.5s ease;
+    transition: left 1.5s ease, height 1.5s ease;
 }
 
 header img:hover {
