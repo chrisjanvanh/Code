@@ -182,9 +182,11 @@ header a.logo-btn {
     }
 
     header img {
+        all: unset;
         height: 8vh;
-        margin-left: 5px;
-        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .menu-button {
