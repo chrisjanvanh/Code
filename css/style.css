@@ -28,6 +28,7 @@ header {
 
 header img {
     height: 80%;
+    left: 0;
     margin-left: 25px;
     position: absolute;
     transition: transform 1.5s ease;
