@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "config2.php";
 
 if (!isset($_GET['id'])) {
@@ -10,7 +11,7 @@ $id = $_GET['id'];
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 $stmt = $pdo->prepare("
-    SELECT BestandNaam, BestandType, BestandData
+    SELECT MedewerkerEmail, BestandNaam, BestandType, BestandData
     FROM MedewerkerBestanden
     WHERE ID = ?
 ");
@@ -20,7 +21,7 @@ $bestand = $stmt->fetch(PDO::FETCH_ASSOC);
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        $gebruikerNaam . " heeft het bestand van " . urlencode($_POST['naam']) . " genaamd " . $bestand['BestandNaam'] . " gedownload",
+        $gebruikerNaam . " heeft het bestand van " . $bestand['MedewerkerEmail'] . " genaamd " . $bestand['BestandNaam'] . " gedownload",
         "Huidige Medewerker"
     ]);
 
