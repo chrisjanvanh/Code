@@ -30,12 +30,11 @@ header img {
     height: 6vh;
     left: 2vh;
     position: absolute;
-    transition: left 1s, height 1s;
 }
 
 header img:hover {
-    height: 7vh;
-    left: 1.5vh;
+    height: 6.25vh;
+    left: 1.875vh;
 }
 
 header a {
