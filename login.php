@@ -47,6 +47,9 @@ if (isset($_SESSION['email'])) {
             border-radius:6px;
             cursor:pointer;
         }
+        .g_id_onload {
+            margin-top:10px;
+        }
     </style>
 </head>
 
