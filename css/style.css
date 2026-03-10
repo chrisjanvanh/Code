@@ -34,10 +34,11 @@ header img {
 header a {
     color: white;
     text-decoration: none;
-    margin-left: 20px;
+    margin-left: 8px;
     font-size: 18px;
     padding: 5px;
     border-radius: 5px;
+    border-collapse: collapse;
     /* background-color: #167ff7;
     border: 1px solid #0c66cc;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
@@ -48,7 +49,7 @@ header a:hover {
 }
 
 header a.current {
-    border-bottom: 1px solid red;
+    border-bottom: 2px solid red;
 
 }
 
