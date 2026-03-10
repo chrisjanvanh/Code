@@ -124,7 +124,7 @@ if (isset($_POST['verwijder'])) {
             // Logboek
             $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
             $log->execute([
-                "$gebruikerNaam heeft de toegewezen hardware met als serienummer $sn van $opgehaald['Naam'] verplaatst naar de voorraad",
+                "$gebruikerNaam heeft de toegewezen hardware met als serienummer $sn van " . $opgehaald['Naam'] . " verplaatst naar de voorraad",
                 "Toewijzen Hardware"
             ]);
     }
