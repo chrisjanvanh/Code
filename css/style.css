@@ -41,9 +41,9 @@ header img:hover {
 header a {
     color: white;
     text-decoration: none;
-    margin-left: 12px;
+    margin-left: 8px;
     font-size: 18px;
-    padding: 5px;
+    padding: 8px;
     border-radius: 5px;
     /* display: flex; */
     /* background-color: #167ff7;
