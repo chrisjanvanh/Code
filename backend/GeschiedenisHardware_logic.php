@@ -29,7 +29,7 @@ if ($stmt->rowCount() === 0) {
 $medewerkers = $pdo->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")
                    ->fetchAll(PDO::FETCH_ASSOC);
 
-$hardware = $pdo->query("SELECT Serienummer FROM GeschiedenisHardware")
+$hardware = $pdo->query("SELECT Serienummer FROM GeschiedenisGebruikname")
                 ->fetchAll(PDO::FETCH_ASSOC);
 
 $melding = "";
