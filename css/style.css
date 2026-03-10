@@ -172,12 +172,11 @@ header a.logo-btn {
         margin-top: 10px;
         padding: 5px;
         font-size: 14px;
-        display: flex;
-        align-items: center;
     }
 
     header.open .logout-button {
-        display: block;
+        display: flex;
+        align-items: center;
     }
 
     header.open a {
