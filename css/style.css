@@ -27,6 +27,7 @@ header {
 }
 
 header a.logo-btn {
+    all: unset;
     height: 6vh;
     left: 2vh;
     position: absolute;
