@@ -167,6 +167,10 @@ header a.logo-btn {
         font-size: 20px;
     }
 
+    header .logout-container {
+        margin-right: 10px;
+    }
+
     header .logout-button {
         display: none;
         margin-top: 10px;
