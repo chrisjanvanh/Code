@@ -165,12 +165,13 @@ header a.logo-btn {
 
     header .logout-container {
         right: 10px;
-        padding: 5px;
     }
 
     header .logout-button {
         display: none;
         margin-top: 10px;
+        padding: 5px;
+        font-size: 14px;
     }
 
     header.open .logout-button {
