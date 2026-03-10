@@ -32,8 +32,24 @@ foreach ($columns as $col) {
     $kolom = $col['Field'];
     if (in_array($kolom, $exclude)) continue;
 
-    $update = $pdo->prepare("UPDATE Medewerker SET `$kolom` = 2 WHERE Naam = ?");
-    $update->execute([$naam]);
+    // 1. Huidige waarde ophalen
+    $stmt = $pdo->prepare("SELECT `$kolom` FROM Medewerker WHERE Naam = ?");
+    $stmt->execute([$naam]);
+    $huidig = $stmt->fetchColumn();
+
+    // 2. Nieuwe waarde bepalen
+    if ($huidig == 1) {
+        $nieuw = 2;
+    } elseif ($huidig == 0 || $huidig == 3) {
+        $nieuw = null;
+    } else {
+        // huidige waarde is 2 → niets veranderen
+        continue;
+    }
+
+    // 3. Update uitvoeren
+    $update = $pdo->prepare("UPDATE Medewerker SET `$kolom` = ? WHERE Naam = ?");
+    $update->execute([$nieuw, $naam]);
 }
 
 // 6. Redirect terug naar medewerkerspagina
