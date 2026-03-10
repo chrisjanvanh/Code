@@ -119,6 +119,7 @@ header a.logo-btn {
     header a {
         margin-left: 5px;
         padding: 5px;
+        font-size: 15px;
     }
 }
 
