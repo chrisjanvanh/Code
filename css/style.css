@@ -26,14 +26,15 @@ header {
     justify-content: center;
 }
 
-header img {
+header a.logo-btn {
     height: 6vh;
     left: 2vh;
     position: absolute;
     transition: left 0.25s, height 0.25s;
+    cursor: pointer;
 }
 
-header img:hover {
+header a.logo-btn {
     height: 6.25vh;
     left: 1.875vh;
 }
@@ -86,14 +87,14 @@ header .logout-button:hover {
     background: darkred;
 }
 
-header a.logo-btn {
+/* header a.logo-btn {
     all: unset;
     height: 80%;
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: transform 1.5s ease;
-}
+} */
 
 /* ------------------------------
    Content container
@@ -186,7 +187,7 @@ header a.logo-btn {
         display: block;
     }
 
-    header img {
+    header a.logo-btn {
         all: unset;
         height: 8vh;
         margin-top: 2vh;
@@ -202,7 +203,7 @@ header a.logo-btn {
         top: 27px;
         left: 20px;
         width: 30px;
-        height: 30px;
+        height: auto;
         cursor: pointer;
     }
 }
