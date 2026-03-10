@@ -45,10 +45,6 @@ header a {
     font-size: 18px;
     padding: 8px;
     border-radius: 5px;
-    /* display: flex; */
-    /* background-color: #167ff7;
-    border: 1px solid #0c66cc;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
 header a:hover {
@@ -76,7 +72,7 @@ header .logout-container {
 
 header .logout-button {
     all: unset;
-    padding: 5px;
+    padding: 8px;
     background: red;
     color: white;
     border-radius: 5px;
@@ -84,7 +80,6 @@ header .logout-button {
     cursor: pointer;
     width: auto;
     font-size: 18px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 header .logout-button:hover {
