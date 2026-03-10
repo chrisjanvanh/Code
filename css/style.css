@@ -26,18 +26,11 @@ header {
     justify-content: center;
 }
 
-header a.logo-btn {
-    all: unset;
+header img {
     height: 6vh;
     left: 2vh;
     position: absolute;
     transition: left 0.25s, height 0.25s;
-    cursor: pointer;
-}
-
-header a.logo-btn {
-    height: 6.25vh;
-    left: 1.875vh;
 }
 
 header a {
@@ -88,14 +81,14 @@ header .logout-button:hover {
     background: darkred;
 }
 
-/* header a.logo-btn {
+header a.logo-btn {
     all: unset;
     height: 80%;
     display: flex;
     align-items: center;
     cursor: pointer;
     transition: transform 1.5s ease;
-} */
+}
 
 /* ------------------------------
    Content container
@@ -188,7 +181,7 @@ header .logout-button:hover {
         display: block;
     }
 
-    header a.logo-btn {
+    header img {
         all: unset;
         height: 8vh;
         margin-top: 2vh;
@@ -212,5 +205,10 @@ header .logout-button:hover {
 @media (min-width: 851px) {
     .menu-button {
         display: none;
+    }
+
+    header img:hover {
+        height: 6.25vh;
+        left: 1.875vh;
     }
 }
