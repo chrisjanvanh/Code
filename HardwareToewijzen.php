@@ -62,10 +62,7 @@ toonMenu($rechten, 'hardware');
         <a href="GeschiedenisHardware.php" class="button">Geschiedenis</a>
     </form>
 
-    <!-- <button type="button" class="button" onclick="naamzoeken()">Zoeken</button>
-    <a href="HardwareToevoegen.php" class="button">Hardware Toevoegen</a>
-    <a href="GeschiedenisHardware.php" class="button">Geschiedenis</a> -->
-
+    <br><br>
     <table id="Toegewezen">
         <tr>
             <th>Naam</th>
