@@ -57,11 +57,14 @@ toonMenu($rechten, 'hardware');
         <input type="date" id="uitgiftedatum" name="uitgiftedatum">
 
         <button class="button" name="opslaan">Opslaan</button>
+        <button type="button" class="button" onclick="naamzoeken()">Zoeken</button>
+        <a href="HardwareToevoegen.php" class="button">Hardware Toevoegen</a>
+        <a href="GeschiedenisHardware.php" class="button">Geschiedenis</a>
     </form>
 
-    <button type="button" class="button" onclick="naamzoeken()">Zoek</button>
+    <!-- <button type="button" class="button" onclick="naamzoeken()">Zoeken</button>
     <a href="HardwareToevoegen.php" class="button">Hardware Toevoegen</a>
-    <a href="GeschiedenisHardware.php" class="button">Geschiedenis</a>
+    <a href="GeschiedenisHardware.php" class="button">Geschiedenis</a> -->
 
     <table id="Toegewezen">
         <tr>
