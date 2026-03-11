@@ -154,7 +154,7 @@ header a.logo-btn {
     }
 
     header.hide {
-        transform: translateY(12vh);
+        transform: translateY(-12vh);
     }
 
     .content {
@@ -162,7 +162,7 @@ header a.logo-btn {
     }
 
     .content.hide {
-        transform: translateY(12vh);
+        transform: translateY(-12vh);
     }
 
     header.open {
