@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(data => {
                     if (data === "OK") {
                         this.style.backgroundColor = "green";
-                        setTimeout(() => this.style.backgroundColor = "", 500);
+                        setTimeout(() => this.style.backgroundColor = "", 1000);
                     } else {
                         alert("Opslaan mislukt");
                     }
