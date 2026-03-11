@@ -110,7 +110,7 @@ header a.logo-btn {
 }
 
 form input[type=text], input[list], input[type=email] {
-    transition: background-color 1.0s ease-out;
+    transition: background-color 0.5s ease-out;
 }
 
 form input[type=text]:focus, input[list]:focus, input[type=email]:focus {
