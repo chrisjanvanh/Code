@@ -63,6 +63,7 @@ toonMenu($rechten, 'hardware');
     </form>
 
     <br><br>
+    <h3>Toegewezen Hardware</h3>
     <table id="Toegewezen">
         <tr>
             <th>Naam</th>
