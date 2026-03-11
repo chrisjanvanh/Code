@@ -76,7 +76,7 @@ header .logout-button {
     cursor: pointer;
     width: auto;
     font-size: 18px;
-    transition: background-color 0.5s ease-out;
+    transition: background-color 1.0s ease-out;
 }
 
 header .logout-button:hover {
