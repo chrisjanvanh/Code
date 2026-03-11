@@ -151,6 +151,7 @@ header a.logo-btn {
         transition: transform 1.5s ease;
         overflow: hidden;
         width: 100%;
+        z-index: 9999;
     }
 
     header.hide {
