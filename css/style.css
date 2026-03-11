@@ -161,7 +161,7 @@ header a.logo-btn {
         transition: transform 1.5s ease;
     }
 
-    .content.hide {
+    .content#hide {
         transform: translateY(-12vh);
     }
 
