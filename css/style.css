@@ -40,11 +40,12 @@ header a {
     font-size: 18px;
     padding: 8px;
     border-radius: 5px;
-    transition: background-color 0.5s;
+    transition: all 1.0s ease-out;
 }
 
 header a:hover {
     background-color: #509cf2;
+    color: black;
 }
 
 header a.current {
@@ -75,7 +76,7 @@ header .logout-button {
     cursor: pointer;
     width: auto;
     font-size: 18px;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s ease-out;
 }
 
 header .logout-button:hover {
