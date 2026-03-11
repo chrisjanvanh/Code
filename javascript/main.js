@@ -5,11 +5,10 @@ window.addEventListener("scroll", function () {
 
     if (st > lastScrollTop) {
         document.querySelector("header").classList.add("hide");   // scroll omlaag → verbergen
-        document.getElementById("hide").classList.add("hide");
+        document.querySelector(".content").id = "hide";
     } else {
         document.querySelector("header").classList.remove("hide"); // scroll omhoog → tonen
-        document.getElementById("hide").classList.remove("hide");
-
+        document.querySelector(".content").id = "";
     }
 
     lastScrollTop = st <= 0 ? 0 : st;
