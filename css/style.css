@@ -109,11 +109,11 @@ header a.logo-btn {
     box-sizing: border-box;
 }
 
-form input[type=text], input[list], input[type=email] {
+form input[type=text], input[list], input[type=email], input[type=date] {
     transition: background-color 0.5s ease-out;
 }
 
-form input[type=text]:focus, input[list]:focus, input[type=email]:focus {
+form input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=date]:focus {
     background-color: #f0f0f0;
 }
 
