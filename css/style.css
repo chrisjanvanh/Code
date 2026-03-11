@@ -30,7 +30,7 @@ header img {
     height: 6vh;
     left: 2vh;
     position: absolute;
-    transition: left 0.25s, height 0.25s;
+    transition: all 0.25s;
 }
 
 header a {
