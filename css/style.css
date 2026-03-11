@@ -163,7 +163,7 @@ header a.logo-btn {
     }
 
     .content#hide {
-        transform: translateY(-12vh);
+        transform: translateY(-10vh);
     }
 
     header.open {
