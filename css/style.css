@@ -154,7 +154,15 @@ header a.logo-btn {
     }
 
     header.hide {
-        transform: translateY(-110%);
+        transform: translateY(12vh);
+    }
+
+    .content {
+        transition: transform 1.5s ease;
+    }
+
+    .content.hide {
+        transform: translateY(12vh);
     }
 
     header.open {
