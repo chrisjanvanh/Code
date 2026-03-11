@@ -40,6 +40,7 @@ header a {
     font-size: 18px;
     padding: 8px;
     border-radius: 5px;
+    transition: background-color 0.5s;
 }
 
 header a:hover {
@@ -74,6 +75,7 @@ header .logout-button {
     cursor: pointer;
     width: auto;
     font-size: 18px;
+    transition: background-color 0.5s;
 }
 
 header .logout-button:hover {
