@@ -78,6 +78,7 @@ header .logout-button {
 
 header .logout-button:hover {
     background: #509cf2;
+    color: #c72c2c;
 }
 
 header a.logo-btn {
