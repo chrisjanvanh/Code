@@ -35,7 +35,7 @@ $hardware = $pdo->query("SELECT DISTINCT Serienummer FROM GeschiedenisGebruiknam
 $melding = "";
 
 /* ---------------------------------------------------
-   5. Niet-toegewezen hardware ophalen
+   3. 
 --------------------------------------------------- */
 $toegewezen = $pdo->query("
     SELECT Serienummer, Naam, Uitgiftedatum, Einddatum
