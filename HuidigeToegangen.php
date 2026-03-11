@@ -49,7 +49,7 @@ toonMenu($rechten, 'medewerkers');
     </form>
 
     <?php if ($medewerker): ?>
-
+        <br><br>
         <form method="POST">
             Functie:<br>
             <input type="text" name="functie" value="<?= $medewerker['Functie'] ?>"><br>
