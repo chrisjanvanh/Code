@@ -41,6 +41,8 @@ foreach ($columns as $col) {
     $update->execute([$naam]);
 }
 
+$melding = "Succes het opzeggen van alle producten aangevraagd voor $naam"
+
 // Redirect
 header("Location: ../../HuidigeToegangen.php?verwijderd=" . urlencode($naam));
 exit;

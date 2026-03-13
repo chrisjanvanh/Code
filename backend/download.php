@@ -25,6 +25,7 @@ $bestand = $stmt->fetch(PDO::FETCH_ASSOC);
         "Huidige Medewerker"
     ]);
 
+    $melding = "Bestand succesvol gedownload"
 
 if (!$bestand) {
     die("Geen bestand gevonden.");

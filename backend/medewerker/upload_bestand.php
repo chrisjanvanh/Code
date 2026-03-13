@@ -37,6 +37,8 @@ try {
         "Huidige Medewerker"
     ]);
 
+    $melding = "Bestand succesvol opgeslagen"
+
 } catch (PDOException $e) {
     die("Database fout: " . $e->getMessage());
 }
