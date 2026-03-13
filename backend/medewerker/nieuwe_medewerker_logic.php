@@ -140,6 +140,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             array_values($values)
         );
 
+        $melding = "Medewerker succesvol aangemeld.";
+
         $stmt->execute($params);
 
         /* -----------------------------------------------------------
