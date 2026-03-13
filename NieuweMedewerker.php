@@ -36,19 +36,19 @@ toonMenu($rechten, 'medewerkers');
         <input type="text" id="naam" name="naam" required>
 
         Functie:
-        <input type="text" id="functie" name="functie" required>
+        <input type="text" id="functie" name="functie">
 
         Locatie:
         <input type="text" id="locatie" name="locatie" required>
 
         Leidinggevende:
-        <input type="text" id="leidinggevende" name="leidinggevende" required>
+        <input type="text" id="leidinggevende" name="leidinggevende">
 
         Bedrijf:
         <input type="text" id="bedrijf" name="bedrijf" required>
 
         Email:
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email">
         <br>
 
         <h2>Komt de medewerker contractueel in dienst?</h2>
