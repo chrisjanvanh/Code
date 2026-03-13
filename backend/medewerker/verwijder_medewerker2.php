@@ -44,5 +44,5 @@ foreach ($columns as $col) {
 $melding = "Het aanvragen voor het verwijderen van de producten van $naam is geslaagd";
 
 // Redirect
-header("Location: ../../HuidigeToegangen.php?verwijderd=" . urlencode($naam));
+header("Location: ../../HuidigeToegangen.php?naam=" . urlencode($naam));
 exit;
