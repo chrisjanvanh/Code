@@ -102,6 +102,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
     $stmt->execute([$veld]);
     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $melding = "Toegang succesvol aangevraagd";
+
     $emails = [];
     if (!empty($contact['Contactpersoon'])) {
         $emails[] = $contact['Contactpersoon'];
