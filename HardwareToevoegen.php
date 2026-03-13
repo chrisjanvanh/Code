@@ -37,16 +37,16 @@ toonMenu($rechten, 'hardware');
         <input type="text" name="serienummer" required>
 
         Merk:<br>
-        <input type="text" name="merk" required>
+        <input type="text" name="merk">
 
         Model:<br>
-        <input type="text" name="model" required>
+        <input type="text" name="model">
 
         Prijs:<br>
-        <input type="text" name="prijs" required>
+        <input type="text" name="prijs">
 
         Aankoopdatum:<br>
-        <input type="date" name="aankoopdatum" required>
+        <input type="date" name="aankoopdatum">
 
         <input type="submit" value="Opslaan">
     </form>
