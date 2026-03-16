@@ -57,44 +57,6 @@ toonMenu($rechten, 'producten');
         </datalist>
 
         <div id="producten-container"></div>
-
-    <!-- <table>
-        <tr>
-            <th>Product</th>
-            <th>Contactpersoon</th>
-            <th>Afdeling</th>
-            <th>Product verwijderen</th>
-        </tr>
-
-        <?php foreach ($producten as $row): ?>
-            <tr>
-                <td><?= htmlspecialchars($row['Product']) ?></td>
-
-                <td>
-                    <input type="text"
-                           id="contact_<?= $row['ID'] ?>"
-                           value="<?= htmlspecialchars($row['Contactpersoon']) ?>">
-                </td>
-
-                <td>
-                    <input type="text"
-                           id="afdeling_<?= $row['ID'] ?>"
-                           value="<?= htmlspecialchars($row['Afdeling']) ?>">
-                </td>
-
-                <td>
-                    <button onclick="VerwijderProduct(<?= $row['ID'] ?>)"
-                            class="button">Verwijder</button>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-
-        <tr>
-            <td colspan="4">
-                <button type="button" class="Toevoegen">Toevoegen product</button>
-            </td>
-        </tr>
-    </table> -->
 </div>
 </body>
 </html>

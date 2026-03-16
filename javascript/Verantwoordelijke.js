@@ -41,12 +41,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // --- ENTER OPSLAAN ---
-    document.querySelectorAll("input[id^='contact_'], input[id^='afdeling_']").forEach(input => {
-        input.addEventListener("keydown", function(e) {
+    document.addEventListener("keydown", function(e) {
+        const target = e.target;
+
+        // Alleen inputs die beginnen met contact_ of afdeling_
+        if (target.id.startsWith("contact_") || target.id.startsWith("afdeling_")) {
+
             if (e.key === "Enter") {
                 e.preventDefault();
 
-                const parts = this.id.split("_");
+                const parts = target.id.split("_");
                 const id = parts[1];
 
                 const contact = document.getElementById("contact_" + id).value;
@@ -60,14 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(res => res.text())
                 .then(data => {
                     if (data === "OK") {
-                        this.style.backgroundColor = "green";
-                        setTimeout(() => this.style.backgroundColor = "", 1000);
+                        target.style.backgroundColor = "green";
+                        setTimeout(() => target.style.backgroundColor = "", 1000);
                     } else {
                         alert("Opslaan mislukt");
                     }
                 });
             }
-        });
+        }
     });
 
 });
