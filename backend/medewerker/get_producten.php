@@ -7,13 +7,13 @@ $stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY ID
 $stmt->execute([$bedrijf]);
 $producten = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
+echo '<h2>De nieuwe medewerker heeft het volgende nodig:</h2>
+      <h3>Software & Hardware</h3>';
+
 if (!$producten) {
     echo "<p>Geen producten voor dit bedrijf.</p>";
     exit;
 }
-
-    echo '<h2>De nieuwe medewerker heeft het volgende nodig:</h2>
-          <h3>Software & Hardware</h3>';
 
 foreach ($producten as $p) {
     echo '<input type="checkbox" id="'.htmlspecialchars($p).'" name="'.htmlspecialchars($p).'">';
