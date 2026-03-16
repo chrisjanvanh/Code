@@ -17,9 +17,9 @@ function VerwijderProduct(id) {
 document.addEventListener("DOMContentLoaded", () => {
 
     // --- PRODUCT TOEVOEGEN ---
-    const btn = document.querySelector(".Toevoegen");
-    if (btn) {
-        btn.addEventListener("click", () => {
+    document.addEventListener("click", function(e) {
+        if (e.target.classList.contains("Toevoegen")) {
+
             const product = prompt("Productnaam:");
             if (!product) return;
 
@@ -30,15 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
             fetch("/backend/producten/producten.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: `action=add&product=${encodeURIComponent(product)}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
+                body: `action=add&product=${encodeURIComponent(product)}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}&bedrijf=${encodeURIComponent(bedrijf)}`
             })
             .then(res => res.text())
             .then(data => {
-                if (data === "OK") laadProducten();
-                else alert("Toevoegen mislukt");
+                if (data === "OK") {
+                    laadProducten(); // direct verversen zonder reload
+                } else {
+                    alert("Toevoegen mislukt");
+                }
             });
-        });
-    }
+        }
+    });
 
 
     // --- ENTER OPSLAAN ---
