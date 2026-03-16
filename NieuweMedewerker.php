@@ -63,9 +63,6 @@ toonMenu($rechten, 'medewerkers');
         <input type="radio" id="nee" name="radiogroep" value="Nee" required>
         <label for="nee">Nee</label><br><br>
 
-        <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
-        <h3>Software & Hardware</h3>
-
         <div id="producten-container">
             <!-- Wordt gevuld via JavaScript -->
         </div>

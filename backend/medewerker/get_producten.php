@@ -12,6 +12,9 @@ if (!$producten) {
     exit;
 }
 
+    echo '<h2>De nieuwe medewerker heeft het volgende nodig:</h2>
+        <h3>Software & Hardware</h3>'
+
 foreach ($producten as $p) {
     echo '<input type="checkbox" id="'.htmlspecialchars($p).'" name="'.htmlspecialchars($p).'">';
     echo '<label for="'.htmlspecialchars($p).'">'.htmlspecialchars($p).'</label><br>';
