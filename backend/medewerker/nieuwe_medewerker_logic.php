@@ -41,6 +41,13 @@ $exclude = [
 $melding = "";
 
 /* -----------------------------------------------------------
+   Bedrijven ophalen voor dropdown
+----------------------------------------------------------- */
+
+$stmtBedrijven = $pdo->query("SELECT Bedrijf FROM Bedrijven ORDER BY Bedrijf ASC");
+$bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
+
+/* -----------------------------------------------------------
    3. POST verwerking
 ----------------------------------------------------------- */
 

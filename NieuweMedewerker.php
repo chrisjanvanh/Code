@@ -45,7 +45,13 @@ toonMenu($rechten, 'medewerkers');
         <input type="text" id="leidinggevende" name="leidinggevende">
 
         Bedrijf:
-        <input type="text" id="bedrijf" name="bedrijf" required>
+        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization">
+
+        <datalist id="bedrijven">
+            <?php foreach ($bedrijven as $b): ?>
+                <option value="<?= htmlspecialchars($b) ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
 
         Email:
         <input type="email" id="email" name="email">
