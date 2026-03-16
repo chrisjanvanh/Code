@@ -45,7 +45,7 @@ toonMenu($rechten, 'medewerkers');
         <input type="text" id="leidinggevende" name="leidinggevende">
 
         Bedrijf:
-        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization" oninput="laadProducten()">
+        <select list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
 
         <datalist id="bedrijven">
             <?php foreach ($bedrijven as $b): ?>
@@ -63,9 +63,7 @@ toonMenu($rechten, 'medewerkers');
         <input type="radio" id="nee" name="radiogroep" value="Nee" required>
         <label for="nee">Nee</label><br><br>
 
-        <div id="producten-container">
-            <!-- Wordt gevuld via JavaScript -->
-        </div>
+        <div id="producten-container"></div>
 
         <br><br>
 
