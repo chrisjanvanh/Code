@@ -12,6 +12,7 @@ $id       = intval($_POST['id'] ?? 0);
 $product  = $_POST['product'] ?? '';
 $contact  = $_POST['contact'] ?? '';
 $afdeling = $_POST['afdeling'] ?? '';
+$bedrijf = $_POST['bedrijf'] ?? '';
 
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
@@ -28,8 +29,8 @@ if ($action === "add") {
     }
 
     // 1. Product toevoegen
-    $stmt = $pdo->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling) VALUES (?, ?, ?)");
-    if (!$stmt->execute([$product, $contact, $afdeling])) $ok = false;
+    $stmt = $pdo->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling, bedrijf) VALUES (?, ?, ?, ?)");
+    if (!$stmt->execute([$product, $contact, $afdeling, $bedrijf])) $ok = false;
 
     // 2. Kolom toevoegen aan Medewerker
     try {

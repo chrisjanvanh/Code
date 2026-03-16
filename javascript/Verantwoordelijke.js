@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const contact = prompt("Contactpersoon:");
             const afdeling = prompt("Afdeling:");
+            const bedrijf = document.getElementById("bedrijf").value;
 
             fetch("/backend/producten/producten.php", {
                 method: "POST",
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(res => res.text())
             .then(data => {
-                if (data === "OK") location.reload();
+                if (data === "OK") laadProducten();
                 else alert("Toevoegen mislukt");
             });
         });
@@ -59,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch("/backend/producten/producten.php", {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                    body: `action=update&id=${id}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}`
+                    body: `action=update&id=${id}&contact=${encodeURIComponent(contact)}&afdeling=${encodeURIComponent(afdeling)}&bedrijf=${encodeURIComponent(bedrijf)}`
                 })
                 .then(res => res.text())
                 .then(data => {
