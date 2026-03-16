@@ -45,7 +45,7 @@ toonMenu($rechten, 'medewerkers');
         <input type="text" id="leidinggevende" name="leidinggevende">
 
         Bedrijf:
-        <select list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
+        <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
 
         <datalist id="bedrijven">
             <?php foreach ($bedrijven as $b): ?>
