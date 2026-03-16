@@ -18,6 +18,11 @@ if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
     exit;
 }
+
+// Bedrijven ophalen
+$stmtBedrijven = $pdo->query("SELECT DISTINCT Bedrijf FROM Product WHERE Bedrijf IS NOT NULL ORDER BY Bedrijf ASC");
+$bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +35,7 @@ if ($stmt->rowCount() === 0) {
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/Verantwoordelijke.js"></script>
     <script src="javascript/main.js"></script>
-    
+
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
@@ -42,11 +47,18 @@ toonMenu($rechten, 'producten');
 
 <div class="content">
 
-    <?php
-    // Producten ophalen via PDO
-    $stmt = $pdo->query("SELECT * FROM Product ORDER BY ID ASC");
-    $producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    ?>
+        Bedrijf:
+        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization" oninput="laadProducten()">
+
+        <datalist id="bedrijven">
+            <?php foreach ($bedrijven as $b): ?>
+                <option value="<?= htmlspecialchars($b) ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
+
+        <div id="producten-container">
+            <!-- Hier komen de producten via AJAX -->
+        </div>
 
     <table>
         <tr>

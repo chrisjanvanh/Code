@@ -71,3 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 });
+
+
+function laadProducten() {
+    const bedrijf = document.getElementById("bedrijf").value;
+
+    if (bedrijf.trim() === "") {
+        document.getElementById("producten-container").innerHTML = "";
+        return;
+    }
+
+    fetch("backend/producten/producten_op_bedrijf.php?bedrijf=" + encodeURIComponent(bedrijf))
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("producten-container").innerHTML = html;
+        });
+}
