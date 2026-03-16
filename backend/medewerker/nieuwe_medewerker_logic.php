@@ -44,7 +44,7 @@ $melding = "";
    Bedrijven ophalen voor dropdown
 ----------------------------------------------------------- */
 
-$stmtBedrijven = $pdo->query("SELECT Bedrijf FROM Bedrijven ORDER BY Bedrijf ASC");
+$stmtBedrijven = $pdo->query("SELECT DISTINCT Bedrijf FROM Product WHERE Bedrijf IS NOT NULL ORDER BY Bedrijf ASC");
 $bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
 
 /* -----------------------------------------------------------
