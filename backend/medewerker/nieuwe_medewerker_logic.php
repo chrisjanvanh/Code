@@ -31,7 +31,17 @@ if ($stmt->rowCount() === 0) {
    2. Kolommen ophalen uit database
 ----------------------------------------------------------- */
 
-$columns = $pdo->query("SHOW COLUMNS FROM Medewerker")->fetchAll(PDO::FETCH_ASSOC);
+$bedrijf = $_POST['bedrijf'];
+// Producten ophalen die bij dit bedrijf horen
+$stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY Product ASC");
+$stmt->execute([$bedrijf]);
+$productKolommen = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+// Bouw $columns in hetzelfde formaat als SHOW COLUMNS
+$columns = [];
+foreach ($productKolommen as $p) {
+    $columns[] = ['Field' => $p];
+}
 
 $exclude = [
     "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf",

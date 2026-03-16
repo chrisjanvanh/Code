@@ -45,7 +45,7 @@ toonMenu($rechten, 'medewerkers');
         <input type="text" id="leidinggevende" name="leidinggevende">
 
         Bedrijf:
-        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization">
+        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization" oninput="laadProducten()">
 
         <datalist id="bedrijven">
             <?php foreach ($bedrijven as $b): ?>
@@ -66,12 +66,9 @@ toonMenu($rechten, 'medewerkers');
         <h2>De nieuwe medewerker heeft het volgende nodig:</h2>
         <h3>Software & Hardware</h3>
 
-        <?php foreach ($columns as $col): ?>
-            <?php if (!in_array($col['Field'], $exclude)): ?>
-                <input type="checkbox" id="<?= $col['Field'] ?>" name="<?= $col['Field'] ?>">
-                <label for="<?= $col['Field'] ?>"><?= $col['Field'] ?></label><br>
-            <?php endif; ?>
-        <?php endforeach; ?>
+        <div id="producten-container">
+            <!-- Wordt gevuld via JavaScript -->
+        </div>
 
         <br><br>
 
