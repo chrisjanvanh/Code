@@ -15,7 +15,17 @@ if (!$producten) {
     exit;
 }
 
+$exclude = [
+    "VDL AD Account",
+    "MyVDL",
+    "Kelio"
+];
+
 foreach ($producten as $p) {
+    if (in_array($p, $exclude)) {
+        continue;
+    }
+
     echo '<input type="checkbox" id="'.htmlspecialchars($p).'" name="'.htmlspecialchars($p).'">';
     echo '<label for="'.htmlspecialchars($p).'">'.htmlspecialchars($p).'</label><br>';
 }
