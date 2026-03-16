@@ -55,7 +55,7 @@ toonMenu($rechten, 'producten');
                 <option value="<?= htmlspecialchars($b) ?>"></option>
             <?php endforeach; ?>
         </datalist>
-                <br><br>
+
         <div id="producten-container"></div>
 
     <!-- <table>

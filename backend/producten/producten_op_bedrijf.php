@@ -12,7 +12,8 @@ if (!$producten) {
     exit;
 }
 
-echo '<table>
+echo '<br><br>
+    <table>
         <tr>
             <th>Product</th>
             <th>Contactpersoon</th>
