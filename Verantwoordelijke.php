@@ -55,10 +55,8 @@ toonMenu($rechten, 'producten');
                 <option value="<?= htmlspecialchars($b) ?>"></option>
             <?php endforeach; ?>
         </datalist>
-
-        <div id="producten-container">
-            <!-- Hier komen de producten via AJAX -->
-        </div>
+                <br><br>
+        <div id="producten-container"></div>
 
     <!-- <table>
         <tr>
