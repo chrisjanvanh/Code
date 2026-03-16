@@ -13,7 +13,7 @@ if (!$producten) {
 }
 
     echo '<h2>De nieuwe medewerker heeft het volgende nodig:</h2>
-        <h3>Software & Hardware</h3>'
+          <h3>Software & Hardware</h3>';
 
 foreach ($producten as $p) {
     echo '<input type="checkbox" id="'.htmlspecialchars($p).'" name="'.htmlspecialchars($p).'">';
