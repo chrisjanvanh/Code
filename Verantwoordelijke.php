@@ -60,7 +60,7 @@ toonMenu($rechten, 'producten');
             <!-- Hier komen de producten via AJAX -->
         </div>
 
-    <table>
+    <!-- <table>
         <tr>
             <th>Product</th>
             <th>Contactpersoon</th>
@@ -96,7 +96,7 @@ toonMenu($rechten, 'producten');
                 <button type="button" class="Toevoegen">Toevoegen product</button>
             </td>
         </tr>
-    </table>
+    </table> -->
 </div>
 </body>
 </html>
