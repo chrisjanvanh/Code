@@ -209,10 +209,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $emails = [];
 
-        $stmtProd = $pdo->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
+        $stmtProd = $pdo->prepare("SELECT Contactpersoon 
+                                FROM Product 
+                                WHERE Product = ? AND Bedrijf = ?");
 
         foreach ($geselecteerdeProductenWebhook as $prod) {
-            $stmtProd->execute([$prod]);
+            $stmtProd->execute([$prod, $bedrijf]);
             if ($row = $stmtProd->fetch(PDO::FETCH_ASSOC)) {
                 if (!empty($row['Contactpersoon'])) {
                     $emails[] = $row['Contactpersoon'];
@@ -221,7 +223,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $emails = array_unique($emails);
-
+        
         $payload = [
             "naam"      => $naam,
             "actie"     => "toegevoegd",
