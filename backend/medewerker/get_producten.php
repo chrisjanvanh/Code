@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config2.php';
 
 $bedrijf = $_GET['bedrijf'] ?? '';
 
-$stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY Product ASC");
+$stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY ID ASC");
 $stmt->execute([$bedrijf]);
 $producten = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
