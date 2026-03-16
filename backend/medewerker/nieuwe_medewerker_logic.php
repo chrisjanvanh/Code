@@ -31,18 +31,6 @@ if ($stmt->rowCount() === 0) {
    2. Kolommen ophalen uit database
 ----------------------------------------------------------- */
 
-$bedrijf = $_POST['bedrijf'];
-// Producten ophalen die bij dit bedrijf horen
-$stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY Product ASC");
-$stmt->execute([$bedrijf]);
-$productKolommen = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-// Bouw $columns in hetzelfde formaat als SHOW COLUMNS
-$columns = [];
-foreach ($productKolommen as $p) {
-    $columns[] = ['Field' => $p];
-}
-
 $exclude = [
     "Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf",
     "Referentie", "Email", "VDL AD Account", "MyVDL", "Kelio"
@@ -71,6 +59,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email          = $_POST['email'];
     $referentie     = $_POST['referentie'];
     $contractueel   = ($_POST['radiogroep'] ?? '') === 'Ja';
+
+    // Producten ophalen die bij dit bedrijf horen
+    $stmt = $pdo->prepare("SELECT Product FROM Product WHERE Bedrijf = ? ORDER BY Product ASC");
+    $stmt->execute([$bedrijf]);
+    $productKolommen = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    // Bouw $columns in hetzelfde formaat als SHOW COLUMNS
+    $columns = [];
+    foreach ($productKolommen as $p) {
+        $columns[] = ['Field' => $p];
+    }
+
 
     /* -----------------------------------------------------------
        4. Checkbox‑waarden verzamelen
