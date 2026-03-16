@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../config2.php';
+require_once __DIR__ . '/../config2.php';
 
 $bedrijf = $_GET['bedrijf'] ?? '';
 
