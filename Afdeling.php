@@ -47,9 +47,17 @@ toonMenu($rechten, 'taken');
                 $kolom = $product['Product'];
 
                 // Medewerkers ophalen via PDO
-                $stmtM = $pdo->prepare("SELECT * FROM Medewerker WHERE `$kolom` IN (0,2)");
-                $stmtM->execute();
+                $stmtM = $pdo->prepare("
+                    SELECT m.*
+                    FROM BedrijfProduct bp
+                    JOIN Medewerker m ON m.Naam = bp.Medewerker
+                    WHERE bp.Product = ?
+                    AND bp.Bedrijf = ?
+                    AND bp.Waarde IN (0,2)
+                ");
+                $stmtM->execute([$kolom, $bedrijf]);
                 $medewerkers = $stmtM->fetchAll(PDO::FETCH_ASSOC);
+
             ?>
 
             <?php foreach ($medewerkers as $m): ?>
@@ -65,7 +73,7 @@ toonMenu($rechten, 'taken');
                     <td>
                         <?php if ($m[$kolom] == 0): ?>
                             Toevoegen
-                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 1)'>Afronden</button>
+                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 1, "<?= $bedrijf ?>")'>Afronden</button>
                         <?php else: ?>
                             Verwijderen
                             <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", "null")'>Afronden</button>

@@ -1,11 +1,11 @@
-function afronden(naam, kolom, waarde) {
+function afronden(naam, kolom, waarde, bedrijf) {
     if (!confirm(`Weet je zeker dat je deze taak van ${naam} wilt afronden?`)) return;
 
     fetch("/backend/afdeling/afronden.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
-        body: `naam=${encodeURIComponent(naam)}&kolom=${encodeURIComponent(kolom)}&waarde=${waarde}`
+        body: `naam=${encodeURIComponent(naam)}&kolom=${encodeURIComponent(kolom)}&waarde=${waarde}$bedrijf=${bedrijf}`
     })
     .then(r => r.text())
     .then(t => {

@@ -19,8 +19,11 @@ if (!isset($_SESSION['email'])) {
 $gebruikerEmail = $_SESSION['email'];
 
 // 3. Controleer of gebruiker toegang heeft tot deze afdeling
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt = $pdo->prepare("SELECT ID, Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
 $stmt->execute([$afdeling, $gebruikerEmail]);
+$info = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$bedrijf = $info['Bedrijf'];
 
 if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
@@ -28,8 +31,13 @@ if ($stmt->rowCount() === 0) {
 }
 
 // 4. Haal producten op
-$stmt = $pdo->prepare("SELECT * FROM Product WHERE Afdeling = ?");
-$stmt->execute([$afdeling]);
+$stmt = $pdo->prepare("
+    SELECT Product 
+    FROM Product 
+    WHERE Afdeling = ? AND Bedrijf = ?
+    ORDER BY Product ASC
+");
+$stmt->execute([$afdeling, $bedrijf]);
 $producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 5. Haal emailadressen op
