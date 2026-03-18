@@ -37,7 +37,7 @@ toonMenu($rechten, 'hardware');
     <?php if (count($bedrijven) > 1): ?>
         <form method="GET">
             <label>Bedrijf:</label>
-            <select name="bedrijf" onchange="this.form.submit()">
+            <input list="bedrijven" name="bedrijf" onchange="this.form.submit()">
                 <option value="">-- Kies bedrijf --</option>
                 <?php foreach ($bedrijven as $b): ?>
                     <option value="<?= htmlspecialchars($b) ?>"
@@ -45,7 +45,7 @@ toonMenu($rechten, 'hardware');
                         <?= htmlspecialchars($b) ?>
                     </option>
                 <?php endforeach; ?>
-            </select>
+                </input>
         </form>
         <br>
     <?php endif; ?>
