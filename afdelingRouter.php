@@ -25,12 +25,19 @@ toonMenu($rechten, 'taken');
 <div class="content">
     <h2>Kies jouw afdeling</h2>
 
-    <?php foreach ($afdelingen as $afd): ?>
-        <a class="afdeling-btn" 
-        href="Afdeling.php?afdeling=<?= urlencode($afd['Afdeling']) ?>&bedrijf=<?= urlencode($afd['Bedrijf']) ?>">
-            <?= htmlspecialchars($afd['Afdeling']) ?> (<?= htmlspecialchars($afd['Bedrijf']) ?>)
-        </a>
+    <?php foreach ($bedrijven_gegroepeerd as $bedrijf => $afdelingenLijst): ?>
+        <h3><?= htmlspecialchars($bedrijf) ?></h3>
+
+        <?php foreach ($afdelingenLijst as $afd): ?>
+            <a class="afdeling-btn" 
+            href="Afdeling.php?afdeling=<?= urlencode($afd) ?>&bedrijf=<?= urlencode($bedrijf) ?>">
+                <?= htmlspecialchars($afd) ?>
+            </a>
+        <?php endforeach; ?>
+
+        <br><br>
     <?php endforeach; ?>
+
 </div>
 
 </body>

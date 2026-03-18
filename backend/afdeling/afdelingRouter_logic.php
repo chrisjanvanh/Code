@@ -38,3 +38,13 @@ if (count($rows) === 1) {
    4. Meerdere afdelingen → lijst tonen
 --------------------------------------------------- */
 $afdelingen = $rows;
+
+$bedrijven_gegroepeerd = [];
+
+foreach ($afdelingen as $afd) {
+    $bedrijf = $afd['Bedrijf'];
+    if (!isset($bedrijven_gegroepeerd[$bedrijf])) {
+        $bedrijven_gegroepeerd[$bedrijf] = [];
+    }
+    $bedrijven_gegroepeerd[$bedrijf][] = $afd['Afdeling'];
+}
