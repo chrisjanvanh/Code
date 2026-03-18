@@ -8,7 +8,7 @@ form input[type=text], input[type=date], input[list] {
     box-sizing: border-box;
 }
 
-input[list] {
+select {
     width: 100%;
     padding: 10px;
     font-size: 16px;
