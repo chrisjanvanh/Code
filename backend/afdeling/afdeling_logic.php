@@ -26,10 +26,10 @@ $gebruikerEmail = $_SESSION['email'];
 
 // $bedrijf = $info['Bedrijf'];
 
-if ($stmt->rowCount() === 0) {
-    header("Location: forbidden.php");
-    exit;
-}
+// if ($stmt->rowCount() === 0) {
+//     header("Location: forbidden.php");
+//     exit;
+// }
 
 // 4. Haal producten op
 $stmt = $pdo->prepare("
