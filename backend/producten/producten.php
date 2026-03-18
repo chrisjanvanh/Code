@@ -16,22 +16,6 @@ $bedrijf = $_POST['bedrijf'] ?? '';
 
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
-// // Bedrijven ophalen waar gebruiker toegang toe heeft
-// $stmt = $pdo->prepare("
-//     SELECT DISTINCT Bedrijf 
-//     FROM AfdelingEmails 
-//     WHERE Email = ? AND Afdeling = 'Business IT'
-// ");
-// $stmt->execute([$gebruikerEmail]);
-// $bedrijvenUser = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-// if (!in_array($bedrijf, $bedrijvenUser)) {
-//     echo "FOUT: geen toegang tot dit bedrijf";
-//     exit;
-// }
-
-// $ok = true;
-
 /* ---------------------------------------------------
    PRODUCT TOEVOEGEN
 --------------------------------------------------- */
@@ -134,8 +118,8 @@ if ($action === "delete") {
     }
 
     // Productnaam ophalen
-    $stmt = $pdo->prepare("SELECT Product FROM Product WHERE ID = ?");
-    $stmt->execute([$id]);
+    $stmt = $pdo->prepare("SELECT Product FROM Product WHERE ID = ? AND Bedrijf = ?");
+    $stmt->execute([$id, $bedrijf]);
     $productnaam = $stmt->fetchColumn();
 
     if (!$productnaam) {
@@ -147,12 +131,9 @@ if ($action === "delete") {
     $stmt = $pdo->prepare("DELETE FROM Product WHERE ID = ?");
     if (!$stmt->execute([$id])) $ok = false;
 
-    // 2. Kolom verwijderen uit Medewerker
-    try {
-        $pdo->exec("ALTER TABLE `Medewerker` DROP COLUMN `$productnaam`");
-    } catch (PDOException $e) {
-        $ok = false;
-    }
+    // 2. Verwijderen uit BedrijfProduct
+    $stmt = $pdo->prepare("DELETE FROM BedrijfProduct WHERE Product = ? AND Bedrijf = ?");
+    $stmt->execute([$productnaam, $bedrijf]);
 
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
