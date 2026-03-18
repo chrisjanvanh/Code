@@ -42,8 +42,14 @@ $melding = "";
    Bedrijven ophalen voor dropdown
 ----------------------------------------------------------- */
 
-$stmtBedrijven = $pdo->query("SELECT DISTINCT Bedrijf FROM Product WHERE Bedrijf IS NOT NULL ORDER BY Bedrijf ASC");
-$bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
+// Bedrijven ophalen waar HR toegang toe heeft
+$stmt = $pdo->prepare("
+    SELECT DISTINCT Bedrijf 
+    FROM AfdelingEmails 
+    WHERE Afdeling = 'HR' AND Email = ?
+");
+$stmt->execute([$gebruikerEmail]);
+$bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
 /* -----------------------------------------------------------
    3. POST verwerking

@@ -44,14 +44,22 @@ toonMenu($rechten, 'medewerkers');
         Leidinggevende:
         <input type="text" id="leidinggevende" name="leidinggevende">
 
-        Bedrijf:
-        <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
+        <?php if (count($bedrijven) > 1): ?>
+            Bedrijf:
+            <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
 
-        <datalist id="bedrijven">
-            <?php foreach ($bedrijven as $b): ?>
-                <option value="<?= htmlspecialchars($b) ?>"></option>
-            <?php endforeach; ?>
-        </datalist>
+            <datalist id="bedrijven">
+                <?php foreach ($bedrijven as $b): ?>
+                    <option value="<?= htmlspecialchars($b) ?>"></option>
+                <?php endforeach; ?>
+            </datalist>
+        <?php else: ?>
+            <input type="hidden" id="bedrijf" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
+            <script>
+                document.addEventListener("DOMContentLoaded", () => laadProducten());
+            </script>
+        <?php endif; ?>
+
 
         Email:
         <input type="email" id="email" name="email">
