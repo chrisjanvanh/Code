@@ -42,6 +42,6 @@ $stmt->execute([$afdeling, $bedrijf]);
 $producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // 5. Haal emailadressen op
-$stmt2 = $pdo->prepare("SELECT * FROM AfdelingEmails WHERE Afdeling = ?");
-$stmt2->execute([$afdeling]);
+$stmt2 = $pdo->prepare("SELECT * FROM AfdelingEmails WHERE Afdeling = ? AND Bedrijf = ?");
+$stmt2->execute([$afdeling, $bedrijf]);
 $emails = $stmt2->fetchAll(PDO::FETCH_ASSOC);
