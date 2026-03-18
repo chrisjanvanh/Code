@@ -5,7 +5,7 @@ function afronden(naam, kolom, waarde, bedrijf) {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
-        body: `naam=${encodeURIComponent(naam)}&kolom=${encodeURIComponent(kolom)}&waarde=${waarde}$bedrijf=${bedrijf}`
+        body: `naam=${encodeURIComponent(naam)}&kolom=${encodeURIComponent(kolom)}&waarde=${waarde}&bedrijf=${encodeURIComponent(bedrijf)}`
     })
     .then(r => r.text())
     .then(t => {

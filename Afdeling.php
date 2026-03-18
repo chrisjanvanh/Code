@@ -25,6 +25,7 @@ toonMenu($rechten, 'taken');
 
 <script>
     const afdeling = "<?= htmlspecialchars($afdeling) ?>";
+    const bedrijf  = "<?= htmlspecialchars($bedrijf) ?>";
 </script>
 
 <div class="content">
@@ -48,7 +49,7 @@ toonMenu($rechten, 'taken');
 
                 // Medewerkers ophalen via PDO
                 $stmtM = $pdo->prepare("
-                    SELECT m.*
+                    SELECT m.*, bp.Waarde
                     FROM BedrijfProduct bp
                     JOIN Medewerker m ON m.Naam = bp.Medewerker
                     WHERE bp.Product = ?
@@ -71,7 +72,7 @@ toonMenu($rechten, 'taken');
                     <td><?= htmlspecialchars($m['Referentie']) ?></td>
 
                     <td>
-                        <?php if ($m[$kolom] == 0): ?>
+                        <?php if ($m['Waarde'] == 0): ?>
                             Toevoegen
                             <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 1, "<?= $bedrijf ?>")'>Afronden</button>
                         <?php else: ?>
