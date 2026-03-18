@@ -9,7 +9,9 @@ if (!isset($_GET['naam'])) {
 $naam = $_GET['naam'];
 $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
-// Check of medewerker bestaat
+/* ---------------------------------------------------
+   1. Medewerker ophalen + bedrijf bepalen
+--------------------------------------------------- */
 $stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
 $stmt->execute([$naam]);
 $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -18,31 +20,48 @@ if (!$medewerker) {
     die("FOUT: medewerker niet gevonden.");
 }
 
-// Kolommen ophalen
-$stmt = $pdo->query("SHOW COLUMNS FROM Medewerker");
-$columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$bedrijf = $medewerker['Bedrijf'];
 
-$exclude = ["Naam","Functie","Locatie","Leidinggevende","Bedrijf","Referentie","Email"];
+/* ---------------------------------------------------
+   2. Alle producten ophalen uit BedrijfProduct
+--------------------------------------------------- */
+$stmt = $pdo->prepare("
+    SELECT Product, Waarde
+    FROM BedrijfProduct
+    WHERE Medewerker = ? AND Bedrijf = ?
+");
+$stmt->execute([$naam, $bedrijf]);
+$toegangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-foreach ($columns as $col) {
-    $kolom = $col['Field'];
-    if (in_array($kolom, $exclude)) continue;
+/* ---------------------------------------------------
+   3. Alle producten in één keer updaten
+      Oude logica:
+      - 1 → 2 (verwijderd)
+      - 0 of 3 → NULL (geen toegang)
+--------------------------------------------------- */
+$stmtUpdate = $pdo->prepare("
+    UPDATE BedrijfProduct
+    SET Waarde = CASE
+        WHEN Waarde = 1 THEN 2
+        WHEN Waarde IN (0,3) THEN NULL
+        ELSE Waarde
+    END
+    WHERE Medewerker = ? AND Bedrijf = ?
+");
 
-    // Update in één query
-    $update = $pdo->prepare("
-        UPDATE Medewerker
-        SET `$kolom` = CASE
-            WHEN `$kolom` = 1 THEN 2
-            WHEN `$kolom` IN (0,3) THEN NULL
-            ELSE `$kolom`
-        END
-        WHERE Naam = ?
-    ");
-    $update->execute([$naam]);
-}
+$stmtUpdate->execute([$naam, $bedrijf]);
 
-$melding = "Het aanvragen voor het verwijderen van de producten van $naam is geslaagd";
+/* ---------------------------------------------------
+   4. Logboek
+--------------------------------------------------- */
+$log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+$log->execute([
+    "$gebruikerNaam heeft alle producten verwijderd voor $naam (bedrijf: $bedrijf)",
+    "Huidige Medewerker"
+]);
 
-// Redirect
+/* ---------------------------------------------------
+   5. Redirect
+--------------------------------------------------- */
 header("Location: ../../HuidigeToegangen.php?naam=" . urlencode($naam));
 exit;
