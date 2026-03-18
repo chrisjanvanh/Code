@@ -31,17 +31,14 @@ if (empty($bedrijven)) {
 if (count($bedrijven) === 1) {
     $bedrijf = $bedrijven[0];
 } else {
-    $bedrijf = $_POST['bedrijf'] ?? ($_GET['bedrijf'] ?? "");
+    // bedrijf komt uit POST (van jouw input list)
+    $bedrijf = $_POST['bedrijf'] ?? "";
 }
 
 /* ---------------------------------------------------
-   4. Als meerdere bedrijven → bedrijf moet gekozen zijn
+   4. Check of bedrijf gekozen is
 --------------------------------------------------- */
-if (count($bedrijven) > 1 && empty($bedrijf)) {
-    $bedrijfGekozen = false;
-} else {
-    $bedrijfGekozen = true;
-}
+$bedrijfGekozen = !empty($bedrijf);
 
 /* ---------------------------------------------------
    5. Medewerkers + hardware ophalen (alleen van dit bedrijf)
@@ -145,7 +142,7 @@ if (isset($_POST['opslaan'])) {
 
                     if ($ok) {
                         $_SESSION['melding'] = "Hardware succesvol toegewezen!";
-                        header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
+                        header("Location: ../HardwareToewijzen.php");
                         exit;
                     } else {
                         $melding = "Er is iets fout gegaan.";
@@ -195,6 +192,6 @@ if (isset($_POST['verwijder'])) {
         ]);
     }
 
-    header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
+    header("Location: ../HardwareToewijzen.php");
     exit;
 }
