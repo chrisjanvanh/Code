@@ -7,39 +7,94 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-$afdeling = "Business IT";
 $gebruikerEmail = $_SESSION['email'];
-
-$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
-   1. Controle: heeft gebruiker toegang?
+   1. Haal bedrijven op waar deze gebruiker toegang toe heeft
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->execute([$afdeling, $gebruikerEmail]);
+$stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ?");
+$stmt->execute([$gebruikerEmail]);
+$bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-if ($stmt->rowCount() === 0) {
+/* ---------------------------------------------------
+   2. Geen bedrijven → forbidden
+--------------------------------------------------- */
+if (empty($bedrijven)) {
     header("Location: forbidden.php");
     exit;
 }
 
 /* ---------------------------------------------------
-   2. Medewerkers + hardware ophalen
+   3. Bepaal geselecteerd bedrijf
 --------------------------------------------------- */
-$medewerkers = $pdo->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC")
-                   ->fetchAll(PDO::FETCH_ASSOC);
+if (count($bedrijven) === 1) {
+    $bedrijf = $bedrijven[0];
+} else {
+    $bedrijf = $_POST['bedrijf'] ?? ($_GET['bedrijf'] ?? "");
+}
 
-$hardware = $pdo->query("SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
-    FROM Hardware
-    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)")
-                ->fetchAll(PDO::FETCH_ASSOC);
+/* ---------------------------------------------------
+   4. Als meerdere bedrijven → bedrijf moet gekozen zijn
+--------------------------------------------------- */
+if (count($bedrijven) > 1 && empty($bedrijf)) {
+    $bedrijfGekozen = false;
+} else {
+    $bedrijfGekozen = true;
+}
+
+/* ---------------------------------------------------
+   5. Medewerkers + hardware ophalen (alleen van dit bedrijf)
+--------------------------------------------------- */
+$medewerkers = [];
+$hardware = [];
+$voorraad = [];
+$toegewezen = [];
+$alle_regels = [];
+
+if ($bedrijfGekozen) {
+
+    // Medewerkers per bedrijf
+    $stmt = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Bedrijf = ? ORDER BY Naam ASC");
+    $stmt->execute([$bedrijf]);
+    $medewerkers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Hardware in voorraad
+    $stmt = $pdo->prepare("
+        SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
+        FROM Hardware
+        WHERE Bedrijf = ?
+        AND Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
+    ");
+    $stmt->execute([$bedrijf]);
+    $voorraad = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Toegewezen hardware
+    $stmt = $pdo->prepare("
+        SELECT g.Serienummer, g.Naam, g.Uitgiftedatum, 'toegewezen' AS type
+        FROM Gebruikname g
+        JOIN Hardware h ON g.Serienummer = h.Serienummer
+        WHERE h.Bedrijf = ?
+        ORDER BY g.Uitgiftedatum DESC
+    ");
+    $stmt->execute([$bedrijf]);
+    $toegewezen = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $alle_regels = array_merge($voorraad, $toegewezen);
+}
 
 $melding = "";
 
 /* ---------------------------------------------------
-   3. OPSLAAN VAN NIEUWE TOEWĲZING
+   6. OPSLAAN VAN NIEUWE TOEWĲZING
 --------------------------------------------------- */
 if (isset($_POST['opslaan'])) {
+
+    if (!$bedrijfGekozen) {
+        $_SESSION['melding'] = "Kies eerst een bedrijf.";
+        header("Location: ../HardwareToewijzen.php");
+        exit;
+    }
 
     $naam         = trim($_POST['naam']);
     $serienummer  = trim($_POST['serienummer']);
@@ -50,19 +105,19 @@ if (isset($_POST['opslaan'])) {
     } else {
 
         // Check medewerker
-        $checkNaam = $pdo->prepare("SELECT 1 FROM Medewerker WHERE Naam = ?");
-        $checkNaam->execute([$naam]);
+        $checkNaam = $pdo->prepare("SELECT 1 FROM Medewerker WHERE Naam = ? AND Bedrijf = ?");
+        $checkNaam->execute([$naam, $bedrijf]);
 
         if ($checkNaam->rowCount() === 0) {
-            $melding = "Deze medewerker bestaat niet.";
+            $melding = "Deze medewerker hoort niet bij dit bedrijf.";
         } else {
 
             // Check hardware
-            $checkHW = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
-            $checkHW->execute([$serienummer]);
+            $checkHW = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ? AND Bedrijf = ?");
+            $checkHW->execute([$serienummer, $bedrijf]);
 
             if ($checkHW->rowCount() === 0) {
-                $melding = "Dit serienummer bestaat niet in de hardwarelijst.";
+                $melding = "Dit serienummer bestaat niet binnen dit bedrijf.";
             } else {
 
                 // Check of al toegewezen
@@ -81,20 +136,19 @@ if (isset($_POST['opslaan'])) {
 
                     $ok = $stmt->execute([$serienummer, $naam, $uitgiftedatum]);
 
-                        // Logboek
-                        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-                        $log->execute([
-                            "$gebruikerNaam heeft de hardware met als serienummer $serienummer toegewezen aan $naam",
-                            "Toewijzen Hardware"
-                        ]);
+                    // Logboek
+                    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+                    $log->execute([
+                        "$gebruikerNaam heeft hardware ($serienummer) toegewezen aan $naam in bedrijf $bedrijf",
+                        "Toewijzen Hardware"
+                    ]);
 
                     if ($ok) {
                         $_SESSION['melding'] = "Hardware succesvol toegewezen!";
-                        header("Location: ../HardwareToewijzen.php");
+                        header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
                         exit;
                     } else {
-                        error_log("Insert error: " . implode(" | ", $stmt->errorInfo()), 3, __DIR__ . "/error.log");
-                        $melding = "Er is iets fout gegaan, probeer het later opnieuw.";
+                        $melding = "Er is iets fout gegaan.";
                     }
                 }
             }
@@ -103,7 +157,7 @@ if (isset($_POST['opslaan'])) {
 }
 
 /* ---------------------------------------------------
-   4. VERWIJDEREN
+   7. VERWIJDEREN
 --------------------------------------------------- */
 if (isset($_POST['verwijder'])) {
 
@@ -111,6 +165,7 @@ if (isset($_POST['verwijder'])) {
     $type = $_POST['type'];
 
     if ($type === "toegewezen") {
+
         $oph = $pdo->prepare("SELECT Naam, Uitgiftedatum FROM Gebruikname WHERE Serienummer = ?");
         $oph->execute([$sn]);
         $opgehaald = $oph->fetch(PDO::FETCH_ASSOC);
@@ -121,49 +176,25 @@ if (isset($_POST['verwijder'])) {
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
         $del->execute([$sn]);
 
-            // Logboek
-            $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-            $log->execute([
-                "$gebruikerNaam heeft de toegewezen hardware met als serienummer $sn van " . $opgehaald['Naam'] . " verplaatst naar de voorraad",
-                "Toewijzen Hardware"
-            ]);
+        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log->execute([
+            "$gebruikerNaam heeft toegewezen hardware ($sn) teruggezet naar voorraad in bedrijf $bedrijf",
+            "Toewijzen Hardware"
+        ]);
     }
 
     if ($type === "voorraad") {
-        $del = $pdo->prepare("DELETE FROM Hardware WHERE Serienummer = ?");
-        $del->execute([$sn]);
 
-            // Logboek
-            $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-            $log->execute([
-                "$gebruikerNaam heeft de hardware met als serienummer $sn verwijderd",
-                "Hardware"
-            ]);
+        $del = $pdo->prepare("DELETE FROM Hardware WHERE Serienummer = ? AND Bedrijf = ?");
+        $del->execute([$sn, $bedrijf]);
+
+        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log->execute([
+            "$gebruikerNaam heeft hardware ($sn) verwijderd uit bedrijf $bedrijf",
+            "Hardware"
+        ]);
     }
 
-    header("Location: ../HardwareToewijzen.php");
+    header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
     exit;
 }
-
-/* ---------------------------------------------------
-   5. Niet-toegewezen hardware ophalen
---------------------------------------------------- */
-$voorraad = $pdo->query("
-    SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
-    FROM Hardware
-    WHERE Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
-")->fetchAll(PDO::FETCH_ASSOC);
-
-/* ---------------------------------------------------
-   6. Toegewezen hardware ophalen
---------------------------------------------------- */
-$toegewezen = $pdo->query("
-    SELECT Serienummer, Naam, Uitgiftedatum, 'toegewezen' AS type
-    FROM Gebruikname
-    ORDER BY Uitgiftedatum DESC
-")->fetchAll(PDO::FETCH_ASSOC);
-
-/* ---------------------------------------------------
-   7. Voorraad bovenaan
---------------------------------------------------- */
-$alle_regels = array_merge($voorraad, $toegewezen);

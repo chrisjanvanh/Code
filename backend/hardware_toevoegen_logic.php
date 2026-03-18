@@ -1,51 +1,34 @@
 <?php
 session_start();
-require_once __DIR__ . '/../config2.php';
+require 'config2.php';
 
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
 
+$afdeling = "Business IT";
 $gebruikerEmail = $_SESSION['email'];
-$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
-   1. Haal bedrijven op waar deze gebruiker toegang toe heeft
+   1. Controle: heeft gebruiker toegang?
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ?");
-$stmt->execute([$gebruikerEmail]);
-$bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt->execute([$afdeling, $gebruikerEmail]);
 
-/* ---------------------------------------------------
-   2. Geen bedrijven → forbidden
---------------------------------------------------- */
-if (empty($bedrijven)) {
-    header("Location: forbidden.php");
+if ($stmt->rowCount() === 0) {
+    header("Location: ../forbidden.php");
     exit;
 }
 
-/* ---------------------------------------------------
-   3. Eén bedrijf → automatisch selecteren
---------------------------------------------------- */
-if (count($bedrijven) === 1) {
-    $geselecteerdBedrijf = $bedrijven[0];
-} else {
-    // Meerdere bedrijven → dropdown keuze
-    $geselecteerdBedrijf = $_POST['bedrijf'] ?? "";
-}
+$melding = "";
 
 /* ---------------------------------------------------
-   4. POST verwerking
+   2. POST verwerking
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    // Controle: bedrijf moet gekozen zijn bij meerdere bedrijven
-    if (count($bedrijven) > 1 && empty($_POST['bedrijf'])) {
-        $_SESSION['melding'] = "Kies een bedrijf.";
-        header("Location: ../HardwareToevoegen.php");
-        exit;
-    }
 
     $serienummer  = trim($_POST['serienummer']);
     $merk         = trim($_POST['merk']);
@@ -69,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     /* ---------------------------------------------------
-       5. Serienummer moet uniek zijn
+       3. Serienummer moet uniek zijn
     --------------------------------------------------- */
     $check = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
     $check->execute([$serienummer]);
@@ -81,11 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     /* ---------------------------------------------------
-       6. INSERT uitvoeren (inclusief Bedrijf)
+       4. INSERT uitvoeren
     --------------------------------------------------- */
     $stmt = $pdo->prepare("
-        INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum, Bedrijf)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum)
+        VALUES (?, ?, ?, ?, ?)
     ");
 
     $ok = $stmt->execute([
@@ -93,22 +76,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $merk,
         $model,
         $prijs,
-        $aankoopdatum,
-        $geselecteerdBedrijf
+        $aankoopdatum
     ]);
 
-    /* ---------------------------------------------------
-       7. Logboek
-    --------------------------------------------------- */
+    // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft hardware toegevoegd (Serienummer: $serienummer, Bedrijf: $geselecteerdBedrijf)",
+        "$gebruikerNaam heeft de hardware met als serienummer $serienummer aangemaakt",
         "Hardware"
     ]);
 
-    /* ---------------------------------------------------
-       8. Resultaat
-    --------------------------------------------------- */
     if ($ok) {
         $_SESSION['melding'] = "Hardware succesvol toegevoegd!";
     } else {
