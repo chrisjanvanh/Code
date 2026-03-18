@@ -46,15 +46,8 @@ if ($action === "add") {
     $stmt = $pdo->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling, bedrijf) VALUES (?, ?, ?, ?)");
     if (!$stmt->execute([$product, $contact, $afdeling, $bedrijf])) $ok = false;
 
-    // 2. Kolom toevoegen aan Medewerker
-    try {
-        $pdo->exec("ALTER TABLE `Medewerker` ADD `$product` INT(11) NULL DEFAULT NULL");
-    } catch (PDOException $e) {
-        $ok = false;
-    }
-
-    $afdeling = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf) VALUES (?, ?, ?)");
-    if (!afdeling->execute([$afdeling, $contact, $bedrijf])) $ok = false;
+    $afdelingstmt = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf) VALUES (?, ?, ?)");
+    if (!$afdelingstmt->execute([$afdeling, $contact, $bedrijf])) $ok = false;
 
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
