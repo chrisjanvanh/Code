@@ -34,6 +34,9 @@ toonMenu($rechten, 'hardware');
         <div class="melding"><?= $melding ?></div>
     <?php endif; ?>
 
+    <h1>Hardware Toewijzen</h1>
+
+    <form method="POST">
     <?php if (count($bedrijven) > 1): ?>
         <form method="POST" style="margin-bottom: 20px;">
             <label>Bedrijf:</label><br>
@@ -51,12 +54,6 @@ toonMenu($rechten, 'hardware');
         <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
     <?php endif; ?>
 
-
-
-
-    <h1>Hardware Toewijzen</h1>
-
-    <form method="POST">
         Naam:<br>
         <input list="namen" id="naam" name="naam" required>
         <datalist id="namen">
