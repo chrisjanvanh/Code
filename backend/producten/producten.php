@@ -112,6 +112,8 @@ if ($action === "update") {
 --------------------------------------------------- */
 if ($action === "delete") {
 
+    $ok = true;
+
     if ($id === 0) {
         echo "FOUT";
         exit;
