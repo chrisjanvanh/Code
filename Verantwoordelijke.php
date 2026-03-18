@@ -30,6 +30,8 @@ if (empty($bedrijven)) {
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/Verantwoordelijke.js"></script>
     <script src="javascript/main.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
 
