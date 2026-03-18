@@ -1,5 +1,6 @@
 form input[type=text],
-form input[type=date] {
+form input[type=date],
+form input[list] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
