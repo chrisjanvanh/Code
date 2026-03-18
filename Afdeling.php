@@ -76,7 +76,7 @@ toonMenu($rechten, 'taken');
                             <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", 1, "<?= $bedrijf ?>")'>Afronden</button>
                         <?php else: ?>
                             Verwijderen
-                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", "null")'>Afronden</button>
+                            <button class="button" onclick='afronden("<?= $m["Naam"] ?>", "<?= $kolom ?>", "null", "<?= $bedrijf ?>")'>Afronden</button>
                         <?php endif; ?>
                     </td>
                 </tr>
