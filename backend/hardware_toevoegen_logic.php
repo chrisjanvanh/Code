@@ -7,24 +7,12 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-$afdeling = "Business IT";
 $gebruikerEmail = $_SESSION['email'];
-
-$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
-   1. Controle: heeft gebruiker toegang?
+   1. Haal bedrijven op waar deze gebruiker toegang toe heeft
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->execute([$afdeling, $gebruikerEmail]);
-
-if ($stmt->rowCount() === 0) {
-    header("Location: ../forbidden.php");
-    exit;
-}
-
-$melding = "";
-
 $stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ?");
 $stmt->execute([$gebruikerEmail]);
 $bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -35,10 +23,20 @@ $bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $serienummer  = trim($_POST['serienummer']);
+    $bedrijf      = trim($_POST['bedrijf']);
     $merk         = trim($_POST['merk']);
     $model        = trim($_POST['model']);
     $prijs        = trim($_POST['prijs']);
     $aankoopdatum = trim($_POST['aankoopdatum']);
+
+    /* ---------------------------------------------------
+       3. Validatie bedrijf
+    --------------------------------------------------- */
+    if (!in_array($bedrijf, $bedrijven)) {
+        $_SESSION['melding'] = "Ongeldig bedrijf geselecteerd.";
+        header("Location: ../HardwareToevoegen.php");
+        exit;
+    }
 
     if ($aankoopdatum === "") {
         $aankoopdatum = null;
@@ -56,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     /* ---------------------------------------------------
-       3. Serienummer moet uniek zijn
+       4. Serienummer moet uniek zijn
     --------------------------------------------------- */
     $check = $pdo->prepare("SELECT 1 FROM Hardware WHERE Serienummer = ?");
     $check->execute([$serienummer]);
@@ -68,11 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     /* ---------------------------------------------------
-       4. INSERT uitvoeren
+       5. INSERT uitvoeren (inclusief Bedrijf!)
     --------------------------------------------------- */
     $stmt = $pdo->prepare("
-        INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO Hardware (Serienummer, Merk, Model, Prijs, Aankoopdatum, Bedrijf)
+        VALUES (?, ?, ?, ?, ?, ?)
     ");
 
     $ok = $stmt->execute([
@@ -80,13 +78,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $merk,
         $model,
         $prijs,
-        $aankoopdatum
+        $aankoopdatum,
+        $bedrijf
     ]);
 
-    // Logboek
+    /* ---------------------------------------------------
+       6. Logboek
+    --------------------------------------------------- */
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft de hardware met als serienummer $serienummer aangemaakt",
+        "$gebruikerNaam heeft hardware ($serienummer) toegevoegd aan bedrijf $bedrijf",
         "Hardware"
     ]);
 
