@@ -20,8 +20,8 @@ if ($action === "delete") {
 
     $id = intval($_POST['id']);
 
-    // Email + afdeling ophalen voor logboek
-    $stmtInfo = $pdo->prepare("SELECT Email, Afdeling FROM AfdelingEmails WHERE ID = ?");
+    // Email + afdeling + bedrijf ophalen voor logboek
+    $stmtInfo = $pdo->prepare("SELECT Email, Afdeling, Bedrijf FROM AfdelingEmails WHERE ID = ?");
     $stmtInfo->execute([$id]);
     $info = $stmtInfo->fetch(PDO::FETCH_ASSOC);
 
@@ -30,8 +30,9 @@ if ($action === "delete") {
         exit;
     }
 
-    $email = $info['Email'];
+    $email    = $info['Email'];
     $afdeling = $info['Afdeling'];
+    $bedrijf  = $info['Bedrijf'];
 
     try {
         // Verwijderen
@@ -41,7 +42,7 @@ if ($action === "delete") {
         // Logboek
         $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
         $log->execute([
-            "Email $email verwijderd uit afdeling $afdeling door $gebruikerNaam",
+            "Email $email verwijderd uit afdeling $afdeling ($bedrijf) door $gebruikerNaam",
             "Afdelingen"
         ]);
 
@@ -56,23 +57,24 @@ if ($action === "delete") {
 /* ---------------- ADD ---------------- */
 if ($action === "add") {
 
-    if (!isset($_POST['email'], $_POST['afdeling'])) {
+    if (!isset($_POST['email'], $_POST['afdeling'], $_POST['bedrijf'])) {
         echo "FOUT: ontbrekende parameters";
         exit;
     }
 
-    $email = $_POST['email'];
+    $email    = $_POST['email'];
     $afdeling = $_POST['afdeling'];
+    $bedrijf  = $_POST['bedrijf'];
 
     try {
         // Toevoegen
-        $stmt = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email) VALUES (?, ?)");
-        $stmt->execute([$afdeling, $email]);
+        $stmt = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf) VALUES (?, ?, ?)");
+        $stmt->execute([$afdeling, $email, $bedrijf]);
 
         // Logboek
         $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
         $log->execute([
-            "Email $email toegevoegd aan afdeling $afdeling door $gebruikerNaam",
+            "Email $email toegevoegd aan afdeling $afdeling ($bedrijf) door $gebruikerNaam",
             "Afdelingen"
         ]);
 
