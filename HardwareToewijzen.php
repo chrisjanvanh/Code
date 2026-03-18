@@ -35,20 +35,22 @@ toonMenu($rechten, 'hardware');
     <?php endif; ?>
 
     <?php if (count($bedrijven) > 1): ?>
-        Bedrijf:
-        <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
-
-        <datalist id="bedrijven">
-            <?php foreach ($bedrijven as $b): ?>
-                <option value="<?= htmlspecialchars($b) ?>"></option>
-            <?php endforeach; ?>
-        </datalist>
+        <form method="POST" style="margin-bottom: 20px;">
+            <label>Bedrijf:</label><br>
+            <select name="bedrijf" onchange="this.form.submit()" required>
+                <option value="">-- Kies bedrijf --</option>
+                <?php foreach ($bedrijven as $b): ?>
+                    <option value="<?= htmlspecialchars($b) ?>"
+                        <?= ($bedrijf === $b ? "selected" : "") ?>>
+                        <?= htmlspecialchars($b) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </form>
     <?php else: ?>
-        <input type="hidden" id="bedrijf" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
-        <script>
-            document.addEventListener("DOMContentLoaded", () => laadProducten());
-        </script>
+        <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
     <?php endif; ?>
+
 
 
 
