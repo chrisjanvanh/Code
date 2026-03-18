@@ -43,20 +43,56 @@ if ($action === "add") {
     }
 
     // 1. Product toevoegen
-    $stmt = $pdo->prepare("INSERT INTO Product (Product, Contactpersoon, Afdeling, bedrijf) VALUES (?, ?, ?, ?)");
-    if (!$stmt->execute([$product, $contact, $afdeling, $bedrijf])) $ok = false;
+    $stmt = $pdo->prepare("
+        INSERT INTO Product (Product, Contactpersoon, Afdeling, Bedrijf)
+        VALUES (?, ?, ?, ?)
+    ");
+    if (!$stmt->execute([$product, $contact, $afdeling, $bedrijf])) {
+        echo "FOUT";
+        exit;
+    }
 
-    $afdelingstmt = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf) VALUES (?, ?, ?)");
-    if (!$afdelingstmt->execute([$afdeling, $contact, $bedrijf])) $ok = false;
+    // 2. Voor alle medewerkers van dit bedrijf een BedrijfProduct-regel aanmaken
+    $stmtM = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Bedrijf = ?");
+    $stmtM->execute([$bedrijf]);
+    $medewerkers = $stmtM->fetchAll(PDO::FETCH_COLUMN);
 
-    // Logboek
+    $stmtBP = $pdo->prepare("
+        INSERT INTO BedrijfProduct (Bedrijf, Product, Medewerker, Waarde)
+        VALUES (?, ?, ?, NULL)
+    ");
+
+    foreach ($medewerkers as $m) {
+        $stmtBP->execute([$bedrijf, $product, $m]);
+    }
+
+    // 3. Contactpersoon automatisch toevoegen aan AfdelingEmails (indien nog niet aanwezig)
+    if (!empty($contact)) {
+
+        // Bestaat deze combinatie al?
+        $check = $pdo->prepare("
+            SELECT 1 FROM AfdelingEmails 
+            WHERE Email = ? AND Afdeling = ? AND Bedrijf = ?
+        ");
+        $check->execute([$contact, $afdeling, $bedrijf]);
+
+        if ($check->rowCount() === 0) {
+            $insert = $pdo->prepare("
+                INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf)
+                VALUES (?, ?, ?)
+            ");
+            $insert->execute([$afdeling, $contact, $bedrijf]);
+        }
+    }
+
+    // 4. Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft het product $product toegevoegd aan producten",
+        "$gebruikerNaam heeft het product $product toegevoegd aan bedrijf $bedrijf",
         "Producten"
     ]);
 
-    echo $ok ? "OK" : "FOUT";
+    echo "OK";
     exit;
 }
 
