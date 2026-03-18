@@ -117,15 +117,18 @@ if ($action === "delete") {
         exit;
     }
 
-    // Productnaam ophalen
-    $stmt = $pdo->prepare("SELECT Product FROM Product WHERE ID = ? AND Bedrijf = ?");
+    // Productnaam + afdeling ophalen
+    $stmt = $pdo->prepare("SELECT Product, Afdeling FROM Product WHERE ID = ? AND Bedrijf = ?");
     $stmt->execute([$id, $bedrijf]);
-    $productnaam = $stmt->fetchColumn();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$productnaam) {
+    if (!$row) {
         echo "FOUT";
         exit;
     }
+
+    $productnaam = $row['Product'];
+    $productAfdeling = $row['Afdeling'];
 
     // 1. Product verwijderen uit Product-tabel
     $stmt = $pdo->prepare("DELETE FROM Product WHERE ID = ?");
@@ -135,7 +138,14 @@ if ($action === "delete") {
     $stmt = $pdo->prepare("DELETE FROM BedrijfProduct WHERE Product = ? AND Bedrijf = ?");
     $stmt->execute([$productnaam, $bedrijf]);
 
-    // Logboek
+    // 3. Verwijder de combinatie Afdeling + Bedrijf uit AfdelingEmails
+    $stmt = $pdo->prepare("
+        DELETE FROM AfdelingEmails
+        WHERE Afdeling = ? AND Bedrijf = ?
+    ");
+    $stmt->execute([$productAfdeling, $bedrijf]);
+
+    // 4. Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
         "$gebruikerNaam heeft het product $productnaam verwijderd",
