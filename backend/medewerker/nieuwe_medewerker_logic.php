@@ -139,27 +139,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
            7. Dynamische INSERT bouwen
         ----------------------------------------------------------- */
 
-        $kolomnamen = array_keys($values);
-        $kolomnamen_sql = implode(", ", array_map(fn($c) => "`$c`", $kolomnamen));
-
-        $placeholders = implode(", ", array_fill(0, count($values), "?"));
-
         $sql = "
             INSERT INTO Medewerker 
-            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, Email, $kolomnamen_sql)
-            VALUES (" . rtrim(str_repeat("?,", 7 + count($values)), ",") . ")
+            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, Email)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ";
-
         $stmt = $pdo->prepare($sql);
+        $stmt->execute([$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email]);
 
-        $params = array_merge(
-            [$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email],
-            array_values($values)
-        );
 
         $melding = "Medewerker succesvol aangemeld.";
 
         $stmt->execute($params);
+
+        foreach ($values as $product => $waarde) {
+
+        $stmt = $pdo->prepare("
+            INSERT INTO BedrijfProduct (Bedrijf, Product, Medewerker, Waarde)
+            VALUES (?, ?, ?, ?)
+        ");
+
+        $stmt->execute([
+            $bedrijf,
+            $product,
+            $naam,
+            $waarde   // 0 of NULL of 3 (business rules)
+        ]);
+    }
+
 
         /* -----------------------------------------------------------
            8. Logboek
@@ -223,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $emails = array_unique($emails);
-        
+
         $payload = [
             "naam"      => $naam,
             "actie"     => "toegevoegd",
