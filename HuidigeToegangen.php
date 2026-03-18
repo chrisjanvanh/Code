@@ -125,51 +125,63 @@ toonMenu($rechten, 'medewerkers');
         <table>
             <tr>
                 <th>Product</th>
+                <th>Status</th>
                 <th>Toevoegen</th>
                 <th>Verwijderen</th>
             </tr>
 
-            <?php foreach ($columns as $col): ?>
+            <?php foreach ($toegangen as $t): ?>
                 <?php
-                    $kolom = $col['Field'];
-                    if (in_array($kolom, $exclude)) continue;
+                    $product = $t['Product'];
+                    $waarde  = $t['Waarde'];
 
-                    $waarde = $medewerker[$kolom];
-
+                    // Kleuren
                     $kleur = "white";
                     $tekst = "black";
 
                     if ($waarde === 0) { $kleur = "orange"; }
                     if ($waarde === 1) { $kleur = "green"; }
                     if ($waarde === 2) { $kleur = "lightgray"; $tekst = "white"; }
+                    if ($waarde === 3) { $kleur = "yellow"; }
                 ?>
                 <tr>
-                    <td style="background-color: <?= $kleur ?>; color: <?= $tekst ?>"><?= $kolom ?></td>
+                    <td><?= htmlspecialchars($product) ?></td>
+
+                    <td style="background-color: <?= $kleur ?>; color: <?= $tekst ?>">
+                        <?php
+                            if ($waarde === null) echo "Geen toegang";
+                            if ($waarde === 0)    echo "Aangevraagd";
+                            if ($waarde === 1)    echo "Toegekend";
+                            if ($waarde === 2)    echo "Verwijderd";
+                            if ($waarde === 3)    echo "In wachtrij";
+                        ?>
+                    </td>
 
                     <td>
-                        <?php if ($waarde === NULL): ?>
-                        <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt toevoegen?')">
-                            <input type="hidden" name="actie" value="toevoegen">
-                            <input type="hidden" name="veld" value="<?= $kolom ?>">
-                            <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
-                            <button type="submit" class="Toevoegen">Toevoegen</button>
-                        </form>
+                        <?php if ($waarde === null): ?>
+                            <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt toevoegen?')">
+                                <input type="hidden" name="actie" value="toevoegen">
+                                <input type="hidden" name="veld" value="<?= htmlspecialchars($product) ?>">
+                                <input type="hidden" name="naam" value="<?= htmlspecialchars($medewerker['Naam']) ?>">
+                                <button type="submit" class="Toevoegen">Toevoegen</button>
+                            </form>
                         <?php endif; ?>
                     </td>
 
                     <td>
                         <?php if ($waarde === 1): ?>
-                        <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt verwijderen?')">
-                            <input type="hidden" name="actie" value="verwijderen">
-                            <input type="hidden" name="veld" value="<?= $kolom ?>">
-                            <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
-                            <button type="submit" class="Verwijderen">Verwijderen</button>
-                        </form>
+                            <form method="POST" onsubmit="return confirm('Weet je zeker dat je deze toegang wilt verwijderen?')">
+                                <input type="hidden" name="actie" value="verwijderen">
+                                <input type="hidden" name="veld" value="<?= htmlspecialchars($product) ?>">
+                                <input type="hidden" name="naam" value="<?= htmlspecialchars($medewerker['Naam']) ?>">
+                                <button type="submit" class="Verwijderen">Verwijderen</button>
+                            </form>
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
+
 
         <br><br>
         <input type="button" name="verwijderen" value="Verwijderen" class="button medewerkerverwijderen" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">

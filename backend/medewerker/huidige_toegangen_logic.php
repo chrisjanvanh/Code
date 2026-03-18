@@ -7,78 +7,86 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-$afdeling = "HR";
+$afdeling       = "HR";
 $gebruikerEmail = $_SESSION['email'];
-
-$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
    1. Controle: heeft gebruiker toegang tot deze afdeling?
+   + bedrijf ophalen
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt = $pdo->prepare("SELECT ID, Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
 $stmt->execute([$afdeling, $gebruikerEmail]);
+$info = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($stmt->rowCount() === 0) {
+if (!$info) {
     header("Location: forbidden.php");
     exit;
 }
 
+$bedrijf = $info['Bedrijf'];
+
 /* ---------------------------------------------------
-   2. Medewerkers ophalen
+   2. Medewerkers ophalen (alleen dit bedrijf)
 --------------------------------------------------- */
-$stmt = $pdo->query("SELECT Naam FROM Medewerker ORDER BY Naam ASC");
+$stmt = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Bedrijf = ? ORDER BY Naam ASC");
+$stmt->execute([$bedrijf]);
 $medewerkers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ---------------------------------------------------
-   3. Kolommen ophalen
---------------------------------------------------- */
-$stmt = $pdo->query("SHOW COLUMNS FROM Medewerker");
-$columns = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-/* Kolommen die GEEN toegang zijn */
-$exclude = ["Naam", "Functie", "Locatie", "Leidinggevende", "Bedrijf", "Referentie", "Email"];
-
-/* ---------------------------------------------------
-   4. Medewerker ophalen
+   3. Medewerker + toegangen ophalen
 --------------------------------------------------- */
 $medewerker = null;
+$toegangen  = [];
+$bestanden  = [];
 
 if (isset($_GET['naam'])) {
     $naam = $_GET['naam'];
 
-    $stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ?");
-    $stmt->execute([$naam]);
+    // Medewerker ophalen, gecontroleerd op bedrijf
+    $stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ? AND Bedrijf = ?");
+    $stmt->execute([$naam, $bedrijf]);
     $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($medewerker) {
+        // Toegangen uit BedrijfProduct
+        $stmt = $pdo->prepare("
+            SELECT Product, Waarde
+            FROM BedrijfProduct
+            WHERE Medewerker = ? AND Bedrijf = ?
+            ORDER BY Product ASC
+        ");
+        $stmt->execute([$naam, $bedrijf]);
+        $toegangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Bestanden ophalen
+        $stmt = $pdo->prepare("
+            SELECT ID, BestandNaam, BestandType, OCTET_LENGTH(BestandData) AS Grootte, UploadDatum
+            FROM MedewerkerBestanden
+            WHERE MedewerkerEmail = ?
+            ORDER BY UploadDatum DESC
+        ");
+        $stmt->execute([$medewerker['Email']]);
+        $bestanden = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 
 /* ---------------------------------------------------
-   5. Bestanden ophalen
---------------------------------------------------- */
-$bestanden = [];
-
-if ($medewerker) {
-    $stmt = $pdo->prepare("
-        SELECT ID, BestandNaam, BestandType, OCTET_LENGTH(BestandData) AS Grootte, UploadDatum
-        FROM MedewerkerBestanden
-        WHERE MedewerkerEmail = ?
-        ORDER BY UploadDatum DESC
-    ");
-    $stmt->execute([$medewerker['Email']]);
-    $bestanden = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-/* ---------------------------------------------------
-   6. Toegang toevoegen/verwijderen
+   4. Toegang toevoegen / verwijderen (BedrijfProduct)
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['actie'] === "toevoegen" || $_POST['actie'] === "verwijderen")) {
 
-    $veld = $_POST['veld'];
-    $naam = $_POST['naam'];
+    $veld  = $_POST['veld'];   // Productnaam
+    $naam  = $_POST['naam'];
     $actie = $_POST['actie'];
 
-    // Huidige waarde ophalen
-    $stmt = $pdo->prepare("SELECT `$veld` FROM Medewerker WHERE Naam = ?");
-    $stmt->execute([$naam]);
+    // Huidige waarde ophalen uit BedrijfProduct
+    $stmt = $pdo->prepare("
+        SELECT Waarde 
+        FROM BedrijfProduct 
+        WHERE Medewerker = ? AND Product = ? AND Bedrijf = ?
+    ");
+    $stmt->execute([$naam, $veld, $bedrijf]);
     $huidigeWaarde = $stmt->fetchColumn();
 
     // Validatie
@@ -91,15 +99,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
     }
 
     $actieTekst = ($actie === "toevoegen") ? "toegevoegd" : "verwijderd";
-    $waarde = ($actie === "toevoegen") ? 0 : 2;
+    $waarde     = ($actie === "toevoegen") ? 0 : 2;
 
-    // Update uitvoeren
-    $stmt = $pdo->prepare("UPDATE Medewerker SET `$veld` = ? WHERE Naam = ?");
-    $stmt->execute([$waarde, $naam]);
+    // Update uitvoeren in BedrijfProduct
+    $stmt = $pdo->prepare("
+        UPDATE BedrijfProduct 
+        SET Waarde = ?
+        WHERE Medewerker = ? AND Product = ? AND Bedrijf = ?
+    ");
+    $stmt->execute([$waarde, $naam, $veld, $bedrijf]);
 
-    // Verantwoordelijke mailadressen ophalen
-    $stmt = $pdo->prepare("SELECT Contactpersoon FROM Product WHERE Product = ?");
-    $stmt->execute([$veld]);
+    // Verantwoordelijke mailadressen ophalen (per product + bedrijf)
+    $stmt = $pdo->prepare("
+        SELECT Contactpersoon 
+        FROM Product 
+        WHERE Product = ? AND Bedrijf = ?
+    ");
+    $stmt->execute([$veld, $bedrijf]);
     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $melding = "Toegang succesvol aangevraagd";
@@ -111,10 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
 
     // Webhook payload
     $payload = [
-        "naam" => $naam,
-        "actie" => $actieTekst,
+        "naam"      => $naam,
+        "actie"     => $actieTekst,
         "producten" => [$veld],
-        "emails" => $emails
+        "emails"    => $emails
     ];
 
     // Webhook call
@@ -132,14 +148,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
 }
 
 /* ---------------------------------------------------
-   7. Bovenste velden opslaan
+   5. Bovenste velden opslaan (Medewerker)
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset($_POST['actie'])) {
 
     $stmt = $pdo->prepare("
         UPDATE Medewerker 
-        SET Functie=?, Locatie=?, Leidinggevende=?, Bedrijf=?, Email=?
-        WHERE Naam=?
+        SET Functie = ?, Locatie = ?, Leidinggevende = ?, Bedrijf = ?, Email = ?
+        WHERE Naam = ?
     ");
 
     $stmt->execute([
@@ -164,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset(
 }
 
 /* ---------------------------------------------------
-   8. Bestand verwijderen
+   6. Bestand verwijderen
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['actie'] === "verwijderen_bestand") {
 
@@ -174,12 +190,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && $_POST['a
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
-        "$gebruikerNaam heeft een bestand verwijderd van " . urlencode($_POST['naam']),
+        "$gebruikerNaam heeft een bestand verwijderd van " . $_POST['naam'],
         "Huidige Medewerker"
     ]);
 
     $_SESSION['melding'] = "Bestand succesvol verwijderd!";
     header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam']));
-
     exit;
 }
