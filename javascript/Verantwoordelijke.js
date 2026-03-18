@@ -1,15 +1,17 @@
 function VerwijderProduct(id) {
     if (!confirm("Weet je zeker dat je dit product wilt verwijderen?")) return;
 
+    const bedrijf = document.getElementById("bedrijf").value;
+
     fetch("/backend/producten/producten.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `action=delete&id=${id}`
+        body: `action=delete&id=${id}&bedrijf=${encodeURIComponent(bedrijf)}`
     })
     .then(res => res.text())
     .then(data => {
         if (data === "OK") location.reload();
-        else alert("Verwijderen mislukt");
+        else alert("Verwijderen mislukt: " + data);
     });
 }
 
