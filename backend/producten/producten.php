@@ -7,6 +7,15 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
+$action   = $_POST['action'] ?? '';
+$id       = intval($_POST['id'] ?? 0);
+$product  = $_POST['product'] ?? '';
+$contact  = $_POST['contact'] ?? '';
+$afdeling = $_POST['afdeling'] ?? '';
+$bedrijf = $_POST['bedrijf'] ?? '';
+
+$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
+
 // Bedrijven ophalen waar gebruiker toegang toe heeft
 $stmt = $pdo->prepare("
     SELECT DISTINCT Bedrijf 
@@ -20,15 +29,6 @@ if (!in_array($bedrijf, $bedrijvenUser)) {
     echo "FOUT: geen toegang tot dit bedrijf";
     exit;
 }
-
-$action   = $_POST['action'] ?? '';
-$id       = intval($_POST['id'] ?? 0);
-$product  = $_POST['product'] ?? '';
-$contact  = $_POST['contact'] ?? '';
-$afdeling = $_POST['afdeling'] ?? '';
-$bedrijf = $_POST['bedrijf'] ?? '';
-
-$gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 $ok = true;
 
