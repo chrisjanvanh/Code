@@ -10,7 +10,7 @@ function VerwijderProduct(id) {
     })
     .then(res => res.text())
     .then(data => {
-        if (data === "OK") location.reload();
+        if (data === "OK") laadProducten();
         else alert("Verwijderen mislukt: " + data);
     });
 }
