@@ -1,7 +1,23 @@
 <?php
+session_start();
 require_once __DIR__ . '/../config2.php';
 
+$gebruikerEmail = $_SESSION['email'];
+
+// Bedrijven ophalen waar gebruiker toegang toe heeft
+$stmt = $pdo->prepare("
+    SELECT DISTINCT Bedrijf 
+    FROM AfdelingEmails 
+    WHERE Email = ? AND Afdeling = 'Business IT'
+");
+$stmt->execute([$gebruikerEmail]);
+$bedrijvenUser = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 $bedrijf = $_GET['bedrijf'] ?? '';
+
+if (!in_array($bedrijf, $bedrijvenUser)) {
+    die("<p>Geen toegang tot dit bedrijf.</p>");
+}
 
 $stmt = $pdo->prepare("SELECT * FROM Product WHERE Bedrijf = ? ORDER BY ID ASC");
 $stmt->execute([$bedrijf]);

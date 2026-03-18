@@ -7,24 +7,19 @@ if (!isset($_SESSION['email'])) {
 
 require_once 'backend/config2.php';
 
-// Alleen Business IT mag deze pagina zien
 $gebruikerEmail = $_SESSION['email'];
 $afdelingRecht = "Business IT";
 
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+// Check toegang
+$stmt = $pdo->prepare("SELECT Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
 $stmt->execute([$afdelingRecht, $gebruikerEmail]);
+$bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-if ($stmt->rowCount() === 0) {
+if (empty($bedrijven)) {
     header("Location: forbidden.php");
     exit;
 }
-
-// Bedrijven ophalen
-$stmtBedrijven = $pdo->query("SELECT DISTINCT Bedrijf FROM Product WHERE Bedrijf IS NOT NULL ORDER BY Bedrijf ASC");
-$bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +30,6 @@ $bedrijven = $stmtBedrijven->fetchAll(PDO::FETCH_COLUMN);
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/Verantwoordelijke.js"></script>
     <script src="javascript/main.js"></script>
-
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
 <body>
 
@@ -47,16 +40,23 @@ toonMenu($rechten, 'producten');
 
 <div class="content">
 
-        Bedrijf:
-        <input list="bedrijven" id="bedrijf" name="bedrijf" required autocomplete="organization" oninput="laadProducten()">
+<?php if (count($bedrijven) > 1): ?>
+    Bedrijf:
+    <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
 
-        <datalist id="bedrijven">
-            <?php foreach ($bedrijven as $b): ?>
-                <option value="<?= htmlspecialchars($b) ?>"></option>
-            <?php endforeach; ?>
-        </datalist>
+    <datalist id="bedrijven">
+        <?php foreach ($bedrijven as $b): ?>
+            <option value="<?= htmlspecialchars($b) ?>"></option>
+        <?php endforeach; ?>
+    </datalist>
+<?php else: ?>
+    <input type="hidden" id="bedrijf" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => laadProducten());
+    </script>
+<?php endif; ?>
 
-        <div id="producten-container"></div>
+    <div id="producten-container"></div>
 </div>
 </body>
 </html>
