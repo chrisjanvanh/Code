@@ -38,7 +38,7 @@ function voegEmailToe() {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         credentials: "include",
-        body: `action=add&email=${encodeURIComponent(email)}&afdeling=${encodeURIComponent(afdeling)}`
+        body: `action=add&email=${encodeURIComponent(email)}&afdeling=${encodeURIComponent(afdeling)}&bedrijf=${encodeURIComponent(bedrijf)}`
     })
     .then(r => r.text())
     .then(t => {
