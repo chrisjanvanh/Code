@@ -12,29 +12,38 @@ $gebruikerEmail = $_SESSION['email'];
 $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 
 /* ---------------------------------------------------
-   1. Controle: heeft gebruiker toegang tot deze afdeling?
-   + bedrijf ophalen
+   1. Alle bedrijven ophalen waarvoor deze gebruiker HR is
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT ID, Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+$stmt = $pdo->prepare("
+    SELECT Bedrijf 
+    FROM AfdelingEmails 
+    WHERE Afdeling = ? AND Email = ?
+");
 $stmt->execute([$afdeling, $gebruikerEmail]);
-$info = $stmt->fetch(PDO::FETCH_ASSOC);
+$bedrijvenHR = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-if (!$info) {
+if (empty($bedrijvenHR)) {
     header("Location: forbidden.php");
     exit;
 }
 
-$bedrijf = $info['Bedrijf'];
+/* Helper: placeholders voor IN (...) */
+$placeholdersBedrijven = implode(',', array_fill(0, count($bedrijvenHR), '?'));
 
 /* ---------------------------------------------------
-   2. Medewerkers ophalen (alleen dit bedrijf)
+   2. Medewerkers ophalen (alleen bedrijven waar HR toegang toe heeft)
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Bedrijf = ? ORDER BY Naam ASC");
-$stmt->execute([$bedrijf]);
+$stmt = $pdo->prepare("
+    SELECT Naam 
+    FROM Medewerker 
+    WHERE Bedrijf IN ($placeholdersBedrijven)
+    ORDER BY Naam ASC
+");
+$stmt->execute($bedrijvenHR);
 $medewerkers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ---------------------------------------------------
-   3. Medewerker + toegangen ophalen
+   3. Medewerker + toegangen + bestanden ophalen
 --------------------------------------------------- */
 $medewerker = null;
 $toegangen  = [];
@@ -43,20 +52,29 @@ $bestanden  = [];
 if (isset($_GET['naam'])) {
     $naam = $_GET['naam'];
 
-    // Medewerker ophalen, gecontroleerd op bedrijf
-    $stmt = $pdo->prepare("SELECT * FROM Medewerker WHERE Naam = ? AND Bedrijf = ?");
-    $stmt->execute([$naam, $bedrijf]);
+    // Medewerker ophalen, maar alleen als hij in een bedrijf zit waar HR toegang toe heeft
+    $params = array_merge([$naam], $bedrijvenHR);
+
+    $stmt = $pdo->prepare("
+        SELECT * 
+        FROM Medewerker 
+        WHERE Naam = ?
+          AND Bedrijf IN ($placeholdersBedrijven)
+    ");
+    $stmt->execute($params);
     $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($medewerker) {
-        // Toegangen uit BedrijfProduct
+        $bedrijfMedewerker = $medewerker['Bedrijf'];
+
+        // Toegangen uit BedrijfProduct voor deze medewerker + zijn bedrijf
         $stmt = $pdo->prepare("
             SELECT Product, Waarde
             FROM BedrijfProduct
             WHERE Medewerker = ? AND Bedrijf = ?
             ORDER BY Product ASC
         ");
-        $stmt->execute([$naam, $bedrijf]);
+        $stmt->execute([$naam, $bedrijfMedewerker]);
         $toegangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Bestanden ophalen
@@ -80,13 +98,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
     $naam  = $_POST['naam'];
     $actie = $_POST['actie'];
 
+    // Medewerker opnieuw ophalen om zeker te zijn van bedrijf + rechten
+    $params = array_merge([$naam], $bedrijvenHR);
+    $stmt = $pdo->prepare("
+        SELECT * 
+        FROM Medewerker 
+        WHERE Naam = ?
+          AND Bedrijf IN ($placeholdersBedrijven)
+    ");
+    $stmt->execute($params);
+    $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$medewerker) {
+        die("FOUT: geen rechten op deze medewerker of medewerker niet gevonden.");
+    }
+
+    $bedrijfMedewerker = $medewerker['Bedrijf'];
+
     // Huidige waarde ophalen uit BedrijfProduct
     $stmt = $pdo->prepare("
         SELECT Waarde 
         FROM BedrijfProduct 
         WHERE Medewerker = ? AND Product = ? AND Bedrijf = ?
     ");
-    $stmt->execute([$naam, $veld, $bedrijf]);
+    $stmt->execute([$naam, $veld, $bedrijfMedewerker]);
     $huidigeWaarde = $stmt->fetchColumn();
 
     // Validatie
@@ -107,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
         SET Waarde = ?
         WHERE Medewerker = ? AND Product = ? AND Bedrijf = ?
     ");
-    $stmt->execute([$waarde, $naam, $veld, $bedrijf]);
+    $stmt->execute([$waarde, $naam, $veld, $bedrijfMedewerker]);
 
     // Verantwoordelijke mailadressen ophalen (per product + bedrijf)
     $stmt = $pdo->prepare("
@@ -115,10 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
         FROM Product 
         WHERE Product = ? AND Bedrijf = ?
     ");
-    $stmt->execute([$veld, $bedrijf]);
+    $stmt->execute([$veld, $bedrijfMedewerker]);
     $contact = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    $melding = "Toegang succesvol aangevraagd";
 
     $emails = [];
     if (!empty($contact['Contactpersoon'])) {
@@ -151,6 +184,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
    5. Bovenste velden opslaan (Medewerker)
 --------------------------------------------------- */
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['functie']) && !isset($_POST['actie'])) {
+
+    // Medewerker ophalen + check bedrijf
+    $naamPost = $_POST['naam'];
+    $params   = array_merge([$naamPost], $bedrijvenHR);
+
+    $stmt = $pdo->prepare("
+        SELECT * 
+        FROM Medewerker 
+        WHERE Naam = ?
+          AND Bedrijf IN ($placeholdersBedrijven)
+    ");
+    $stmt->execute($params);
+    $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$medewerker) {
+        die("FOUT: geen rechten op deze medewerker of medewerker niet gevonden.");
+    }
 
     $stmt = $pdo->prepare("
         UPDATE Medewerker 
