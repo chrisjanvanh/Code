@@ -133,6 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($check->rowCount() > 0) {
         $melding = "Deze medewerker bestaat al.";
+        return;
     } else {
 
         /* -----------------------------------------------------------
@@ -149,8 +150,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         $melding = "Medewerker succesvol aangemeld.";
-
-        $stmt->execute($params);
 
         foreach ($values as $product => $waarde) {
 
