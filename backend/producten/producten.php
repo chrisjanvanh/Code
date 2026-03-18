@@ -53,6 +53,9 @@ if ($action === "add") {
         $ok = false;
     }
 
+    $afdeling = $pdo->prepare("INSERT INTO AfdelingEmails (Afdeling, Email, Bedrijf) VALUES (?, ?, ?)");
+    if (!afdeling->execute([$afdeling, $contact, $bedrijf])) $ok = false;
+
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
