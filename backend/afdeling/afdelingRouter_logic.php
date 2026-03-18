@@ -10,16 +10,16 @@ if (!isset($_SESSION['email'])) {
 $gebruikerEmail = $_SESSION['email'];
 
 /* ---------------------------------------------------
-   1. Haal alle afdelingen op waar deze gebruiker toegang toe heeft
+   1. Haal alle afdelingen + bedrijven op
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
+$stmt = $pdo->prepare("SELECT Afdeling, Bedrijf FROM AfdelingEmails WHERE Email = ?");
 $stmt->execute([$gebruikerEmail]);
-$afdelingen = $stmt->fetchAll(PDO::FETCH_COLUMN);
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 /* ---------------------------------------------------
    2. Geen afdelingen → forbidden
 --------------------------------------------------- */
-if (empty($afdelingen)) {
+if (empty($rows)) {
     header("Location: forbidden.php");
     exit;
 }
@@ -27,8 +27,14 @@ if (empty($afdelingen)) {
 /* ---------------------------------------------------
    3. Eén afdeling → direct doorsturen
 --------------------------------------------------- */
-if (count($afdelingen) === 1) {
-    $afdeling = urlencode($afdelingen[0]);
-    header("Location: Afdeling.php?afdeling=$afdeling");
+if (count($rows) === 1) {
+    $afd = urlencode($rows[0]['Afdeling']);
+    $bedrijf = urlencode($rows[0]['Bedrijf']);
+    header("Location: Afdeling.php?afdeling=$afd&bedrijf=$bedrijf");
     exit;
 }
+
+/* ---------------------------------------------------
+   4. Meerdere afdelingen → lijst tonen
+--------------------------------------------------- */
+$afdelingen = $rows;

@@ -9,6 +9,7 @@ if (!isset($_GET['afdeling'])) {
 }
 
 $afdeling = $_GET['afdeling'];
+$bedrijf = $_GET['bedrijf'] ?? null;
 
 // 2. Check of gebruiker is ingelogd
 if (!isset($_SESSION['email'])) {
@@ -19,11 +20,11 @@ if (!isset($_SESSION['email'])) {
 $gebruikerEmail = $_SESSION['email'];
 
 // 3. Controleer of gebruiker toegang heeft tot deze afdeling
-$stmt = $pdo->prepare("SELECT ID, Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->execute([$afdeling, $gebruikerEmail]);
-$info = $stmt->fetch(PDO::FETCH_ASSOC);
+// $stmt = $pdo->prepare("SELECT ID, Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
+// $stmt->execute([$afdeling, $gebruikerEmail]);
+// $info = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$bedrijf = $info['Bedrijf'];
+// $bedrijf = $info['Bedrijf'];
 
 if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");
