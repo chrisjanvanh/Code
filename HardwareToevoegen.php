@@ -36,6 +36,15 @@ toonMenu($rechten, 'hardware');
         Serienummer:<br>
         <input type="text" name="serienummer" required>
 
+        Bedrijf:
+        <input list="bedrijven" id="bedrijf" name="bedrijf" required>
+
+        <datalist id="bedrijven">
+            <?php foreach ($bedrijven as $b): ?>
+                <option value="<?= htmlspecialchars($b) ?>"></option>
+            <?php endforeach; ?>
+        </datalist>
+
         Merk:<br>
         <input type="text" name="merk" >
 

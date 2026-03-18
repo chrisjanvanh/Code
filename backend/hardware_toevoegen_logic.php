@@ -25,6 +25,10 @@ if ($stmt->rowCount() === 0) {
 
 $melding = "";
 
+$stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ?");
+$stmt->execute([$gebruikerEmail]);
+$bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
 /* ---------------------------------------------------
    2. POST verwerking
 --------------------------------------------------- */
