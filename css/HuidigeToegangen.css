@@ -25,6 +25,16 @@ form input[type=submit], .button, ::file-selector-button {
     margin-bottom: 5px;
 }
 
+input[list] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
 form input[type=submit]:hover, .button:hover, ::file-selector-button:hover {
     background-color: #167ff7;
 }
