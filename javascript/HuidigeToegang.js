@@ -9,7 +9,8 @@ function naamtoevoegen() {
     }
 }
 
-function verwijderMedewerker(naam) {
+function verwijderMedewerker(naam, bedrijf) {
     if (!confirm(`Weet je zeker dat je ${naam} wilt verwijderen? \nDeze actie kan niet ongedaan worden gemaakt.`)) return;
-     window.location.href = `backend/medewerker/verwijder_medewerker2.php?naam=${encodeURIComponent(naam)}`;
+
+    window.location.href = `backend/medewerker/verwijder_medewerker2.php?naam=${encodeURIComponent(naam)}&bedrijf=${encodeURIComponent(bedrijf)}`;
 }

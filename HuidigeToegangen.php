@@ -184,7 +184,12 @@ toonMenu($rechten, 'medewerkers');
 
 
         <br><br>
-        <input type="button" name="verwijderen" value="Verwijderen" class="button medewerkerverwijderen" onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>')">
+        <input type="button" 
+       name="verwijderen" 
+       value="Verwijderen" 
+       class="button medewerkerverwijderen" 
+       onclick="verwijderMedewerker('<?= $medewerker['Naam'] ?>', '<?= $medewerker['Bedrijf'] ?>')">
+
     <?php endif; ?>
 
 </div>
