@@ -9,7 +9,7 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
-$afdelingRecht = "IT Contact"
+$afdelingRecht = "IT Contact";
 
 /* ---------------------------------------------------
    1. Haal bedrijven op waar deze gebruiker toegang toe heeft
