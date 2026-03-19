@@ -13,7 +13,7 @@ $bedrijf = $_GET['bedrijf'] ?? null;
 
 // 2. Check of gebruiker is ingelogd
 if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
+    header("Location: /../../login.php");
     exit;
 }
 
