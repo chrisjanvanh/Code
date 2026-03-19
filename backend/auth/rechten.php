@@ -32,11 +32,11 @@ function toonMenu($rechten, $current = "")
             <a href="HuidigeToegangen.php" class="<?= $current === 'medewerkers' ? 'current' : '' ?>">Medewerkers</a>
         <?php endif; ?>
 
-        <?php if (in_array("Business IT", $rechten)): ?>
+        <?php if (in_array("IT Contact", $rechten)): ?>
             <a href="HardwareToewijzen.php" class="<?= $current === 'hardware' ? 'current' : '' ?>">Hardware</a>
         <?php endif; ?>
 
-        <?php if (in_array("Business IT", $rechten)): ?>
+        <?php if (in_array("IT Contact", $rechten)): ?>
             <a href="Verantwoordelijke.php" class="<?= $current === 'producten' ? 'current' : '' ?>">Producten</a>
         <?php endif; ?>
 
@@ -44,7 +44,7 @@ function toonMenu($rechten, $current = "")
             <a href="afdelingRouter.php" class="<?= $current === 'taken' ? 'current' : '' ?>">Taken</a>
         <?php endif; ?>
 
-        <?php if (in_array("Business IT", $rechten)): ?>
+        <?php if (in_array("IT Contact", $rechten)): ?>
             <a href="Logboek.php" class="<?= $current === 'logboek' ? 'current' : '' ?>">Logboek</a>
         <?php endif; ?>
 
