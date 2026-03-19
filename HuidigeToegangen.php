@@ -105,7 +105,7 @@ toonMenu($rechten, 'medewerkers');
                 <?php endforeach; ?>
                 <tr>
                     <td colspan="4">
-                        <form action="/backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
+                        <form action="backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="email" value="<?= $medewerker['Email'] ?>">
                             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
 
