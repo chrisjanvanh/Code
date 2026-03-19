@@ -24,8 +24,8 @@ toonMenu($rechten, 'taken');
 ?>
 
 <script>
-    const afdeling = "<?= htmlspecialchars($afdeling) ?>";
-    const bedrijf  = "<?= htmlspecialchars($bedrijf) ?>";
+    const afdeling = "<?= htmlspecialchars_decode($afdeling) ?>";
+    const bedrijf  = "<?= htmlspecialchars_decode($bedrijf) ?>";
 </script>
 
 <div class="content">
