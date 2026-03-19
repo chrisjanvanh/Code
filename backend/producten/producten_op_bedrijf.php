@@ -8,7 +8,7 @@ $gebruikerEmail = $_SESSION['email'];
 $stmt = $pdo->prepare("
     SELECT DISTINCT Bedrijf 
     FROM AfdelingEmails 
-    WHERE Email = ? AND Afdeling = 'Business IT'
+    WHERE Email = ? AND Afdeling = 'IT Contact'
 ");
 $stmt->execute([$gebruikerEmail]);
 $bedrijvenUser = $stmt->fetchAll(PDO::FETCH_COLUMN);
