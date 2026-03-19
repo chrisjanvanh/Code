@@ -32,7 +32,7 @@ echo '<br><br>
     <table>
         <tr>
             <th>Product</th>
-            <th>Contactpersoon</th>
+            <th>Mailadres Contactpersoon</th>
             <th>Afdeling</th>
             <th>Product verwijderen</th>
         </tr>';
