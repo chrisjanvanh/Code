@@ -9,12 +9,13 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$afdelingRechten = "IT Contact";
 
 /* ---------------------------------------------------
    1. Haal bedrijven op waar deze gebruiker toegang toe heeft
 --------------------------------------------------- */
-$stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ?");
-$stmt->execute([$gebruikerEmail]);
+$stmt = $pdo->prepare("SELECT DISTINCT Bedrijf FROM AfdelingEmails WHERE Email = ? AND Afdeling = ?");
+$stmt->execute([$gebruikerEmail, $afdelingRechten]);
 $bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
 /* ---------------------------------------------------
