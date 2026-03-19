@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../config2.php';
 
 if (!isset($_SESSION['email'])) {
-    header("Location: /login.php");
+    header("Location: login.php");
     exit;
 }
  
@@ -37,12 +37,12 @@ try {
         "Huidige Medewerker"
     ]);
 
-    $melding = "Bestand succesvol opgeslagen"
+    $melding = "Bestand succesvol opgeslagen";
 
 } catch (PDOException $e) {
     die("Database fout: " . $e->getMessage());
 }
 
 // Terug naar medewerkerpagina
-header("Location: ../../HuidigeToegangen.php?naam=" . urlencode($_POST['naam'] ?? ''));
+header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam'] ?? ''));
 exit;
