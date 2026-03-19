@@ -23,21 +23,7 @@ if (!$medewerker) {
 $bedrijf = $medewerker['Bedrijf'];
 
 /* ---------------------------------------------------
-   2. Alle producten ophalen uit BedrijfProduct
---------------------------------------------------- */
-$stmt = $pdo->prepare("
-    SELECT Product, Waarde
-    FROM BedrijfProduct
-    WHERE Medewerker = ? AND Bedrijf = ?
-");
-$stmt->execute([$naam, $bedrijf]);
-$toegangen = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-/* ---------------------------------------------------
-   3. Alle producten in één keer updaten
-      Oude logica:
-      - 1 → 2 (verwijderd)
-      - 0 of 3 → NULL (geen toegang)
+   2. Alle producten updaten
 --------------------------------------------------- */
 $stmtUpdate = $pdo->prepare("
     UPDATE BedrijfProduct
@@ -48,17 +34,53 @@ $stmtUpdate = $pdo->prepare("
     END
     WHERE Medewerker = ? AND Bedrijf = ?
 ");
-
 $stmtUpdate->execute([$naam, $bedrijf]);
 
 /* ---------------------------------------------------
-   4. Logboek
+   3. Check of ALLE waarden NULL zijn
 --------------------------------------------------- */
-$log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-$log->execute([
-    "$gebruikerNaam heeft alle producten verwijderd voor $naam (bedrijf: $bedrijf)",
-    "Huidige Medewerker"
-]);
+$stmtCheck = $pdo->prepare("
+    SELECT COUNT(*) 
+    FROM BedrijfProduct 
+    WHERE Medewerker = ? AND Bedrijf = ? AND Waarde IS NOT NULL
+");
+$stmtCheck->execute([$naam, $bedrijf]);
+$heeftNogProducten = $stmtCheck->fetchColumn();
+
+/* ---------------------------------------------------
+   4. Als medewerker geen producten meer heeft → verwijderen
+--------------------------------------------------- */
+if ($heeftNogProducten == 0) {
+
+    // Verwijder uit BedrijfProduct
+    $delBP = $pdo->prepare("
+        DELETE FROM BedrijfProduct 
+        WHERE Medewerker = ? AND Bedrijf = ?
+    ");
+    $delBP->execute([$naam, $bedrijf]);
+
+    // Verwijder uit Medewerker
+    $delMed = $pdo->prepare("
+        DELETE FROM Medewerker 
+        WHERE Naam = ? AND Bedrijf = ?
+    ");
+    $delMed->execute([$naam, $bedrijf]);
+
+    // Logboek
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam heeft medewerker $naam volledig verwijderd (geen producten meer, bedrijf: $bedrijf)",
+        "Huidige Medewerker"
+    ]);
+} else {
+
+    // Normale log
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+    $log->execute([
+        "$gebruikerNaam heeft alle producten verwijderd voor $naam (bedrijf: $bedrijf)",
+        "Huidige Medewerker"
+    ]);
+}
 
 /* ---------------------------------------------------
    5. Redirect
