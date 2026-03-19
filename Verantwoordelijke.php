@@ -8,7 +8,7 @@ if (!isset($_SESSION['email'])) {
 require_once 'backend/config2.php';
 
 $gebruikerEmail = $_SESSION['email'];
-$afdelingRecht = "Business IT";
+$afdelingRecht = "IT Contact";
 
 // Check toegang
 $stmt = $pdo->prepare("SELECT Bedrijf FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
