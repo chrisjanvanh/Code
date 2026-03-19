@@ -85,6 +85,22 @@ if ($kolom === $colMyVDL && $waarde == 1) {
 
         $productenNaarNul[] = $p;
     }
+
+    /* Extra stap: bestanden verwijderen wanneer MyVDL is afgerond */
+    if ($kolom === $colMyVDL && $waarde == 1) {
+
+        // 1. Email van medewerker ophalen
+        $stmtEmail = $pdo->prepare("SELECT Email FROM Medewerker WHERE Naam = ? AND Bedrijf = ?");
+        $stmtEmail->execute([$naam, $bedrijf]);
+        $email = $stmtEmail->fetchColumn();
+
+        if ($email) {
+
+            // 2. Bestanden verwijderen uit MedewerkerBestanden
+            $stmtDel = $pdo->prepare("DELETE FROM MedewerkerBestanden WHERE MedewerkerEmail = ?");
+            $stmtDel->execute([$email]);
+        }
+    }
 }
 
 /* C. Kelio afgerond → alle 3 → 0 */
