@@ -33,16 +33,16 @@ toonMenu($rechten, 'medewerkers');
         <h2>Nieuwe medewerker</h2>
 
         Naam:
-        <input type="text" id="naam" name="naam" required>
+        <input type="text" id="naam" name="naam" required autocomplete="off">
 
         Functie:
-        <input type="text" id="functie" name="functie">
+        <input type="text" id="functie" name="functie" autocomplete="off">
 
         Locatie:
-        <input type="text" id="locatie" name="locatie" required>
+        <input type="text" id="locatie" name="locatie" required autocomplete="off">
 
         Leidinggevende:
-        <input type="text" id="leidinggevende" name="leidinggevende">
+        <input type="text" id="leidinggevende" name="leidinggevende" autocomplete="off">
 
         <?php if (count($bedrijven) > 1): ?>
             Bedrijf:
@@ -62,7 +62,7 @@ toonMenu($rechten, 'medewerkers');
 
 
         Email:
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email" autocomplete="off">
         <br>
 
         <h2>Komt de medewerker contractueel in dienst?</h2>
@@ -76,7 +76,7 @@ toonMenu($rechten, 'medewerkers');
         <br><br>
 
         Referentie:
-        <input type="text" id="referentie" name="referentie">
+        <input type="text" id="referentie" name="referentie" autocomplete="off">
 
         <input type="submit" value="Opslaan">
     </form>
