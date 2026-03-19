@@ -44,5 +44,5 @@ try {
 }
 
 // Terug naar medewerkerpagina
-header("Location: ../HuidigeToegangen.php?naam=" . urlencode($_POST['naam'] ?? ''));
+header("Location: ../../HuidigeToegangen.php?naam=" . urlencode($_POST['naam'] ?? ''));
 exit;
