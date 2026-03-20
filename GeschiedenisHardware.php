@@ -34,7 +34,7 @@ toonMenu($rechten, 'hardware');
         <div class="melding"><?= $melding ?></div>
     <?php endif; ?>
 
-    <h1>Hardware Toewijzen</h1>
+    <h1>Hardware Geschiedenis</h1>
 
         Naam:<br>
         <input list="namen" id="naam" name="naam" required>
@@ -60,6 +60,7 @@ toonMenu($rechten, 'hardware');
             <th>Serienummer</th>
             <th>Uitgiftedatum</th>
             <th>Einddatum</th>
+            <th>Bedrijf</th>
         </tr>
 
         <?php foreach ($alle_regels as $row): ?>
@@ -72,6 +73,7 @@ toonMenu($rechten, 'hardware');
                 <td>
                     <?= $row['Einddatum'] ? date("d-m-Y", strtotime($row['Einddatum'])) : '-' ?>
                 </td>
+                    <td><?= htmlspecialchars($row['Bedrijf']) ?></td>
             </tr>
         <?php endforeach; ?>
     </table>

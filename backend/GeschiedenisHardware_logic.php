@@ -38,7 +38,7 @@ $melding = "";
    3. 
 --------------------------------------------------- */
 $toegewezen = $pdo->query("
-    SELECT Serienummer, Naam, Uitgiftedatum, Einddatum
+    SELECT Serienummer, Naam, Uitgiftedatum, Einddatum, Bedrijf
     FROM GeschiedenisGebruikname
     ORDER BY Einddatum DESC
 ")->fetchAll(PDO::FETCH_ASSOC);

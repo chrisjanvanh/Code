@@ -168,8 +168,12 @@ if (isset($_POST['verwijder'])) {
         $oph->execute([$sn]);
         $opgehaald = $oph->fetch(PDO::FETCH_ASSOC);
 
-        $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum) VALUES (?, ?, ?)");
-        $ges->execute([$sn, $opgehaald['Naam'], $opgehaald['Uitgiftedatum']]);
+        $bed = $pdo->prepare("SELECT Bedrijf FROM Hardware WHERE Serienummer = ?");
+        $bed->execute([sn]);
+        $bedrijfje = $bed->fetch(PDO::FETCH_ASSOC);
+
+        $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum, Bedrijf) VALUES (?, ?, ?, ?)");
+        $ges->execute([$sn, $opgehaald['Naam'], $opgehaald['Uitgiftedatum'], $bedrijfje['Bedrijf']]);
 
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
         $del->execute([$sn]);
