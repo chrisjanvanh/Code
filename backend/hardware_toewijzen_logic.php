@@ -169,7 +169,7 @@ if (isset($_POST['verwijder'])) {
         $opgehaald = $oph->fetch(PDO::FETCH_ASSOC);
 
         $bed = $pdo->prepare("SELECT Bedrijf FROM Hardware WHERE Serienummer = ?");
-        $bed->execute([sn]);
+        $bed->execute([$sn]);
         $bedrijfje = $bed->fetch(PDO::FETCH_ASSOC);
 
         $ges = $pdo->prepare("INSERT INTO GeschiedenisGebruikname (Serienummer, Naam, Uitgiftedatum, Bedrijf) VALUES (?, ?, ?, ?)");
