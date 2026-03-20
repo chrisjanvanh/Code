@@ -52,9 +52,12 @@ if (isset($_SESSION['email'])) {
         }
         img {
             max-width: 150px;
+            margin-top: 25px;
+            transition: max-width 1.5s ease;
         }
         img:hover {
-            max-width: 175px;
+            max-width: 160px;
+            margin-top: 20px;
         }
     </style>
 </head>
