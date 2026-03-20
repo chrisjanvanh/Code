@@ -65,7 +65,15 @@ toonMenu($rechten, 'hardware');
         <input list="serienummers" id="serienummer" name="serienummer" required>
         <datalist id="serienummers">
             <?php foreach ($alle_regels as $h): ?>
-                <option value="<?= htmlspecialchars($h['Serienummer']) ?>"></option>
+                <?php if ($h['type'] === 'voorraad'): ?>
+                    <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
+                        <?= htmlspecialchars($h['Serienummer']) ?> (Voorraad)
+                    </option>
+                <?php else: ?>
+                    <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
+                        <?= htmlspecialchars($h['Serienummer']) ?> (Toegewezen)
+                    </option>
+                <?php endif; ?>
             <?php endforeach; ?>
         </datalist>
 
