@@ -64,7 +64,7 @@ toonMenu($rechten, 'hardware');
         Serienummer:<br>
         <input list="serienummers" id="serienummer" name="serienummer" required>
         <datalist id="serienummers">
-            <?php foreach ($hardware as $h): ?>
+            <?php foreach ($alle_regels as $h): ?>
                 <option value="<?= htmlspecialchars($h['Serienummer']) ?>"></option>
             <?php endforeach; ?>
         </datalist>
