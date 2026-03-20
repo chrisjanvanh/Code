@@ -37,19 +37,18 @@ toonMenu($rechten, 'hardware');
     <h1>Hardware Toewijzen</h1>
 
     <form method="POST">
+
     <?php if (count($bedrijven) > 1): ?>
-        <form method="POST" style="margin-bottom: 20px;">
-            Bedrijf:<br>
-            <select name="bedrijf" onchange="this.form.submit()" required>
-                <option value="">-- Kies bedrijf --</option>
-                <?php foreach ($bedrijven as $b): ?>
-                    <option value="<?= htmlspecialchars($b) ?>"
-                        <?= ($bedrijf === $b ? "selected" : "") ?>>
-                        <?= htmlspecialchars($b) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </form>
+        Bedrijf:<br>
+        <select name="bedrijf" onchange="this.form.submit()" required>
+            <option value="">-- Kies bedrijf --</option>
+            <?php foreach ($bedrijven as $b): ?>
+                <option value="<?= htmlspecialchars($b) ?>"
+                    <?= ($bedrijf === $b ? "selected" : "") ?>>
+                    <?= htmlspecialchars($b) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
     <?php else: ?>
         <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
     <?php endif; ?>
