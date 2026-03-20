@@ -67,11 +67,11 @@ toonMenu($rechten, 'hardware');
             <?php foreach ($alle_regels as $h): ?>
                 <?php if ($h['type'] === 'voorraad'): ?>
                     <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
-                        <?= htmlspecialchars($h['Serienummer']) ?> (Voorraad)
+                        (Voorraad)
                     </option>
                 <?php else: ?>
                     <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
-                        <?= htmlspecialchars($h['Serienummer']) ?> (Toegewezen)
+                        (Toegewezen)
                     </option>
                 <?php endif; ?>
             <?php endforeach; ?>
