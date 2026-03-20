@@ -50,13 +50,19 @@ if (isset($_SESSION['email'])) {
         .g_id_onload, .g_id_signin {
             margin-top:10px;
         }
+        img {
+            max-width: 150px;
+        }
+        img:hover {
+            max-width: 175px;
+        }
     </style>
 </head>
 
 <body>
 <div class="login-container">
     <div class="login-box">
-        <img src="img/logo.svg" alt="VDL Groep Logo" style="max-width:150px;">
+        <img src="img/logo.svg" alt="VDL Groep Logo">
         <h1>VDL Groep</h1>
         <p>Meld je aan met je account</p>
 
