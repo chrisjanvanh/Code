@@ -90,6 +90,8 @@ foreach ($producten as $veld => $info) {
     }
 }
 
+$opsomming = array_filter($opsomming); // ← verwijdert lege regels
+
 $opsomming_tekst = implode("\n", $opsomming);
 
 // 3. Webhook naar Make
