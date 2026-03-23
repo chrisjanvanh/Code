@@ -30,7 +30,6 @@ toonMenu($rechten, 'index');
 
     <div class="content">
         <form>
-            Bedrijf:
             <?php if (count($bedrijven) > 1): ?>
                 Bedrijf:
                 <input list="bedrijven" id="bedrijf" name="bedrijf" required>
