@@ -25,7 +25,7 @@ require 'backend/HardwareBestellen_logic.php';
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'index');
+toonMenu($rechten, 'hardware');
 ?>
 
     <div class="content">
