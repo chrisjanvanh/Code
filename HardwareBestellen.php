@@ -65,11 +65,11 @@ toonMenu($rechten, 'index');
             <input type="tel" id="telefoon" name="telefoon" required>
             Bestaande gebruiker: <br>
             <label class="switch">
-                <input type="checkbox">
+                <input type="checkbox" name="bestaande_gebruiker" value="ja">
                 <span class="slider round"></span>
             </label> <br><br>
             Huidige computernaam indien van toepassing:
-            <input type="text" id="huidig" name="huidig">
+            <input type="text" id="huidig" name="huidige_computernaam">
 
             <h3>Motivatie</h3>
             <input type="text" id="motivatie" name="motivatie">

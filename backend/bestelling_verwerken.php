@@ -107,6 +107,8 @@ $data = [
     "voor_naam" => $_POST["naam"],
     "voor_afdeling" => $_POST["afdeling"],
     "voor_telefoon" => $_POST["telefoon"],
+    "bestaande_gebruiker" => isset($_POST["bestaande_gebruiker"]) ? "Ja" : "Nee";
+    "huidige_computernaam" => trim($_POST["huidige_computernaam"] ?? "")";"
 
     "motivatie" => $_POST["motivatie"],
     "bestelling" => $opsomming_tekst
