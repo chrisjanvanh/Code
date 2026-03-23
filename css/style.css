@@ -122,7 +122,7 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
    Responsive layout
 ------------------------------ */
 
-@media (max-width: 950px) {
+@media (max-width: 1000px) {
     .content {
         margin-left: 20%;
         margin-right: 20%;
