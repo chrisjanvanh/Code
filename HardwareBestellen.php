@@ -29,7 +29,7 @@ toonMenu($rechten, 'index');
 ?>
 
     <div class="content">
-        <form>
+        <form method="POST" action="backend/bestelling_verwerken.php">
             <?php if (count($bedrijven) > 1): ?>
                 Bedrijf:
                 <input list="bedrijven" id="bedrijf" name="bedrijf" required>
