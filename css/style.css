@@ -157,7 +157,7 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
         justify-content: flex-start;
         align-items: center;
         height: 10vh;
-        transition: transform 0.5s ease;
+        transition: transform 1.0s ease;
         overflow: hidden;
         width: 100%;
         z-index: 9999;
@@ -168,7 +168,7 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
     }
 
     .content {
-        transition: transform 0.5s ease;
+        transition: transform 1.0s ease;
     }
 
     .content#hide {
