@@ -101,7 +101,7 @@ $data = [
     "bedrijf" => $_POST["bedrijf"],
     "aanvrager" => $_POST["naamAanvrager"],
     "telefoonAanvrager" => $_POST["telefoonAanvrager"],
-    "datum" => $_POST["datumAanvrager"],
+    "datum" => date("d-m-Y", strtotime($_POST["datumAanvrager"])),
     "investeringsnummer" => $_POST["investeringsnummer"],
 
     "voor_naam" => $_POST["naam"],
