@@ -29,10 +29,19 @@ toonMenu($rechten, 'index');
     <div class="content">
         <form>
             Bedrijf:
-            <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
-            <datalist id="bedrijven">
-                <option value="VDL Bus & Coach"></option>
-            </datalist>
+            <?php if (count($bedrijven) > 1): ?>
+                Bedrijf:
+                <input list="bedrijven" id="bedrijf" name="bedrijf" required>
+
+                <datalist id="bedrijven">
+                    <?php foreach ($bedrijven as $b): ?>
+                        <option value="<?= htmlspecialchars($b) ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
+            <?php else: ?>
+                <input type="hidden" id="bedrijf" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
+            <?php endif; ?>
+            
             <h3>Aanvrager:</h3>
             Naam:
             <input type="text" id="naamAanvrager" name="naamAanvrager" required>
