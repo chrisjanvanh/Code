@@ -123,7 +123,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
 
-$melding = "Succesvol verstuurd";
+$_SESSION['melding'] = "Succesvol verstuurd";
 
 // 4. Redirect naar bedankpagina
 header("Location: ../HardwareBestellen.php");
