@@ -29,6 +29,12 @@ toonMenu($rechten, 'index');
 ?>
 
     <div class="content">
+
+        <?php if (!empty($_SESSION['melding'])): ?>
+            <div class="melding"><?= $_SESSION['melding'] ?></div>
+            <?php unset($_SESSION['melding']); ?>
+        <?php endif; ?>
+
         <form method="POST" action="backend/bestelling_verwerken.php">
             <?php if (count($bedrijven) > 1): ?>
                 Bedrijf:

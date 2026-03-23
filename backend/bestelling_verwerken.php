@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$melding = "";
+
 // 1. Productdefinities (vervanging + uitbreiding)
 $producten = [
     "11" => ["naam" => "Desktop i5 SFF", "type" => "vervanging"],
@@ -120,6 +122,8 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
+
+$melding = "Succesvol verstuurd";
 
 // 4. Redirect naar bedankpagina
 header("Location: ../HardwareBestellen.php");
