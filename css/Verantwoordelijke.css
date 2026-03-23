@@ -31,6 +31,12 @@ table input[type=text] {
     box-sizing: border-box;
 }
 
+table {
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+}
+
 .button {
     background-color: red;
 }
@@ -47,10 +53,4 @@ table input[type=text] {
 
 .Toevoegen:hover {
     background-color: darkgreen;
-}
-
-table {
-    border-collapse: collapse;
-    overflow-x: auto;
-    display: block;
 }

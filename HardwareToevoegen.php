@@ -58,6 +58,7 @@ toonMenu($rechten, 'hardware');
         <input type="date" name="aankoopdatum">
 
         <input type="submit" value="Opslaan">
+        <a href="HardwareBestellen.php" class="button">Hardware Bestellen</a>
     </form>
 
 </div>
