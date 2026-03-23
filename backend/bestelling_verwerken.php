@@ -118,5 +118,5 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 // 4. Redirect naar bedankpagina
-header("Location: ../bedankt.php");
+header("Location: ../HardwareBestellen.php");
 exit;
