@@ -1,13 +1,12 @@
 <?php
 session_start();
+require 'config2.php';
 
 // Login check
 if (!isset($_SESSION['email'])) {
-    header("Location: /../../login.php");
+    header("Location: /../login.php");
     exit;
 }
-
-require_once __DIR__ . '/../config2.php'; // bevat $pdo
 
 $afdeling = "IT Contact";
 
