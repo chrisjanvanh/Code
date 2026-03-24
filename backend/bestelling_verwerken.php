@@ -3,6 +3,11 @@ session_start();
 
 $melding = "";
 
+$gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
+$naam = htmlspecialchars($_POST['naam']);
+$bedrijf = htmlspecialchars($_POST['bedrijf']);
+
+
 // 1. Productdefinities (vervanging + uitbreiding)
 $producten = [
     "11" => ["naam" => "Desktop i5 SFF", "type" => "vervanging"],
@@ -123,7 +128,23 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
 
-$_SESSION['melding'] = "Succesvol verstuurd";
+if ($response === false) {
+    $_SESSION['melding'] = "Er ging iets mis bij het versturen. Probeer het opnieuw.";
+
+    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log->execute([
+        "$gebruikerNaam heeft geprobeert hardware besteld voor $naam en het bedrijf $bedrijf dit is helaas fout gegaan om een onbekende reden.",
+        "Bestellen Hardware"
+    ]);
+} else {
+    $_SESSION['melding'] = "Succesvol verstuurd!";
+
+    $log2 = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log2->execute([
+        "$gebruikerNaam heeft succesvol hardware besteld voor $naam en het bedrijf $bedrijf",
+        "Bestellen Hardware"
+    ]);
+}
 
 // 4. Redirect naar bedankpagina
 header("Location: ../HardwareBestellen.php");
