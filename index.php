@@ -27,7 +27,7 @@ toonMenu($rechten, 'index');
 
     <div class="content">
         <h1>Welkom op de Medewerkerspagina</h1>
-        <img src="img/bus.webp" alt="Bus">
+        <img src="img/bus.png" alt="Bus">
     </div>
 </body>
 </html>
