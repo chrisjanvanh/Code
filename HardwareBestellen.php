@@ -57,7 +57,7 @@ toonMenu($rechten, 'hardware');
             <input type="date" id="datumAanvrager" name="datumAanvrager" required>
 
             Telefoonnummer:
-            <input type="tel" id="telefoonAanvrager" name="telefoonAanvrager" required>
+            <input type="tel" id="telefoonAanvrager" name="telefoonAanvrager" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
 
             t.l.v. investeringsnummer:
             <input type="text" id="investeringsnummer" name="investeringsnummer">
@@ -68,7 +68,7 @@ toonMenu($rechten, 'hardware');
             Afdeling:
             <input type="text" id="afdeling" name="afdeling" required>
             Telefoonnummer:
-            <input type="tel" id="telefoon" name="telefoon" required>
+            <input type="tel" id="telefoon" name="telefoon" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
             Bestaande gebruiker: <br>
             <label class="switch">
                 <input type="checkbox" name="bestaande_gebruiker" value="ja">
