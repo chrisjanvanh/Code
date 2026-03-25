@@ -32,8 +32,8 @@ if (empty($bedrijven)) {
 if (count($bedrijven) === 1) {
     $bedrijf = $bedrijven[0];
 } else {
-    // bedrijf komt uit POST (van jouw input list)
-    $bedrijf = $_POST['bedrijf'] ?? "";
+    // bedrijf komt uit GET (van jouw input list)
+    $bedrijf = $_GET['bedrijf'] ?? "";
 }
 
 /* ---------------------------------------------------
