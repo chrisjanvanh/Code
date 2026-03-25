@@ -197,6 +197,6 @@ if (isset($_POST['verwijder'])) {
         ]);
     }
 
-    header("Location: ../HardwareToewijzen.php");
+    header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
     exit;
 }
