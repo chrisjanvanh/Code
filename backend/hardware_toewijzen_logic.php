@@ -59,7 +59,7 @@ if ($bedrijfGekozen) {
 
     // Hardware in voorraad
     $stmt = $pdo->prepare("
-        SELECT Serienummer, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
+        SELECT Serienummer, Model, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'voorraad' AS type
         FROM Hardware
         WHERE Bedrijf = ?
         AND Serienummer NOT IN (SELECT Serienummer FROM Gebruikname)
@@ -69,7 +69,7 @@ if ($bedrijfGekozen) {
 
     // Toegewezen hardware
     $stmt = $pdo->prepare("
-        SELECT g.Serienummer, g.Naam, g.Uitgiftedatum, 'toegewezen' AS type
+        SELECT g.Serienummer, h.Model, g.Naam, g.Uitgiftedatum, 'toegewezen' AS type
         FROM Gebruikname g
         JOIN Hardware h ON g.Serienummer = h.Serienummer
         WHERE h.Bedrijf = ?

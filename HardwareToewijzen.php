@@ -92,6 +92,7 @@ toonMenu($rechten, 'hardware');
         <tr>
             <th>Naam</th>
             <th>Serienummer</th>
+            <th>Model</th>
             <th>Uitgiftedatum</th>
             <th>Verwijderen</th>
         </tr>
@@ -100,6 +101,7 @@ toonMenu($rechten, 'hardware');
             <tr>
                 <td><?= htmlspecialchars($row['Naam']) ?></td>
                 <td><?= htmlspecialchars($row['Serienummer']) ?></td>
+                <td><?= htmlspecialchars($row['Model']) ?></td>
                 <td>
                     <?= $row['Uitgiftedatum'] ? date("d-m-Y", strtotime($row['Uitgiftedatum'])) : '-' ?>
                 </td>
