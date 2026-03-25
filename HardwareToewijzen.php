@@ -36,7 +36,7 @@ toonMenu($rechten, 'hardware');
 
     <h1>Hardware Toewijzen</h1>
 
-    <form method="GET">
+    <form method="POST">
 
     <?php if (count($bedrijven) > 1): ?>
         Bedrijf:<br>

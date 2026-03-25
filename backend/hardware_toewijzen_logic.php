@@ -32,8 +32,8 @@ if (empty($bedrijven)) {
 if (count($bedrijven) === 1) {
     $bedrijf = $bedrijven[0];
 } else {
-    // bedrijf komt uit GET (van jouw input list)
-    $bedrijf = $_GET['bedrijf'] ?? "";
+    // bedrijf komt uit POST (van jouw input list)
+    $bedrijf = $_POST['bedrijf'] ?? "";
 }
 
 /* ---------------------------------------------------
@@ -197,6 +197,6 @@ if (isset($_POST['verwijder'])) {
         ]);
     }
 
-    header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
+    header("Location: ../HardwareToewijzen.php");
     exit;
 }
