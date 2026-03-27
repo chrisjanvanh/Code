@@ -24,6 +24,7 @@ header {
     position: sticky;
     top: 0;
     justify-content: center;
+    z-index: 9999;
 }
 
 header img {
