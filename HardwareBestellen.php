@@ -219,7 +219,7 @@ toonMenu($rechten, 'hardware');
                     <td>docking workstation</td>
                     <td><input type="number" id="191" name="191"></td>
                     <td><input type="number" id="192" name="192"></td>
-                    <td>€ 183,60</td>s
+                    <td>€ 183,60</td>
                     <td></td>
                 </tr>
                 <tr>
