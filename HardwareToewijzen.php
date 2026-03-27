@@ -36,22 +36,25 @@ toonMenu($rechten, 'hardware');
 
     <h1>Hardware Toewijzen</h1>
 
-    <form method="POST">
+    <form method="GET">
+        <?php if (count($bedrijven) > 1): ?>
+            Bedrijf:<br>
+            <select name="bedrijf" onchange="this.form.submit()" required>
+                <option value="">-- Kies bedrijf --</option>
+                <?php foreach ($bedrijven as $b): ?>
+                    <option value="<?= htmlspecialchars($b) ?>"
+                        <?= ($bedrijf === $b ? "selected" : "") ?>>
+                        <?= htmlspecialchars($b) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        <?php else: ?>
+            <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
+        <?php endif; ?>
+    </form>
 
-    <?php if (count($bedrijven) > 1): ?>
-        Bedrijf:<br>
-        <select name="bedrijf" onchange="this.form.submit()" required>
-            <option value="">-- Kies bedrijf --</option>
-            <?php foreach ($bedrijven as $b): ?>
-                <option value="<?= htmlspecialchars($b) ?>"
-                    <?= ($bedrijf === $b ? "selected" : "") ?>>
-                    <?= htmlspecialchars($b) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    <?php else: ?>
-        <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
-    <?php endif; ?>
+    <form method="POST">
+        <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
 
         Naam:<br>
         <input list="namen" id="naam" name="naam" required>
@@ -65,15 +68,9 @@ toonMenu($rechten, 'hardware');
         <input list="serienummers" id="serienummer" name="serienummer" required>
         <datalist id="serienummers">
             <?php foreach ($alle_regels as $h): ?>
-                <?php if ($h['type'] === 'voorraad'): ?>
-                    <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
-                        (Voorraad)
-                    </option>
-                <?php else: ?>
-                    <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
-                        (Toegewezen)
-                    </option>
-                <?php endif; ?>
+                <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
+                    (<?= $h['type'] === 'voorraad' ? 'Voorraad' : 'Toegewezen' ?>)
+                </option>
             <?php endforeach; ?>
         </datalist>
 
