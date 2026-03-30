@@ -109,11 +109,11 @@ toonMenu($rechten, 'hardware');
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>
                     </tr>
-                        <tr style="height: 50px;">
-                        <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
-                        <td id="eindtotaal"></td>
-                    </tr>
                 <?php endforeach; ?>
+                <tr style="height: 50px;">
+                    <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
+                    <td id="eindtotaal"></td>
+                </tr>
             </table><br>
             <input type="submit" value="Versturen">
         </form>
