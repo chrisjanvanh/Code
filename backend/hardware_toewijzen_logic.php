@@ -113,6 +113,14 @@ if (isset($_POST['opslaan'])) {
     ");
     $stmt->execute([$serienummer, $naam, $uitgiftedatum]);
 
+    // Logboek
+                    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+                    $log->execute([
+                        "$gebruikerNaam heeft hardware ($serienummer) toegewezen aan $naam in bedrijf $bedrijf",
+                        "Toewijzen Hardware"
+                    ]);
+
+
     $_SESSION['melding'] = "Hardware succesvol toegewezen!";
     header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
     exit;
@@ -142,11 +150,24 @@ if (isset($_POST['verwijder'])) {
 
         $del = $pdo->prepare("DELETE FROM Gebruikname WHERE Serienummer = ?");
         $del->execute([$sn]);
+
+
+        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log->execute([
+            "$gebruikerNaam heeft toegewezen hardware ($sn) teruggezet naar voorraad in bedrijf $bedrijf",
+            "Toewijzen Hardware"
+        ]);
     }
 
     if ($type === "voorraad") {
         $del = $pdo->prepare("DELETE FROM Hardware WHERE Serienummer = ? AND Bedrijf = ?");
         $del->execute([$sn, $bedrijf]);
+
+        $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+        $log->execute([
+            "$gebruikerNaam heeft hardware ($sn) verwijderd uit bedrijf $bedrijf",
+            "Hardware"
+        ]);
     }
 
     $_SESSION['melding'] = "Hardware verwijderd.";
