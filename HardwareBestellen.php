@@ -104,10 +104,14 @@ toonMenu($rechten, 'hardware');
                         </td>
 
                         <!-- Prijs -->
-                        <td>€ <?= htmlspecialchars($p['Prijs']) ?></td>
+                        <td>€ <?= number_format($p['Prijs'], 2, ',', '.') ?></td>
 
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>
+                    </tr>
+                        <tr style="height: 50px;">
+                        <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
+                        <td id="eindtotaal"></td>
                     </tr>
                 <?php endforeach; ?>
             </table><br>
