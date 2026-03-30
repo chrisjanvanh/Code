@@ -38,3 +38,7 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute([$gebruikerEmail]);
 $bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+$stmt = $pdo->prepare("SELECT ID, Naam, Prijs FROM HardwareBestellen ORDER BY ID ASC");
+$stmt->execute();
+$producten = $stmt->fetchAll(PDO::FETCH_ASSOC);
