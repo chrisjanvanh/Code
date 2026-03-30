@@ -104,7 +104,7 @@ toonMenu($rechten, 'hardware');
                         </td>
 
                         <!-- Prijs -->
-                        <td>€ <?= number_format($p['Prijs'], 2, ',', '.') ?></td>
+                        <td>€ <?= htmlspecialchars($p['Prijs']) ?></td>
 
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>
