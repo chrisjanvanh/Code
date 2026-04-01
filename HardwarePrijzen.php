@@ -105,15 +105,14 @@ toonMenu($rechten, 'hardware');
 
                         <!-- Prijs -->
                         <td>
-                            <form>
                             € <input 
                                 type="text"
                                 name="prijs_<?= $p['ID'] ?>"
                                 value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
-                                onkeydown="if(event.key === 'Enter'){ this.form.submit(); }"
+                                onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value); event.preventDefault(); }"
                             >
-                            </form>
                         </td>
+
 
 
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
@@ -128,5 +127,21 @@ toonMenu($rechten, 'hardware');
             <input type="submit" value="Versturen">
         </form>
     </div>
+
+    <script>
+        function updatePrijs(id, waarde) {
+            // Europese notatie → database notatie
+            let prijs = waarde.replace(/\./g, '').replace(',', '.');
+
+            fetch('backend/update_prijs.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'id=' + encodeURIComponent(id) + '&prijs=' + encodeURIComponent(prijs)
+            })
+            .then(r => r.text())
+            .then(t => console.log('Prijs bijgewerkt:', t));
+        }
+    </script>
+
 </body>
 </html>
