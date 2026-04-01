@@ -13,13 +13,13 @@ function updatePrijs(id, waarde, inputElement) {
         inputElement.style.backgroundColor = "lightgreen";
         setTimeout(() => {
             inputElement.style.backgroundColor = "";
-        }, 800);
+        }, 1000);
     })
     .catch(err => {
         inputElement.style.backgroundColor = "lightcoral";
         setTimeout(() => {
             inputElement.style.backgroundColor = "";
-        }, 800);
+        }, 1000);
     });
 }
 
