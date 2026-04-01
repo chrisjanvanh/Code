@@ -113,8 +113,11 @@ toonMenu($rechten, 'hardware');
                             onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value, this); event.preventDefault(); }"
                         >
                         </td>
-
-
+                        <td>
+                            <button type="button" onclick="VerwijderProduct(<?= $p['ID'] ?>)" class="button">
+                                Verwijder
+                            </button>
+                        </td>
 
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>

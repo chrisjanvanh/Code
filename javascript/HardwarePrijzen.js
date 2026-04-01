@@ -22,3 +22,28 @@ function updatePrijs(id, waarde, inputElement) {
         }, 800);
     });
 }
+
+
+function VerwijderProduct(id) {
+    if (!confirm("Weet je zeker dat je dit product wilt verwijderen?")) {
+        return;
+    }
+
+    fetch('backend/verwijder_product.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'id=' + encodeURIComponent(id)
+    })
+    .then(r => r.text())
+    .then(t => {
+        if (t.trim() === "OK") {
+            // Herlaad de pagina zodat de tabel wordt bijgewerkt
+            location.reload();
+        } else {
+            alert("Fout bij verwijderen: " + t);
+        }
+    })
+    .catch(err => {
+        alert("Er ging iets mis bij de verbinding met de server");
+    });
+}
