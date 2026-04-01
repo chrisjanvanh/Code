@@ -18,7 +18,6 @@ require 'backend/HardwareBestellen_logic.php';
     <link rel="stylesheet" href="css/HardwareBestellen.css">
     <script src="javascript/main.js"></script>
     <script src="javascript/HardwareBestellen.js"></script>
-    <script src="javascript/HardwarePrijzen.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -110,7 +109,6 @@ toonMenu($rechten, 'hardware');
                                 type="text"
                                 name="prijs_<?= $p['ID'] ?>"
                                 value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
-                                style="width: 80px;"
                                 onkeydown="if(event.key === 'Enter'){ this.form.submit(); }"
                             >
                         </td>
