@@ -73,6 +73,13 @@ table {
   margin-right: 20%;
 }
 
+.button {
+    background-color: red;
+}
+
+.button:hover {
+    background-color: darkred;
+}
 
 
 
