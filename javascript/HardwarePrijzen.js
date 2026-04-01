@@ -1,5 +1,4 @@
 function updatePrijs(id, waarde, inputElement) {
-    // Europese notatie → database notatie
     let prijs = waarde.replace(/\./g, '').replace(',', '.');
 
     fetch('backend/update_prijs.php', {
@@ -9,7 +8,6 @@ function updatePrijs(id, waarde, inputElement) {
     })
     .then(r => r.text())
     .then(t => {
-        // groene highlight
         inputElement.style.backgroundColor = "lightgreen";
         setTimeout(() => {
             inputElement.style.backgroundColor = "";
@@ -37,7 +35,6 @@ function VerwijderProduct(id) {
     .then(r => r.text())
     .then(t => {
         if (t.trim() === "OK") {
-            // Herlaad de pagina zodat de tabel wordt bijgewerkt
             location.reload();
         } else {
             alert("Fout bij verwijderen: " + t);
