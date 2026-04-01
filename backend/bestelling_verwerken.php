@@ -13,19 +13,17 @@ $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 $naam = htmlspecialchars($_POST['naam']);
 $bedrijf = htmlspecialchars($_POST['bedrijf']);
 
-foreach ($_POST as $key => $value) {
-    if (strpos($key, 'prijs_') === 0) {
+$id = $_POST['id'] ?? null;
+$prijs = $_POST['prijs'] ?? null;
 
-        $id = str_replace('prijs_', '', $key);
-
-        // Europese notatie → database notatie
-        $prijs = str_replace('.', '', $value);   // verwijder duizendtallen
-        $prijs = str_replace(',', '.', $prijs);  // vervang komma door punt
-
-        $stmt = $pdo->prepare("UPDATE HardwareBestellen SET Prijs = ? WHERE ID = ?");
-        $stmt->execute([$prijs, $id]);
-    }
+if (!$id || !$prijs) {
+    exit("Fout: ontbrekende data");
 }
+
+$stmt = $pdo->prepare("UPDATE HardwareBestellen SET Prijs = ? WHERE ID = ?");
+$stmt->execute([$prijs, $id]);
+
+echo "OK";
 
 // 1. Productdefinities (vervanging + uitbreiding)
 $producten = [
