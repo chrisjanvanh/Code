@@ -18,6 +18,7 @@ require 'backend/HardwareBestellen_logic.php';
     <link rel="stylesheet" href="css/HardwareBestellen.css">
     <script src="javascript/main.js"></script>
     <script src="javascript/HardwareBestellen.js"></script>
+    <script src="javascript/HardwarePrijzen.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -104,7 +105,16 @@ toonMenu($rechten, 'hardware');
                         </td>
 
                         <!-- Prijs -->
-                        <td>€ <?= number_format($p['Prijs'], 2, ',', '.') ?></td>
+                        <td>
+                            € <input 
+                            type="text"
+                            name="prijs_<?= $p['ID'] ?>"
+                            value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
+                            onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value, this); event.preventDefault(); }"
+                        >
+                        </td>
+
+
 
                         <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>
