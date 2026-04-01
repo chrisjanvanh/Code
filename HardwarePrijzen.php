@@ -107,11 +107,11 @@ toonMenu($rechten, 'hardware');
                         <!-- Prijs -->
                         <td>
                             € <input 
-                                type="text"
-                                name="prijs_<?= $p['ID'] ?>"
-                                value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
-                                onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value); event.preventDefault(); }"
-                            >
+                            type="text"
+                            name="prijs_<?= $p['ID'] ?>"
+                            value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
+                            onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value, this); event.preventDefault(); }"
+                        >
                         </td>
 
 

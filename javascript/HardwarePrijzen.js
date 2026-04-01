@@ -11,6 +11,14 @@ function updatePrijs(id, waarde, inputElement) {
     .then(t => {
         // groene highlight
         inputElement.style.backgroundColor = "lightgreen";
-        setTimeout(() => inputElement.style.backgroundColor = "", 800);
+        setTimeout(() => {
+            inputElement.style.backgroundColor = "";
+        }, 800);
+    })
+    .catch(err => {
+        inputElement.style.backgroundColor = "lightcoral";
+        setTimeout(() => {
+            inputElement.style.backgroundColor = "";
+        }, 800);
     });
 }
