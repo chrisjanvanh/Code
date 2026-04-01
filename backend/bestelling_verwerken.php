@@ -13,18 +13,6 @@ $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 $naam = htmlspecialchars($_POST['naam']);
 $bedrijf = htmlspecialchars($_POST['bedrijf']);
 
-$id = $_POST['id'] ?? null;
-$prijs = $_POST['prijs'] ?? null;
-
-if (!$id || !$prijs) {
-    exit("Fout: ontbrekende data");
-}
-
-$stmt = $pdo->prepare("UPDATE HardwareBestellen SET Prijs = ? WHERE ID = ?");
-$stmt->execute([$prijs, $id]);
-
-echo "OK";
-
 // 1. Productdefinities (vervanging + uitbreiding)
 $producten = [
     "11" => ["naam" => "Desktop i5 SFF", "type" => "vervanging"],
