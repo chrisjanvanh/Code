@@ -18,6 +18,7 @@ require 'backend/HardwareBestellen_logic.php';
     <link rel="stylesheet" href="css/HardwareBestellen.css">
     <script src="javascript/main.js"></script>
     <script src="javascript/HardwareBestellen.js"></script>
+    <script src="javascript/HardwarePrijzen.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
@@ -127,21 +128,5 @@ toonMenu($rechten, 'hardware');
             <input type="submit" value="Versturen">
         </form>
     </div>
-
-    <script>
-        function updatePrijs(id, waarde) {
-            // Europese notatie → database notatie
-            let prijs = waarde.replace(/\./g, '').replace(',', '.');
-
-            fetch('backend/update_prijs.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'id=' + encodeURIComponent(id) + '&prijs=' + encodeURIComponent(prijs)
-            })
-            .then(r => r.text())
-            .then(t => console.log('Prijs bijgewerkt:', t));
-        }
-    </script>
-
 </body>
 </html>
