@@ -105,12 +105,14 @@ toonMenu($rechten, 'hardware');
 
                         <!-- Prijs -->
                         <td>
+                            <form>
                             € <input 
                                 type="text"
                                 name="prijs_<?= $p['ID'] ?>"
                                 value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
                                 onkeydown="if(event.key === 'Enter'){ this.form.submit(); }"
                             >
+                            </form>
                         </td>
 
 
