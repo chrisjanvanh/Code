@@ -9,9 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const totaalCell = row.cells?.[4];
             if (!totaalCell) return;
 
-            const text = totaalCell.textContent.replace("€", "").replace(".", "").replace(",", ".").trim();
-            const waarde = parseFloat(text);
+            const text = totaalCell.textContent
+                .replace("€", "")
+                .replace(/\./g, "")
+                .replace(",", ".")
+                .trim();
 
+            const waarde = parseFloat(text);
             if (!isNaN(waarde)) totaal += waarde;
         });
 
@@ -29,12 +33,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const prijsCell = row.cells[3];
         const totaalCell = row.cells[4];
 
-        const prijsText = prijsCell.textContent.replace("€", "").replace(".", "").replace(",", ".").trim();
-        const prijs = parseFloat(prijsText);
+        // PRIJS UIT INPUTVELD HALEN
+        const prijsInput = prijsCell.querySelector("input");
+
+        function getPrijs() {
+            return parseFloat(
+                prijsInput.value
+                    .replace(/\./g, "")
+                    .replace(",", ".")
+            ) || 0;
+        }
 
         function updateTotaal() {
             const a = parseInt(vervanging.value) || 0;
             const b = parseInt(uitbreiding.value) || 0;
+            const prijs = getPrijs();
+
             const totaal = (a + b) * prijs;
 
             totaalCell.textContent = totaal > 0
@@ -46,5 +60,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         vervanging.addEventListener("input", updateTotaal);
         uitbreiding.addEventListener("input", updateTotaal);
+        prijsInput.addEventListener("input", updateTotaal);
     });
 });
