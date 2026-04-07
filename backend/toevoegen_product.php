@@ -7,12 +7,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 $naam = $_POST['naam'] ?? null;
-$prijs = str_replace('.', '', $_POST['prijs']);
-$prijs = str_replace(',', '.', $prijs);
-
-if (!is_numeric($prijs)) {
-    exit("Ongeldig bedrag");
-}
+$prijs = $_POST['prijs'] ?? null;
 
 if (!$naam || !$prijs) {
     exit("Ontbrekende gegevens");
