@@ -73,22 +73,45 @@ function validatePrijs(waarde) {
     return !isNaN(parseFloat(dbWaarde));
 }
 
+function convertPrijsToDB(waarde) {
+    waarde = waarde.trim();
+
+    // Case 1: Europese notatie (12,50)
+    if (waarde.includes(",")) {
+        // alle duizendtallen verwijderen
+        waarde = waarde.replace(/\./g, "");
+        // komma → punt
+        waarde = waarde.replace(",", ".");
+        return waarde;
+    }
+
+    // Case 2: Engelse notatie (12.50 of 1.234.567.89)
+    if (waarde.includes(".")) {
+        // laatste punt is decimaalteken
+        const lastDot = waarde.lastIndexOf(".");
+        const before = waarde.substring(0, lastDot).replace(/\./g, "");
+        const after = waarde.substring(lastDot + 1);
+        return before + "." + after;
+    }
+
+    // Case 3: Hele getallen (12)
+    return waarde;
+}
+
 
 function ToevoegenProduct() {
     const naam = prompt("Voer de productnaam in:");
     if (!naam) return;
 
-    let prijs = prompt("Voer de prijs in (bijv. 123,45):");
+    let prijs = prompt("Voer de prijs in (bijv. 12,50):");
     if (!prijs) return;
 
-    // Validatie
     if (!validatePrijs(prijs)) {
         alert("Ongeldig bedrag. Gebruik alleen cijfers, . of ,");
         return;
     }
 
-    // Europese → database notatie
-    const prijsDB = prijs.replace(/\./g, "").replace(",", ".");
+    const prijsDB = convertPrijsToDB(prijs);
 
     fetch('backend/toevoegen_product.php', {
         method: 'POST',
@@ -102,6 +125,6 @@ function ToevoegenProduct() {
         } else {
             alert("Fout bij toevoegen: " + t);
         }
-    })
-    .catch(() => alert("Serverfout bij toevoegen"));
+    });
 }
+
