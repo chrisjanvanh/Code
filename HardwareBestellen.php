@@ -118,9 +118,6 @@ toonMenu($rechten, 'hardware');
                                 Verwijder
                             </button>
                         </td>
-
-                        <!-- Wordt gevuld door de totaalprijs
-                        <td></td> -->
                     </tr>
 
                 <?php endforeach; ?>
