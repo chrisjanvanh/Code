@@ -121,16 +121,16 @@ toonMenu($rechten, 'hardware');
                     </tr>
 
                 <?php endforeach; ?>
+                <tr style="height: 50px;">
+                    <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
+                    <td id="eindtotaal"></td>
+                </tr>
+                
                     <tr>
                         <td colspan="5">
                             <button type='button' onclick="ToevoegenProduct()"  class='Toevoegen'>Toevoegen product</button>
                         </td>
                     </tr>
-
-                <tr style="height: 50px;">
-                    <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
-                    <td id="eindtotaal"></td>
-                </tr>
             </table><br>
             <input type="submit" value="Versturen">
         </form>

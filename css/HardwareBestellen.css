@@ -84,7 +84,6 @@ table {
 .Toevoegen {
     width: 100%;
     display: inline-block;
-    background-color: #3795ed;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -94,6 +93,11 @@ table {
     transition: background-color 0.3s ease;
     box-shadow: 2px 2px 2px;
     color: white;
+    background-color: green;
+}
+
+.Toevoegen:hover {
+    background-color: #03ab03;
 }
 
 
