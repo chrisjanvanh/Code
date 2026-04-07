@@ -64,13 +64,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+function validatePrijs(waarde) {
+    if (!/^[0-9.,]+$/.test(waarde)) {
+        return false;
+    }
+
+    let dbWaarde = waarde.replace(/\./g, "").replace(",", ".");
+    return !isNaN(parseFloat(dbWaarde));
+}
+
 
 function ToevoegenProduct() {
     const naam = prompt("Voer de productnaam in:");
     if (!naam) return;
 
-    const prijs = prompt("Voer de prijs in (bijv. 123,45):");
+    let prijs = prompt("Voer de prijs in (bijv. 123,45):");
     if (!prijs) return;
+
+    // Validatie
+    if (!validatePrijs(prijs)) {
+        alert("Ongeldig bedrag. Gebruik alleen cijfers, . of ,");
+        return;
+    }
 
     // Europese → database notatie
     const prijsDB = prijs.replace(/\./g, "").replace(",", ".");
