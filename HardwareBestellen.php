@@ -119,10 +119,16 @@ toonMenu($rechten, 'hardware');
                             </button>
                         </td>
 
-                        <!-- Totaalprijs (leeg, wordt door JS gevuld) -->
                         <td></td>
                     </tr>
+
                 <?php endforeach; ?>
+                    <tr>
+                        <td colspan='4'>
+                            <button type='button' onclick="ToevoegenProduct()"  class='Toevoegen'>Toevoegen product</button>
+                        </td>
+                    </tr>
+
                 <tr style="height: 50px;">
                     <td colspan="4" style="text-align: right; font-weight: bold;">Eindtotaal:</td>
                     <td id="eindtotaal"></td>

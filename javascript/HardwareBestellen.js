@@ -63,3 +63,30 @@ document.addEventListener("DOMContentLoaded", function () {
         prijsInput.addEventListener("input", updateTotaal);
     });
 });
+
+
+function ToevoegenProduct() {
+    const naam = prompt("Voer de productnaam in:");
+    if (!naam) return;
+
+    const prijs = prompt("Voer de prijs in (bijv. 123,45):");
+    if (!prijs) return;
+
+    // Europese → database notatie
+    const prijsDB = prijs.replace(/\./g, "").replace(",", ".");
+
+    fetch('backend/toevoegen_product.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'naam=' + encodeURIComponent(naam) + '&prijs=' + encodeURIComponent(prijsDB)
+    })
+    .then(r => r.text())
+    .then(t => {
+        if (t.trim() === "OK") {
+            location.reload();
+        } else {
+            alert("Fout bij toevoegen: " + t);
+        }
+    })
+    .catch(() => alert("Serverfout bij toevoegen"));
+}
