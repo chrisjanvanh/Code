@@ -119,12 +119,13 @@ toonMenu($rechten, 'hardware');
                             </button>
                         </td>
 
-                        <td></td>
+                        <!-- Wordt gevuld door de totaalprijs
+                        <td></td> -->
                     </tr>
 
                 <?php endforeach; ?>
                     <tr>
-                        <td colspan='4'>
+                        <td colspan="5">
                             <button type='button' onclick="ToevoegenProduct()"  class='Toevoegen'>Toevoegen product</button>
                         </td>
                     </tr>
