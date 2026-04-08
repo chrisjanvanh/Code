@@ -132,7 +132,7 @@ toonMenu($rechten, 'hardware');
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5">>
+                        <td colspan="5">
                             <input type="submit" value="Versturen">
                         </td>
                     </tr>
