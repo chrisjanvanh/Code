@@ -40,7 +40,10 @@ form h3 {
     border: 1px solid #c3e6cb;
 }
 
-input[type=radio] {
-    height: 25px;
-    width: 25px;
+@media (max-width: 600px) {
+    
+    input[type=radio] {
+        height: 25px;
+        width: 25px;
+    }
 }
