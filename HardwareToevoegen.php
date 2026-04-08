@@ -34,11 +34,15 @@ toonMenu($rechten, 'hardware');
         <form method="POST">
             <h2>Hardware toevoegen</h2>
 
+            <label>
             Serienummer:<br>
             <input type="text" name="serienummer" required>
+            </label>
 
+            <label>
             Bedrijf:
             <input list="bedrijven" id="bedrijf" name="bedrijf" required>
+            </label>
 
             <datalist id="bedrijven">
                 <?php foreach ($bedrijven as $b): ?>
@@ -46,17 +50,25 @@ toonMenu($rechten, 'hardware');
                 <?php endforeach; ?>
             </datalist>
 
+            <label>
             Merk:<br>
-            <input type="text" name="merk" >
+            <input type="text" name="merk">
+            </label>
 
+            <label>
             Model:<br>
             <input type="text" name="model">
+            </label>
 
+            <label>
             Prijs:<br>
             <input type="text" name="prijs">
+            </label>
 
+            <label>
             Aankoopdatum:<br>
             <input type="date" name="aankoopdatum">
+            </label>
 
             <input type="submit" value="Opslaan">
             <a href="HardwareBestellen.php" class="button">Hardware Bestellen</a>
