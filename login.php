@@ -63,6 +63,7 @@ if (isset($_SESSION['email'])) {
 </head>
 
 <body>
+    <main>
 <div class="login-container">
     <div class="login-box">
         <img src="img/logo.svg" alt="VDL Groep Logo">
@@ -137,6 +138,6 @@ function setSession(email, gebruikernaam) {
     });
 }
 </script>
-
+</main>
 </body>
 </html>

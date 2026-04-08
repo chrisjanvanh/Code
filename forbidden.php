@@ -73,6 +73,7 @@ $afdelingenTekst = empty($afdelingen)
     </style>
 </head>
 <body>
+<main>
     <div class="forbidden-container">
         <div class="forbidden-box">
             <h1>❌ Geen toegang</h1>
@@ -81,5 +82,6 @@ $afdelingenTekst = empty($afdelingen)
             <a href="index.php">Terug naar homepagina</a>
         </div>
     </div>
+</main>
 </body>
 </html>

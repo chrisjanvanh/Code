@@ -22,6 +22,7 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'taken'); 
 ?>
 
+<main>
 <div class="content">
     <h2>Kies jouw afdeling</h2>
 
@@ -39,6 +40,6 @@ toonMenu($rechten, 'taken');
     <?php endforeach; ?>
 
 </div>
-
+</main>
 </body>
 </html>

@@ -40,6 +40,7 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'producten');
 ?>
 
+<main>
 <div class="content">
 
 <?php if (count($bedrijven) > 1): ?>
@@ -60,5 +61,6 @@ toonMenu($rechten, 'producten');
 
     <div id="producten-container"></div>
 </div>
+</main>
 </body>
 </html>

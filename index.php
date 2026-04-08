@@ -25,9 +25,11 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'index');
 ?>
 
-    <div class="content">
-        <h1>Welkom op de medewerkerspagina</h1>
-        <img src="img/bus.png" alt="Bus">
-    </div>
+    <main>
+        <div class="content">
+            <h1>Welkom op de medewerkerspagina</h1>
+            <img src="img/bus.png" alt="Bus">
+        </div>
+    </main>
 </body>
 </html>

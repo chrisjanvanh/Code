@@ -22,7 +22,7 @@ require 'backend/medewerker/huidige_toegangen_logic.php';
 require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'medewerkers');
 ?>
-
+<main>
 <div class="content">
 
     <?php if (!empty($_SESSION['melding'])): ?>
@@ -193,5 +193,6 @@ toonMenu($rechten, 'medewerkers');
     <?php endif; ?>
 
 </div>
+</main>
 </body>
 </html>

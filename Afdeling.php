@@ -28,6 +28,7 @@ toonMenu($rechten, 'taken');
     const bedrijf  = "<?= htmlspecialchars_decode($bedrijf) ?>";
 </script>
 
+<main>
 <div class="content">
     <h1>Taken voor <?= htmlspecialchars($afdeling) ?></h1>
 
@@ -112,5 +113,6 @@ toonMenu($rechten, 'taken');
     </table>
 
 </div>
+</main>
 </body>
 </html>

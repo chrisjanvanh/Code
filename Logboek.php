@@ -28,6 +28,7 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'logboek');
 ?>
 
+<main>
     <div class="content">
 
     <h1>Logboek</h1>
@@ -80,5 +81,6 @@ toonMenu($rechten, 'logboek');
             </table>
         </div>
     </div>
+</main>
 </body>
 </html>

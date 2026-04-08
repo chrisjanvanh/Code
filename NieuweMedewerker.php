@@ -23,6 +23,7 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'medewerkers');
 ?>
 
+<main>
 <div class="content">
 
     <?php if (!empty($melding)): ?>
@@ -82,5 +83,6 @@ toonMenu($rechten, 'medewerkers');
     </form>
 
 </div>
+</main>
 </body>
 </html>

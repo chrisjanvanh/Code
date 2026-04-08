@@ -22,6 +22,7 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'hardware');
 ?>
 
+<main>
     <div class="content">
 
         <?php if (!empty($_SESSION['melding'])): ?>
@@ -61,5 +62,6 @@ toonMenu($rechten, 'hardware');
         </form>
 
     </div>
+</main>
 </body>
 </html>
