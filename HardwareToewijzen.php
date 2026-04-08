@@ -60,16 +60,20 @@ toonMenu($rechten, 'hardware');
     <form method="POST">
         <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
 
+        <label>
         Naam:<br>
         <input list="namen" id="naam" name="naam" required>
+        </label>
         <datalist id="namen">
             <?php foreach ($medewerkers as $m): ?>
                 <option value="<?= htmlspecialchars($m['Naam']) ?>"></option>
             <?php endforeach; ?>
         </datalist>
 
+        <label>
         Serienummer:<br>
         <input list="serienummers" id="serienummer" name="serienummer" required>
+        </label>
         <datalist id="serienummers">
             <?php foreach ($alle_regels as $h): ?>
                 <option value="<?= htmlspecialchars($h['Serienummer']) ?>">
@@ -78,8 +82,10 @@ toonMenu($rechten, 'hardware');
             <?php endforeach; ?>
         </datalist>
 
+        <label>
         Uitgiftedatum:<br>
         <input type="date" id="uitgiftedatum" name="uitgiftedatum">
+        </label>
 
         <button class="button" name="opslaan">Opslaan</button>
         <button type="button" class="button" onclick="naamzoeken()">Zoeken</button>
@@ -88,7 +94,7 @@ toonMenu($rechten, 'hardware');
     </form>
 
     <br><br>
-    <h3>Toegewezen Hardware</h3>
+    <h2>Toegewezen Hardware</h2>
     <table id="Toegewezen">
         <tr>
             <th>Naam</th>
