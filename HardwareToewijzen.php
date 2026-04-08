@@ -40,11 +40,13 @@ toonMenu($rechten, 'hardware');
 
     <form method="GET">
         <?php if (count($bedrijven) > 1): ?>
+            <label>
             Bedrijf:<br>
 
             <input list="bedrijven" name="bedrijf" id="bedrijf"
                 value="<?= htmlspecialchars($bedrijf) ?>"
                 oninput="this.form.submit()" required>
+            </label>
 
             <datalist id="bedrijven">
                 <?php foreach ($bedrijven as $b): ?>
