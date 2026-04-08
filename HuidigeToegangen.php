@@ -36,8 +36,10 @@ toonMenu($rechten, 'medewerkers');
     <h2>Medewerker zoeken</h2>
 
     <form method="GET">
+        <label>
         Naam: <br>
         <input list="namen" id="naam" name="naam" required autocomplete="off">
+        </label>
 
         <datalist id="namen">
             <?php foreach ($medewerkers as $m): ?>
@@ -52,20 +54,30 @@ toonMenu($rechten, 'medewerkers');
     <?php if ($medewerker): ?>
         <br><br>
         <form method="POST">
+            <label>
             Functie:<br>
             <input type="text" name="functie" value="<?= $medewerker['Functie'] ?>" autocomplete="off"><br>
+            </label>
 
+            <label>
             Locatie:<br>
             <input type="text" name="locatie" value="<?= $medewerker['Locatie'] ?>"><br>
+            </label>
 
+            <label>
             Leidinggevende:<br>
             <input type="text" name="leidinggevende" value="<?= $medewerker['Leidinggevende'] ?>"><br>
+            </label>
 
+            <label>
             Bedrijf:<br>
             <input type="text" name="bedrijf" value="<?= $medewerker['Bedrijf'] ?>"><br>
+            </label>
 
+            <label>
             Email:<br>
             <input type="email" name="email" value="<?= $medewerker['Email'] ?>" autocomplete="off"><br>
+            </label>
 
             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
 
