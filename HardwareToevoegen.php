@@ -12,7 +12,6 @@ require 'backend/hardware_toevoegen_logic.php';
     <link rel="stylesheet" href="css/HardwareToevoegen.css">
 
     <script src="javascript/main.js" defer></script>
-    <!-- <script src="javascript/HardwareToevoegen.js" defer></script> -->
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
 </head>
