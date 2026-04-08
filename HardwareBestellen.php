@@ -89,7 +89,7 @@ toonMenu($rechten, 'hardware');
             <input type="tel" id="telefoon" name="telefoon" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
             </label>
 
-            <label>
+            <label for="bestaande_gebruiker">
             Bestaande gebruiker: <br>
             </label>
             <label class="switch">
@@ -122,16 +122,12 @@ toonMenu($rechten, 'hardware');
 
                         <!-- Vervanging -->
                         <td>
-                            <label>
                             <input type="number" id="<?= $p['ID'] ?>1" name="<?= $p['ID'] ?>1">
-                            </label>
                         </td>
 
                         <!-- Uitbreiding -->
                         <td>
-                            <label>
                             <input type="number" id="<?= $p['ID'] ?>2" name="<?= $p['ID'] ?>2">
-                            </label>
                         </td>
 
                         <!-- Prijs -->
