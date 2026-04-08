@@ -1,11 +1,5 @@
 <?php 
 require 'backend/hardware_toewijzen_logic.php'; 
-
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
