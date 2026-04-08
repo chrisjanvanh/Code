@@ -45,8 +45,10 @@ toonMenu($rechten, 'producten');
 <div class="content">
 
 <?php if (count($bedrijven) > 1): ?>
+    <label>
     Bedrijf:
     <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
+    </label>
 
     <datalist id="bedrijven">
         <?php foreach ($bedrijven as $b): ?>
