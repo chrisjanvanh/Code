@@ -89,9 +89,7 @@ toonMenu($rechten, 'hardware');
             <input type="tel" id="telefoon" name="telefoon" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
             </label>
 
-            <label for="bestaande_gebruiker">
             Bestaande gebruiker: <br>
-            </label>
             <label class="switch">
                 <input type="checkbox" name="bestaande_gebruiker" value="ja" aria-label="Is de gebruiker een bestaande gebruiker?">
                 <span class="slider round"></span>
