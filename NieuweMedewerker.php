@@ -34,21 +34,31 @@ toonMenu($rechten, 'medewerkers');
     <form method="POST">
         <h2>Nieuwe medewerker</h2>
 
+        <label>
         Naam:
         <input type="text" id="naam" name="naam" required autocomplete="off">
+        </label>
 
+        <label>
         Functie:
         <input type="text" id="functie" name="functie" autocomplete="off">
+        </label>
 
+        <label>
         Locatie:
         <input type="text" id="locatie" name="locatie" required autocomplete="off">
+        </label>
 
+        <label>
         Leidinggevende:
         <input type="text" id="leidinggevende" name="leidinggevende" autocomplete="off">
+        </label>
 
         <?php if (count($bedrijven) > 1): ?>
+            <label>
             Bedrijf:
             <input list="bedrijven" id="bedrijf" name="bedrijf" required oninput="laadProducten()">
+            </label>
 
             <datalist id="bedrijven">
                 <?php foreach ($bedrijven as $b): ?>
@@ -62,9 +72,10 @@ toonMenu($rechten, 'medewerkers');
             </script>
         <?php endif; ?>
 
-
+        <label>
         Email:
         <input type="email" id="email" name="email" autocomplete="off">
+        </label>
         <br>
 
         <h2>Komt de medewerker contractueel in dienst?</h2>
@@ -77,8 +88,10 @@ toonMenu($rechten, 'medewerkers');
 
         <br><br>
 
+        <label>
         Referentie:
         <input type="text" id="referentie" name="referentie" autocomplete="off">
+        </label>
 
         <input type="submit" value="Opslaan">
     </form>
