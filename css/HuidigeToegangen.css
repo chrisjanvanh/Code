@@ -62,7 +62,7 @@ table button {
 }
 
 .Verwijderen, button.button.delete, input.button.medewerkerverwijderen {
-    background-color: red;
+    background-color: #EB0000;
 }
 
 .Verwijderen:hover, button.button.delete:hover, input.button.medewerkerverwijderen:hover {

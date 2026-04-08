@@ -25,7 +25,7 @@ th, td {
 }
 
 .delete {
-    background-color: red;
+    background-color: #EB0000;
 }
 
 .delete:hover {
