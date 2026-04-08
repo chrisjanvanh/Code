@@ -38,8 +38,10 @@ toonMenu($rechten, 'hardware');
 
         <form method="POST" action="backend/bestelling_verwerken.php">
             <?php if (count($bedrijven) > 1): ?>
+                <label>
                 Bedrijf:
                 <input list="bedrijven" id="bedrijf" name="bedrijf" required>
+                </label>
 
                 <datalist id="bedrijven">
                     <?php foreach ($bedrijven as $b): ?>
@@ -51,35 +53,59 @@ toonMenu($rechten, 'hardware');
             <?php endif; ?>
             
             <h3>Aanvrager:</h3>
+            <label>
             Naam:
             <input type="text" id="naamAanvrager" name="naamAanvrager" required>
+            </label>
 
+            <label>
             Datum:
             <input type="date" id="datumAanvrager" name="datumAanvrager" required>
+            </label>
 
+            <label>
             Telefoonnummer:
             <input type="tel" id="telefoonAanvrager" name="telefoonAanvrager" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
+            </label>
 
+            <label>
             t.l.v. investeringsnummer:
             <input type="text" id="investeringsnummer" name="investeringsnummer">
+            </label>
 
             <h3>Voor:</h3>
+            <label>
             Naam:
             <input type="text" id="naam" name="naam" required>
+            </label>
+
+            <label>
             Afdeling:
             <input type="text" id="afdeling" name="afdeling" required>
+            </label>
+
+            <label>
             Telefoonnummer:
             <input type="tel" id="telefoon" name="telefoon" pattern="^(?:06\s?\d{8}|\+31\s?6\s?\d{8})$" required>
+            </label>
+
+            <label>
             Bestaande gebruiker: <br>
             <label class="switch">
                 <input type="checkbox" name="bestaande_gebruiker" value="ja">
                 <span class="slider round"></span>
             </label> <br><br>
+            </label>
+
+            <label>
             Huidige computernaam indien van toepassing:
             <input type="text" id="huidig" name="huidige_computernaam">
+            </label>
 
             <h3>Motivatie</h3>
+            <label>
             <input type="text" id="motivatie" name="motivatie">
+            </label>
             <br>
 
             <table>
