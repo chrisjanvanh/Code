@@ -122,12 +122,12 @@ toonMenu($rechten, 'hardware');
 
                         <!-- Vervanging -->
                         <td>
-                            <input type="number" id="<?= $p['ID'] ?>1" name="<?= $p['ID'] ?>1">
+                            <input type="number" id="<?= $p['ID'] ?>1" name="<?= $p['ID'] ?>1" aria-label="Aantal vervangingen voor <?= htmlspecialchars($p['Naam']) ?>">
                         </td>
 
                         <!-- Uitbreiding -->
                         <td>
-                            <input type="number" id="<?= $p['ID'] ?>2" name="<?= $p['ID'] ?>2">
+                            <input type="number" id="<?= $p['ID'] ?>2" name="<?= $p['ID'] ?>2" aria-label="Aantal uitbreidingen voor <?= htmlspecialchars($p['Naam']) ?>">
                         </td>
 
                         <!-- Prijs -->
