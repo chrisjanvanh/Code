@@ -93,7 +93,7 @@ toonMenu($rechten, 'hardware');
             Bestaande gebruiker: <br>
             </label>
             <label class="switch">
-                <input type="checkbox" name="bestaande_gebruiker" value="ja">
+                <input type="checkbox" name="bestaande_gebruiker" value="ja" aria-label="Is de gebruiker een bestaande gebruiker?">
                 <span class="slider round"></span>
             </label> <br><br>
 
