@@ -91,19 +91,19 @@ toonMenu($rechten, 'hardware');
 
             <label>
             Bestaande gebruiker: <br>
+            </label>
             <label class="switch">
                 <input type="checkbox" name="bestaande_gebruiker" value="ja">
                 <span class="slider round"></span>
             </label> <br><br>
-            </label>
 
             <label>
             Huidige computernaam indien van toepassing:
             <input type="text" id="huidig" name="huidige_computernaam">
             </label>
 
-            <h3>Motivatie</h3>
             <label>
+            <h3>Motivatie</h3>
             <input type="text" id="motivatie" name="motivatie">
             </label>
             <br>
@@ -122,22 +122,28 @@ toonMenu($rechten, 'hardware');
 
                         <!-- Vervanging -->
                         <td>
+                            <label>
                             <input type="number" id="<?= $p['ID'] ?>1" name="<?= $p['ID'] ?>1">
+                            </label>
                         </td>
 
                         <!-- Uitbreiding -->
                         <td>
+                            <label>
                             <input type="number" id="<?= $p['ID'] ?>2" name="<?= $p['ID'] ?>2">
+                            </label>
                         </td>
 
                         <!-- Prijs -->
                         <td>
+                            <label>
                             € <input 
                             type="text"
                             name="prijs_<?= $p['ID'] ?>"
                             value="<?= number_format($p['Prijs'], 2, ',', '.') ?>"
                             onkeydown="if(event.key === 'Enter'){ updatePrijs(<?= $p['ID'] ?>, this.value, this); event.preventDefault(); }"
                         >
+                        </label>
                         </td>
                         <td>
                             <button type="button" onclick="VerwijderProduct(<?= $p['ID'] ?>)" class="button">
