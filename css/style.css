@@ -125,8 +125,8 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
 
 @media (max-width: 1000px) {
     .content {
-        margin-left: 20%;
-        margin-right: 20%;
+        margin-left: 20% !important;
+        margin-right: 20% !important;
     }
 
     header a {
@@ -138,8 +138,8 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
 
 @media (max-width: 760px) {
     .content {
-        margin-left: 10%;
-        margin-right: 10%;
+        margin-left: 10% !important;
+        margin-right: 10% !important;
     }
 }
 
