@@ -120,15 +120,15 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
     background-color: #f0f0f0;
 }
 
-input[type=radio] {
-        height: 18px;
-        width: 18px;
-    }
+/* input[type=radio] {
+    height: 18px;
+    width: 18px;
+}
 
-    input[type=checkbox] {
-        height: 18px;
-        width: 18px;
-    }
+input[type=checkbox] {
+    height: 18px;
+    width: 18px;
+} */
 
 /* ------------------------------
    Responsive layout
