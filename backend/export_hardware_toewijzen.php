@@ -42,7 +42,7 @@ $stmt = $pdo->prepare("
     FROM Gebruikname g
     JOIN Hardware h ON g.Serienummer = h.Serienummer
     WHERE h.Bedrijf = ?
-    ORDER BY g.Uitgiftedatum DESC
+    ORDER BY g.Naam ASC
 ");
 $stmt->execute([$bedrijf]);
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
