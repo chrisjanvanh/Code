@@ -123,6 +123,7 @@ toonMenu($rechten, 'hardware');
             </tr>
         <?php endforeach; ?>
     </table>
+    <br><br>
 
     <form method="get" action="backend/export_hardware_toewijzen.php" style="margin-bottom:16px;">
         <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
