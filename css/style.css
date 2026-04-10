@@ -237,13 +237,13 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
     }
 
     input[type=radio] {
-        height: 25px;
-        width: 25px;
+        height: 18px;
+        width: 18px;
     }
 
     input[type=checkbox] {
-        height: 25px;
-        width: 25px;
+        height: 18px;
+        width: 18px;
     }
 }
 
