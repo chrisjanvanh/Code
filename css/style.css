@@ -32,6 +32,7 @@ header img {
     left: 2vh;
     position: absolute;
     transition: all 0.25s;
+    overflow: clip;
 }
 
 header a {
