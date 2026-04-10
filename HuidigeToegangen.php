@@ -153,7 +153,7 @@ toonMenu($rechten, 'medewerkers');
                     $tekst = "black";
 
                     if ($waarde === 0) { $kleur = "orange"; }
-                    if ($waarde === 1) { $kleur = "green"; }
+                    if ($waarde === 1) { $kleur = "green"; $tekst = "white"; }
                     if ($waarde === 2) { $kleur = "lightgray"; $tekst = "white"; }
                     if ($waarde === 3) { $kleur = "yellow"; }
                 ?>
