@@ -124,12 +124,10 @@ toonMenu($rechten, 'hardware');
         <?php endforeach; ?>
     </table>
 
-    <?php
-        <form method="get" action="backend/export_hardware_toewijzen.php" style="margin-bottom:16px;">
-            <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
-            <button type="submit" class="button">Export naar Excel</button>
-        </form>
-    ?>
+    <form method="get" action="backend/export_hardware_toewijzen.php" style="margin-bottom:16px;">
+        <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
+        <button type="submit" class="button">Export naar Excel</button>
+    </form>
 
 </div>
 </main>
