@@ -232,6 +232,8 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
         width: 30px;
         height: auto;
         cursor: pointer;
+        overflow: clip;
+        contain: paint;
     }
 }
 
