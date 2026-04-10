@@ -2,7 +2,7 @@
 require 'backend/hardware_toewijzen_logic.php'; 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,6 +123,13 @@ toonMenu($rechten, 'hardware');
             </tr>
         <?php endforeach; ?>
     </table>
+
+    <?php
+        <form method="get" action="backend/export_hardware_toewijzen.php" style="margin-bottom:16px;">
+            <input type="hidden" name="bedrijf" value="<?= htmlspecialchars($bedrijf) ?>">
+            <button type="submit" class="button">Export naar Excel</button>
+        </form>
+    ?>
 
 </div>
 </main>
