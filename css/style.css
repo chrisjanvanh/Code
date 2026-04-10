@@ -235,6 +235,16 @@ input[type=text]:focus, input[list]:focus, input[type=email]:focus, input[type=d
         overflow: clip;
         contain: paint;
     }
+
+    input[type=radio] {
+        height: 25px;
+        width: 25px;
+    }
+
+    input[type=checkbox] {
+        height: 25px;
+        width: 25px;
+    }
 }
 
 @media (min-width: 851px) {
