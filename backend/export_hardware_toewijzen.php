@@ -19,7 +19,7 @@ header("Content-Disposition: attachment; filename=hardware_toewijzen_{$bedrijf}_
 echo "\xEF\xBB\xBF";
 
 $output = fopen("php://output", "w");
-fputcsv($output, ["Naam", "Serienummer", "Model", "Uitgiftedatum"], ",", '"', "\\");
+fputcsv($output, ["Naam", "Serienummer", "Model", "Uitgiftedatum"], ";", '"', "\\");
 
 $stmt = $pdo->prepare("
     SELECT Serienummer, Model, 'Voorraad' AS Naam, NULL AS Uitgiftedatum, 'Voorraad' AS Type
@@ -34,7 +34,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $row['Serienummer'],
         $row['Model'],
         ''
-    ], ",", '"', "\\");
+    ], ";", '"', "\\");
 }
 
 $stmt = $pdo->prepare("
@@ -51,7 +51,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $row['Serienummer'],
         $row['Model'],
         date("d-m-Y", strtotime($row['Uitgiftedatum']))
-    ], ",", '"', "\\");
+    ], ";", '"', "\\");
 
 }
 
