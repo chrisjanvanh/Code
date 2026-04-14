@@ -32,6 +32,7 @@ toonMenu($rechten, 'hardware');
 
 <main>
     <div class="content">
+        <h1>Hardware Bestellen</h1>
 
         <?php if (!empty($_SESSION['melding'])): ?>
             <div class="melding"><?= $_SESSION['melding'] ?></div>
