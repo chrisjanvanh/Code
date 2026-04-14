@@ -55,7 +55,7 @@ toonMenu($rechten, 'hardware');
                 <input type="hidden" id="bedrijf" name="bedrijf" value="<?= htmlspecialchars($bedrijven[0]) ?>">
             <?php endif; ?>
             
-            <h3>Aanvrager:</h3>
+            <h2>Aanvrager:</h2>
             <label>
             Naam:
             <input type="text" id="naamAanvrager" name="naamAanvrager" required>
@@ -76,7 +76,7 @@ toonMenu($rechten, 'hardware');
             <input type="text" id="investeringsnummer" name="investeringsnummer">
             </label>
 
-            <h3>Voor:</h3>
+            <h2>Voor:</h2>
             <label>
             Naam:
             <input type="text" id="naam" name="naam" required>
