@@ -17,9 +17,9 @@ $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 $stmt = $pdo->prepare("
     SELECT Bedrijf 
     FROM AfdelingEmails 
-    WHERE Afdeling = ? AND Email = ?
+    WHERE AND Email = ?
 ");
-$stmt->execute([$afdeling, $gebruikerEmail]);
+$stmt->execute([$gebruikerEmail]);
 $bedrijvenHR = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
 if (empty($bedrijvenHR)) {

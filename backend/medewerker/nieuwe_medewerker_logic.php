@@ -19,8 +19,8 @@ $gebruikerNaam = $_SESSION['gebruikernaam'] ?? "Onbekend";
    1. Controleer of gebruiker toegang heeft tot deze afdeling
 ----------------------------------------------------------- */
 
-$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Afdeling = ? AND Email = ?");
-$stmt->execute([$afdeling, $gebruikerEmail]);
+$stmt = $pdo->prepare("SELECT ID FROM AfdelingEmails WHERE Email = ?");
+$stmt->execute([$gebruikerEmail]);
 
 if ($stmt->rowCount() === 0) {
     header("Location: forbidden.php");

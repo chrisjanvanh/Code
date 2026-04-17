@@ -28,7 +28,7 @@ function toonMenu($rechten, $current = "")
 
         <a href="index.php" class="<?= $current === 'index' ? 'current' : '' ?>">Homepagina</a>
 
-        <?php if (in_array("HR", $rechten)): ?>
+        <?php if (!empty($rechten)): ?>
             <a href="HuidigeToegangen.php" class="<?= $current === 'medewerkers' ? 'current' : '' ?>">Medewerkers</a>
         <?php endif; ?>
 
