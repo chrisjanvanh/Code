@@ -1,4 +1,7 @@
 <?php
+header("Cross-Origin-Opener-Policy: unsafe-none");
+header("Cross-Origin-Embedder-Policy: unsafe-none");
+
 session_start();
 
 // Als gebruiker al is ingelogd → direct doorsturen
