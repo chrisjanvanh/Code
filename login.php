@@ -1,7 +1,6 @@
 <?php
 header("Cross-Origin-Opener-Policy: unsafe-none");
 header("Cross-Origin-Embedder-Policy: unsafe-none");
-header("Permissions-Policy: identity-credentials-get=*");
 
 session_start();
 
@@ -25,7 +24,6 @@ if (isset($_SESSION['email'])) {
     <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
 
     <!-- Google SSO -->
-    <meta name="google-signin-client_id" content="208183931140-rafgpe00evlhagalk0adasd7ffelt5is.apps.googleusercontent.com">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <style>
@@ -69,7 +67,7 @@ if (isset($_SESSION['email'])) {
 </head>
 
 <body>
-<main>
+    <main>
 <div class="login-container">
     <div class="login-box">
         <img src="img/logo.svg" alt="VDL Groep Logo">
@@ -109,7 +107,7 @@ const msalConfig = {
     auth: {
         clientId: "00fc974d-f877-4135-8bb4-fb6345b5bac4",
         authority: "https://login.microsoftonline.com/common",
-        redirectUri: "https://vdl-backend.azurewebsites.net/auth/callback.html"
+        redirectUri: window.location.href
     }
 };
 
