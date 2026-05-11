@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>Authenticatie voltooid</title>
+</head>
+<body>
+<script>
+    // Stuurt de hash of querystring terug naar het hoofdvenster
+    if (window.opener) {
+        window.opener.postMessage(location.hash || location.search, "*");
+        window.close();
+    }
+</script>
+</body>
+</html>
