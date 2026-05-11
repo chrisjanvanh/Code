@@ -1,6 +1,16 @@
 <?php
-require "config2.php";
+<?php
+session_set_cookie_params([
+    'samesite' => 'None',
+    'secure' => true,
+    'httponly' => true,
+    'path' => '/'
+]);
+
 session_start();
+
+require "config2.php";
+
 
 if (!isset($_POST['email'])) {
     http_response_code(400);
