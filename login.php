@@ -80,7 +80,8 @@ if (isset($_SESSION['email'])) {
         <!-- Google Login -->
         <div id="g_id_onload"
              data-client_id="208183931140-rafgpe00evlhagalk0adasd7ffelt5is.apps.googleusercontent.com"
-             data-callback="handleGoogleLogin">
+             data-callback="handleGoogleLogin"
+             data-use_fedcm="false">
         </div>
         <div class="g_id_signin" data-type="standard"></div>
     </div>
