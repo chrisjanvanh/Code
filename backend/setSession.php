@@ -1,5 +1,9 @@
 <?php
 require "config2.php";
+
+header("Cross-Origin-Opener-Policy: unsafe-none");
+header("Cross-Origin-Embedder-Policy: unsafe-none");
+
 session_start();
 
 if (!isset($_POST['email'])) {
