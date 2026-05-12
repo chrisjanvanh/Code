@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$host = "217.76.24.141";
+$host = "185.113.173.140";
 $user = "VDL";
 $password = "1234";
 $database = "VDL";
