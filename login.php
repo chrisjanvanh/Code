@@ -110,7 +110,7 @@ const msalConfig = {
     auth: {
         clientId: "00fc974d-f877-4135-8bb4-fb6345b5bac4",
         authority: "https://login.microsoftonline.com/common",
-        redirectUri: "https://vdl-backend.azurewebsites.net/auth/callback.html"
+        redirectUri: window.location.href
     }
 };
 
