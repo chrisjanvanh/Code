@@ -1,5 +1,15 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
 session_start();
+
 require_once __DIR__ . '/../config2.php';
 
 // 1. Check of naam is meegegeven

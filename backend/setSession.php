@@ -4,6 +4,15 @@ require "config2.php";
 header("Cross-Origin-Opener-Policy: unsafe-none");
 header("Cross-Origin-Embedder-Policy: unsafe-none");
 
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
 session_start();
 
 if (!isset($_POST['email'])) {

@@ -3,7 +3,17 @@ header("Cross-Origin-Opener-Policy: unsafe-none");
 header("Cross-Origin-Embedder-Policy: unsafe-none");
 header("Permissions-Policy: identity-credentials-get=*");
 
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
 session_start();
+
 
 // Als gebruiker al is ingelogd → direct doorsturen
 if (isset($_SESSION['email'])) {

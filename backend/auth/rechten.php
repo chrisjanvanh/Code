@@ -1,6 +1,16 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+    session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
+
+session_start();
+
 }
 
 require_once __DIR__ . '/../config2.php';
