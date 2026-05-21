@@ -64,7 +64,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $row['Naam'],
         $row['Serienummer'],
         $row['Model'],
-        date("d-m-Y", strtotime($row['Uitgiftedatum']))
+        '="' . date("d-m-Y", strtotime($row['Uitgiftedatum'])) . '"'
     ], ";", '"', "\\");
 }
 
