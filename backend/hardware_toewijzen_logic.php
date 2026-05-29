@@ -86,15 +86,29 @@ if (isset($_POST['opslaan'])) {
         exit;
     }
 
-    $medewerkerID = (int)($_POST['medewerkerID'] ?? 0);
-    $serienummer  = trim($_POST['serienummer'] ?? '');
-    $uitgiftedatum = $_POST['uitgiftedatum'] ?? '';
+    $naam = trim($_POST['naam'] ?? '');
+    $serienummer = trim($_POST['serienummer'] ?? '');
+    $uitgiftedatum = trim($_POST['uitgiftedatum'] ?? '');
 
-    if ($medewerkerID === 0 || $serienummer === "" || $uitgiftedatum === "") {
+    if ($naam === "" || $serienummer === "" || $uitgiftedatum === "") {
         $_SESSION['melding'] = "Vul alle velden in.";
         header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
         exit;
     }
+
+    // Haal MedewerkerID op
+    $stmt = $pdo->prepare("SELECT MedewerkerID FROM Medewerker WHERE Naam = ? AND Bedrijf = ?");
+    $stmt->execute([$naam, $bedrijf]);
+    $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$medewerker) {
+        $_SESSION['melding'] = "Medewerker niet gevonden binnen dit bedrijf.";
+        header("Location: ../HardwareToewijzen.php?bedrijf=" . urlencode($bedrijf));
+        exit;
+    }
+
+    $medewerkerID = (int)$medewerker['MedewerkerID'];
+
 
     // Check of medewerker bij bedrijf hoort
     $checkNaam = $pdo->prepare("
