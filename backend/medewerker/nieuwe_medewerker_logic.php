@@ -56,7 +56,7 @@ $melding = "";
 $stmt = $pdo->prepare("
     SELECT DISTINCT Bedrijf 
     FROM AfdelingEmails 
-    WHERE Afdeling = 'HR' AND Email = ?
+    WHERE Email = ?
 ");
 $stmt->execute([$gebruikerEmail]);
 $bedrijven = $stmt->fetchAll(PDO::FETCH_COLUMN);
