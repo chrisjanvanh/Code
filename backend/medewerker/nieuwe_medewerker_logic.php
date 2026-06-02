@@ -158,11 +158,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $sql = "
             INSERT INTO Medewerker 
-            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, Email)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            (Naam, Functie, Locatie, Leidinggevende, Bedrijf, Referentie, Email, Startdatum)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         ";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email]);
+        $stmt->execute([$naam, $functie, $locatie, $leidinggevende, $bedrijf, $referentie, $email, $_POST['startdatum']]);
 
 
         $melding = "Medewerker succesvol aangemeld.";
