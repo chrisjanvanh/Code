@@ -92,7 +92,7 @@ toonMenu($rechten, 'medewerkers');
 
             <label>
             Startdatum:<br>
-            <input type="date" name="startdatum" value="<?= $medewerker['Startdatum'] ?>"><br>
+            <input type="date" name="startdatum" value="<?= $medewerker['Startdatum'] ?>" readonly><br>
             </label><br>
 
             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
