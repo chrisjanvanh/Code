@@ -2,7 +2,7 @@
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',
-    'domain' => '',
+    'domain' => 'maar',
     'secure' => true,
     'httponly' => true,
     'samesite' => 'None'

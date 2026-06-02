@@ -87,7 +87,12 @@ toonMenu($rechten, 'medewerkers');
         Email:
         <input type="email" id="email" name="email" autocomplete="off">
         </label>
-        <br>
+
+        <label>
+        Startdatum:
+        <input type="date" id="startdatum" name="startdatum" required>
+        </label>
+        <br><br>
 
         <h2>Komt de medewerker contractueel in dienst?</h2>
         <input type="radio" id="ja" name="radiogroep" value="Ja" required>
