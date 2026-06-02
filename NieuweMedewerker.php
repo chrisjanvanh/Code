@@ -90,7 +90,7 @@ toonMenu($rechten, 'medewerkers');
 
         <label>
         Startdatum:
-        <input type="date" id="startdatum" name="startdatum" required>
+        <input type="date" id="startdatum" name="startdatum">
         </label>
         <br><br>
 
