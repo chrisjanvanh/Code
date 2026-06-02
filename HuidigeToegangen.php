@@ -89,6 +89,11 @@ toonMenu($rechten, 'medewerkers');
             Email:<br>
             <input type="email" name="email" value="<?= $medewerker['Email'] ?>" autocomplete="off"><br>
             </label>
+            
+            <label>
+            Startdatum:<br>
+            <input type="date" name="startdatum" value="<?= $medewerker['Startdatum'] ?>"><br>
+            </label>
 
             <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
 
