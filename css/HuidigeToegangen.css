@@ -1,4 +1,4 @@
-form input[type=text], input[list], input[type=email] {
+form input[type=text], input[list], input[type=date], input[type=email] {
     width: 100%;
     padding: 10px;
     font-size: 16px;
