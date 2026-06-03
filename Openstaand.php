@@ -17,6 +17,16 @@ if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit;
 }
+
+/* Logic bestand laden */
+require_once 'backend/Openstaand_logic.php';
+
+/* Status mapping */
+$statusMap = [
+    0 => "Aangevraagd",
+    2 => "Verwijdering aangevraagd",
+    3 => "Wachtrij"
+];
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +36,7 @@ if (!isset($_SESSION['email'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Interne VDL Bus & Coach portal voor hardwarebeheer, bestellingen en medewerkerstoegang.">
     <title>VDL Bus & Coach</title>
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="javascript/main.js"></script>
@@ -39,8 +50,45 @@ require_once 'backend/auth/rechten.php';
 toonMenu($rechten, 'medewerkers');
 ?>
 
-    <main>
-        
-    </main>
+<main>
+    <h2>Openstaande aanvragen</h2>
+
+    <?php if (empty($openstaandeTaken)): ?>
+        <p>Geen openstaande aanvragen gevonden.</p>
+    <?php else: ?>
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>Naam</th>
+                    <th>Taak</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($openstaandeTaken as $taak): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($taak['Medewerker']) ?></td>
+                        <td><?= htmlspecialchars($taak['Product']) ?></td>
+                        <td>
+                            <?php
+                            $kleur = match ($taak['Waarde']) {
+                                0 => "orange",
+                                2 => "lightgray",
+                                3 => "yellow",
+                                default => "black"
+                            };
+                            ?>
+                            <span style="color: <?= $kleur ?>">
+                                <?= $statusMap[$taak['Waarde']] ?? 'Onbekend' ?>
+                            </span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+
+</main>
+
 </body>
 </html>
