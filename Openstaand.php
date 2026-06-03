@@ -36,7 +36,7 @@ $statusMap = [
     <title>VDL Bus & Coach</title>
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/HuidigeToegangen.css">
     <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -56,7 +56,7 @@ toonMenu($rechten, 'medewerkers');
     <?php if (empty($openstaandeTaken)): ?>
         <p>Geen openstaande aanvragen gevonden.</p>
     <?php else: ?>
-        <table border="1" cellpadding="8">
+        <table>
             <thead>
                 <tr>
                     <th>Naam</th>
