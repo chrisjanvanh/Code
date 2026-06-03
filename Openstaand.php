@@ -77,7 +77,6 @@ toonMenu($rechten, 'medewerkers');
                         <td><?= htmlspecialchars($taak['Medewerker']) ?></td>
                         <td><?= htmlspecialchars($taak['Product']) ?></td>
                         <td><?= htmlspecialchars($taak['Bedrijf']) ?></td>
-                        <td>
                             <?php
                             $kleur = match ($taak['Waarde']) {
                                 0 => "orange",
