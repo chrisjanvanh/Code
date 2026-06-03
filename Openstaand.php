@@ -18,10 +18,8 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-/* Logic bestand laden */
-require_once 'backend/medewerker/Openstaand_logic.php';
+require 'backend/medewerker/Openstaand_logic.php';
 
-/* Status mapping */
 $statusMap = [
     0 => "Aangevraagd",
     2 => "Verwijdering aangevraagd",
