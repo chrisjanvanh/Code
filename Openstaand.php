@@ -22,7 +22,7 @@ require_once __DIR__ . '/backend/medewerker/Openstaand_logic.php';
 
 $statusMap = [
     0 => "Aangevraagd",
-    2 => "Verwijdering aangevraagd",
+    2 => "Verwijderd",
     3 => "Wachtrij"
 ];
 ?>
