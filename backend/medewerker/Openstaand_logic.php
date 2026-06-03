@@ -44,11 +44,11 @@ $placeholdersBedrijven = implode(',', array_fill(0, count($bedrijvenHR), '?'));
    2. Openstaande taken ophalen (waarde 0 of 2)
 --------------------------------------------------- */
 $sql = "
-    SELECT Medewerker, Product, Waarde
+    SELECT Bedrijf, Medewerker, Product, Waarde
     FROM BedrijfProduct
     WHERE Bedrijf IN ($placeholdersBedrijven)
       AND (Waarde IN (0, 2, 3))
-    ORDER BY Medewerker ASC
+    ORDER BY Bedrijf, Medewerker ASC
 ";
 
 

@@ -37,6 +37,12 @@ $statusMap = [
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HuidigeToegangen.css">
+    <style>
+        .content {
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+    </style>
     <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
@@ -61,6 +67,7 @@ toonMenu($rechten, 'medewerkers');
                 <tr>
                     <th>Naam</th>
                     <th>Taak</th>
+                    <th>Bedrijf</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -69,7 +76,7 @@ toonMenu($rechten, 'medewerkers');
                     <tr>
                         <td><?= htmlspecialchars($taak['Medewerker']) ?></td>
                         <td><?= htmlspecialchars($taak['Product']) ?></td>
-                        <td><?= htmlspecialchars($placeholdersBedrijven) ?></td>
+                        <td><?= htmlspecialchars($taak['Bedrijf']) ?></td>
                         <td>
                             <?php
                             $kleur = match ($taak['Waarde']) {
