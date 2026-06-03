@@ -18,7 +18,7 @@ if (!isset($_SESSION['email'])) {
     exit;
 }
 
-// require 'backend/medewerker/Openstaand_logic.php';
+require_once __DIR__ . '/../backend/medewerker/Openstaand_logic.php';
 
 $statusMap = [
     0 => "Aangevraagd",
