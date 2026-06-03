@@ -22,7 +22,7 @@ require_once __DIR__ . '/backend/medewerker/Openstaand_logic.php';
 
 $statusMap = [
     0 => "Aangevraagd",
-    2 => "Verwijderd",
+    2 => "Verwijdering aangevraagd",
     3 => "Wachtrij"
 ];
 ?>
@@ -37,12 +37,12 @@ $statusMap = [
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HuidigeToegangen.css">
-    <style>
+    <!-- <style>
         .content {
             margin-left: 15%;
             margin-right: 15%;
         }
-    </style>
+    </style> -->
     <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
