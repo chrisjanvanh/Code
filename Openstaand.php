@@ -37,12 +37,6 @@ $statusMap = [
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/HuidigeToegangen.css">
-    <!-- <style>
-        .content {
-            margin-left: 15%;
-            margin-right: 15%;
-        }
-    </style> -->
     <script src="javascript/main.js"></script>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.ico">
