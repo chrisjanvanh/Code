@@ -50,7 +50,7 @@ $sql = "
       AND (Waarde IN (0, 2, 3))
     ORDER BY Medewerker ASC
 ";
-``
+
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($bedrijvenHR);
