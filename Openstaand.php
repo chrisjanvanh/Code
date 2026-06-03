@@ -19,7 +19,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 /* Logic bestand laden */
-require_once 'backend/Openstaand_logic.php';
+require_once 'backend/medewerker/Openstaand_logic.php';
 
 /* Status mapping */
 $statusMap = [
@@ -56,7 +56,7 @@ toonMenu($rechten, 'medewerkers');
     <?php if (empty($openstaandeTaken)): ?>
         <p>Geen openstaande aanvragen gevonden.</p>
     <?php else: ?>
-        <table border="1" cellpadding="8">
+        <table cellpadding="8">
             <thead>
                 <tr>
                     <th>Naam</th>
