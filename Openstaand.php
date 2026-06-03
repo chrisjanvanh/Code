@@ -77,8 +77,15 @@ toonMenu($rechten, 'medewerkers');
                                 3 => "yellow",
                                 default => "black"
                             };
+
+                            $tekstkleur = match ($taak['Waarde']) {
+                                0 => "black",
+                                2 => "white",
+                                3 => "black",
+                                default => "black"
+                            };
                             ?>
-                            <span style="color: <?= $kleur ?>">
+                            <span style="background-color: <?= $kleur ?>; color: <?= $tekstkleur ?>">
                                 <?= $statusMap[$taak['Waarde']] ?? 'Onbekend' ?>
                             </span>
                         </td>
