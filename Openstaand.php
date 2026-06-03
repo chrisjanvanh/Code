@@ -36,7 +36,7 @@ if (!isset($_SESSION['email'])) {
 
 <?php
 require_once 'backend/auth/rechten.php';
-toonMenu($rechten, 'Medewerkers');
+toonMenu($rechten, 'medewerkers');
 ?>
 
     <main>
