@@ -85,14 +85,13 @@ toonMenu($rechten, 'medewerkers');
                                 default => "black"
                             };
                             ?>
-                            <span style="background-color: <?= $kleur ?>; color: <?= $tekstkleur ?>">
+                            <td style="background-color: <?= $kleur ?>; color: <?= $tekstkleur ?>;">
                                 <?= $statusMap[$taak['Waarde']] ?? 'Onbekend' ?>
-                            </span>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
     <?php endif; ?>
     </div>
 </main>
