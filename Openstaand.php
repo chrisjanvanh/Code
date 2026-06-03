@@ -49,12 +49,14 @@ toonMenu($rechten, 'medewerkers');
 ?>
 
 <main>
+    <div class="content">
+        
     <h2>Openstaande aanvragen</h2>
 
     <?php if (empty($openstaandeTaken)): ?>
         <p>Geen openstaande aanvragen gevonden.</p>
     <?php else: ?>
-        <table cellpadding="8">
+        <table border="1" cellpadding="8">
             <thead>
                 <tr>
                     <th>Naam</th>
@@ -85,7 +87,7 @@ toonMenu($rechten, 'medewerkers');
             </tbody>
         </table>
     <?php endif; ?>
-
+    </div>
 </main>
 
 </body>
