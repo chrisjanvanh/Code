@@ -38,8 +38,8 @@ $statusMap = [
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="javascript/main.js"></script>
-
-    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+<!-- 
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico"> -->
 </head>
 <body>
 

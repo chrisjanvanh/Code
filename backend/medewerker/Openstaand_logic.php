@@ -12,10 +12,10 @@ session_start();
 
 require_once __DIR__ . '/../config2.php';
 
-if (!isset($_SESSION['email'])) {
-    header("Location: /../../login.php");
-    exit;
-}
+// if (!isset($_SESSION['email'])) {
+//     header("Location: /../../login.php");
+//     exit;
+// }
 
 $afdeling = "HR";
 $gebruikerEmail = $_SESSION['email'];
