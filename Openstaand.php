@@ -69,7 +69,7 @@ toonMenu($rechten, 'medewerkers');
                     <tr>
                         <td><?= htmlspecialchars($taak['Medewerker']) ?></td>
                         <td><?= htmlspecialchars($taak['Product']) ?></td>
-                        <td><?= htmlspecialchars($placeholderBedrijf) ?></td>
+                        <td><?= htmlspecialchars($placeholdersBedrijven) ?></td>
                         <td>
                             <?php
                             $kleur = match ($taak['Waarde']) {
