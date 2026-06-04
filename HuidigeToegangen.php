@@ -60,7 +60,9 @@ toonMenu($rechten, 'medewerkers');
 
         <button type="submit" class="button">Zoeken</button>
         <a href="NieuweMedewerker.php" class="button">Medewerker Toevoegen</a>
-        <a href="Openstaand.php" class="button">Openstaande aanvragen</a>
+        <?php if (!empty($bedrijvenHR)): ?>
+            <a href="Openstaand.php" class="button">Openstaande aanvragen</a>
+        <?php endif; ?>
     </form>
 
     <?php if ($medewerker): ?>
