@@ -24,7 +24,7 @@ if ($bedrijf === '') {
 }
 
 header("Content-Type: text/csv; charset=utf-8");
-header("Content-Disposition: attachment; filename=hardware{$bedrijf}_" . date("Y-m-d_H-i-s") . ".csv");
+header("Content-Disposition: attachment; filename=hardware{$bedrijf}_" . date("d-m-Y_H-i") . ".csv");
 echo "\xEF\xBB\xBF";
 
 $output = fopen("php://output", "w");
