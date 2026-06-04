@@ -17,7 +17,7 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 
-require_once "backend/config2.php"; // hier moet $pdo staan
+require_once "backend/config2.php"; 
 
 $stmt = $pdo->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
 $stmt->execute([$gebruikerEmail]);
