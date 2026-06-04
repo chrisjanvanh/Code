@@ -27,7 +27,7 @@ $gebruikerNaam  = $_SESSION['gebruikernaam'] ?? "Onbekend";
 $stmt = $pdo->prepare("
     SELECT Bedrijf 
     FROM AfdelingEmails 
-    WHERE Email = ? AND Afdeling = 'HR'
+    WHERE Email = ?
 ");
 $stmt->execute([$gebruikerEmail]);
 $bedrijvenHR = $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -36,6 +36,14 @@ if (empty($bedrijvenHR)) {
     header("Location: forbidden.php");
     exit;
 }
+
+$stmt2 = $pdo->prepare("
+    SELECT Bedrijf 
+    FROM AfdelingEmails 
+    WHERE Email = ? AND Afdeling = 'HR'
+");
+$stmt2->execute([$gebruikerEmail]);
+$isHR = $stmt2->fetchAll(PDO::FETCH_COLUMN);
 
 /* Helper: placeholders voor IN (...) */
 $placeholdersBedrijven = implode(',', array_fill(0, count($bedrijvenHR), '?'));
