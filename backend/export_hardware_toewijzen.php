@@ -41,7 +41,7 @@ $stmt->execute([$bedrijf]);
 
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     fputcsv($output, [
-        "Voorraad Desktop",
+        "Voorraad",
         $row['Serienummer'],
         $row['Model'],
         ''
