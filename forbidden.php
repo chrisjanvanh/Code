@@ -17,20 +17,15 @@ if (!isset($_SESSION['email'])) {
 
 $gebruikerEmail = $_SESSION['email'];
 
-require_once "backend/config.php"; // als je dit nog niet had
+require_once "backend/config2.php"; // hier moet $pdo staan
 
-$stmt = $conn->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
-$stmt->bind_param("s", $gebruikerEmail);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt = $pdo->prepare("SELECT Afdeling FROM AfdelingEmails WHERE Email = ?");
+$stmt->execute([$gebruikerEmail]);
 
-// Maak een lijst van alle afdelingen
-$afdelingen = [];
-while ($row = $result->fetch_assoc()) {
-    $afdelingen[] = $row['Afdeling'];
-}
+// Alles ophalen
+$afdelingen = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
-// Maak tekst voor weergave
+// Tekst maken
 $afdelingenTekst = empty($afdelingen)
     ? "Geen afdelingen gevonden"
     : implode(", ", $afdelingen);
