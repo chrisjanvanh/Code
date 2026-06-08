@@ -39,7 +39,7 @@ if (!$bestand) {
         "Huidige Medewerker"
     ]);
 
-    $melding = "Bestand succesvol gedownload"
+    $melding = "Bestand succesvol gedownload";
 
 $naam = $bestand['BestandNaam'];
 $type = $bestand['BestandType'];
