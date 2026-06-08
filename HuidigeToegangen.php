@@ -107,6 +107,21 @@ toonMenu($rechten, 'medewerkers');
 
         <?php if (empty($bestanden)): ?>
             <p>Geen bestanden gevonden voor deze medewerker.</p>
+            <table class="bestanden">
+                <tr>
+                    <td colspan="4">
+                        <form action="backend/medewerker/upload_bestand.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="email" value="<?= $medewerker['Email'] ?>">
+                            <input type="hidden" name="naam" value="<?= $medewerker['Naam'] ?>">
+
+                            <label for="upload">Upload een bestand </label>
+                            <input type="file" id="upload" name="upload" required>
+
+                            <button type="submit" class="button">Verstuur</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
         <?php else: ?>
             <table class="bestanden">
                 <tr>
