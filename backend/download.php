@@ -28,6 +28,10 @@ $stmt = $pdo->prepare("
 $stmt->execute([$id]);
 $bestand = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if (!$bestand) {
+    die("Bestand niet gevonden.");
+}
+
     // Logboek
     $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
     $log->execute([
@@ -36,10 +40,6 @@ $bestand = $stmt->fetch(PDO::FETCH_ASSOC);
     ]);
 
     $melding = "Bestand succesvol gedownload"
-
-if (!$bestand) {
-    die("Geen bestand gevonden.");
-}
 
 $naam = $bestand['BestandNaam'];
 $type = $bestand['BestandType'];

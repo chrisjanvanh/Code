@@ -178,7 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $bedrijf,
             $product,
             $naam,
-            $waarde   // 0 of NULL of 3 (business rules)
+            $waarde   // 0 of NULL of 3
         ]);
     }
 

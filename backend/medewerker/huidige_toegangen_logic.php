@@ -147,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
         die("FOUT: kan niet toevoegen, waarde is niet NULL");
     }
 
-    if ($actie === "verwijderen" && $huidigeWaarde != 1) {
+    if ($actie === "verwijderen" && $huidigeWaarde !== 1) {
         die("FOUT: kan niet verwijderen, waarde is niet 1");
     }
 

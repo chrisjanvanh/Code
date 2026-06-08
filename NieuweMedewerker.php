@@ -57,7 +57,7 @@ toonMenu($rechten, 'medewerkers');
 
         <label>
         Locatie:
-        <input type="text" id="locatie" name="locatie" required autocomplete="off">
+        <input type="text" id="locatie" name="locatie" autocomplete="off">
         </label>
 
         <label>
@@ -90,7 +90,7 @@ toonMenu($rechten, 'medewerkers');
 
         <label>
         Startdatum:
-        <input type="date" id="startdatum" name="startdatum">
+        <input type="date" id="startdatum" name="startdatum" required>
         </label>
         <br><br>
 

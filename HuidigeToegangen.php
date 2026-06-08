@@ -75,17 +75,17 @@ toonMenu($rechten, 'medewerkers');
 
             <label>
             Locatie:<br>
-            <input type="text" name="locatie" value="<?= $medewerker['Locatie'] ?>"><br>
+            <input type="text" name="locatie" value="<?= $medewerker['Locatie'] ?>" autocomplete="off"><br>
             </label>
 
             <label>
             Leidinggevende:<br>
-            <input type="text" name="leidinggevende" value="<?= $medewerker['Leidinggevende'] ?>"><br>
+            <input type="text" name="leidinggevende" value="<?= $medewerker['Leidinggevende'] ?>" autocomplete="off"><br>
             </label>
 
             <label>
             Bedrijf:<br>
-            <input type="text" name="bedrijf" value="<?= $medewerker['Bedrijf'] ?>"><br>
+            <input type="text" name="bedrijf" value="<?= $medewerker['Bedrijf'] ?>" required autocomplete="off"><br>
             </label>
 
             <label>
