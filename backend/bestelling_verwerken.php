@@ -116,8 +116,8 @@ $opsomming = array_filter($opsomming); // ← verwijdert lege regels
 
 $opsomming_tekst = implode("\n", $opsomming);
 
-// 3. Webhook naar Make
-$webhook_url = "https://hook.eu1.make.com/8jhm6yjjfthe6atw11qr3b87c38wdkqd";
+// 3. Webhook naar Power Automate
+$webhook_url = "https://default86a972c8b7ac4a0381be61a5a6b32a.f6.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/41bd28ec15af4c07930769cdc38da45e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r7D5HrQMprIoSXOjz2t1aeE5IFNh401swO3qNolQweU";
 
 $data = [
     "bedrijf" => $_POST["bedrijf"],

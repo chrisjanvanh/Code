@@ -41,7 +41,7 @@ if (empty($bedrijvenHR)) {
 $placeholdersBedrijven = implode(',', array_fill(0, count($bedrijvenHR), '?'));
 
 /* ---------------------------------------------------
-   2. Openstaande taken ophalen (waarde 0 of 2)
+   2. Openstaande taken ophalen (waarde 0, 2 of 3)
 --------------------------------------------------- */
 $sql = "
     SELECT Bedrijf, Medewerker, Product, Waarde
