@@ -120,25 +120,33 @@ $opsomming_tekst = implode("\n", $opsomming);
 $webhook_url = "https://default86a972c8b7ac4a0381be61a5a6b32a.f6.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/41bd28ec15af4c07930769cdc38da45e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=r7D5HrQMprIoSXOjz2t1aeE5IFNh401swO3qNolQweU";
 
 $data = [
-    "bedrijf" => $_POST["bedrijf"],
-    "aanvrager" => $_POST["naamAanvrager"],
-    "telefoonAanvrager" => $_POST["telefoonAanvrager"],
-    "datum" => date("d-m-Y", strtotime($_POST["datumAanvrager"])),
-    "investeringsnummer" => $_POST["investeringsnummer"],
+    "bedrijf" => $_POST["bedrijf"] ?? "",
+    "aanvrager" => $_POST["naamAanvrager"] ?? "",
+    "telefoonAanvrager" => $_POST["telefoonAanvrager"] ?? "",
+    "datum" => date("d-m-Y", strtotime($_POST["datumAanvrager"] ?? "")),
+    "investeringsnummer" => $_POST["investeringsnummer"] ?? "",
 
-    "voor_naam" => $_POST["naam"],
-    "voor_afdeling" => $_POST["afdeling"],
-    "voor_telefoon" => $_POST["telefoon"],
+    "voor_naam" => $_POST["naam"] ?? "",
+    "voor_afdeling" => $_POST["afdeling"] ?? "",
+    "voor_telefoon" => $_POST["telefoon"] ?? "",
     "bestaande_gebruiker" => isset($_POST["bestaande_gebruiker"]) ? "Ja" : "Nee",
     "huidige_computernaam" => trim($_POST["huidige_computernaam"] ?? ""),
 
-    "motivatie" => $_POST["motivatie"],
+    "motivatie" => $_POST["motivatie"] ?? "",
     "bestelling" => $opsomming_tekst
 ];
 
 $ch = curl_init($webhook_url);
 curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+
+$jsonData = json_encode($data);
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($jsonData)
+]);
+
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
