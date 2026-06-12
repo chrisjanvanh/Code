@@ -253,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "emails"    => $emails
         ];
 
-        $url = "https://hook.eu1.make.com/113rh6zbq8knken7iynmqmtto1k0f67n";
+        $url = "https://default86a972c8b7ac4a0381be61a5a6b32a.f6.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/67704d954d1e46b4bd238e9a09e45a48/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Q0M7SdhthHtZjgcWNnrUefxw98gDHOe17J-ac8_iYc";
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
