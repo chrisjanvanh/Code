@@ -1,9 +1,21 @@
 <?php
-require_once "config2.php";
+require_once "config2.php"; // bevat $pdo
 
-$input = json_decode(file_get_contents("php://input"), true);
+header("Content-Type: application/json");
 
-if (!isset($input['email']) || !isset($input['fileData'])) {
+// ---------------------------------------------------
+// 1. JSON input ophalen
+// ---------------------------------------------------
+$rawInput = file_get_contents("php://input");
+$input = json_decode($rawInput, true);
+
+// Debug (optioneel)
+// file_put_contents("debug_input.txt", $rawInput);
+
+// ---------------------------------------------------
+// 2. Validatie
+// ---------------------------------------------------
+if (!$input || !isset($input['email']) || !isset($input['fileData'])) {
     echo json_encode([
         "success" => false,
         "message" => "Vereiste velden ontbreken."
@@ -11,14 +23,43 @@ if (!isset($input['email']) || !isset($input['fileData'])) {
     exit;
 }
 
+// ---------------------------------------------------
+// 3. Variabelen ophalen
+// ---------------------------------------------------
 $email     = $input['email'];
 $filename  = $input['filename'] ?? 'onbekend';
 $mimetype  = $input['mimetype'] ?? 'application/octet-stream';
-$fileData  = base64_decode($input['fileData']);
 
-/* ---------------------------------------------------
-   1. Medewerker zoeken
---------------------------------------------------- */
+// Base64 opschonen (HEEL BELANGRIJK tegen corruptie)
+$fileDataRaw = $input['fileData'];
+$fileDataRaw = trim($fileDataRaw, '"');
+$fileDataRaw = str_replace(["\r", "\n"], '', $fileDataRaw);
+
+// Base64 decode
+$fileData = base64_decode($fileDataRaw, true);
+
+// ---------------------------------------------------
+// 4. Controle decode
+// ---------------------------------------------------
+if ($fileData === false) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Base64 decode mislukt."
+    ]);
+    exit;
+}
+
+if (empty($fileData)) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Bestand is leeg."
+    ]);
+    exit;
+}
+
+// ---------------------------------------------------
+// 5. Medewerker zoeken
+// ---------------------------------------------------
 $stmt = $pdo->prepare("SELECT Naam FROM Medewerker WHERE Email = ?");
 $stmt->execute([$email]);
 $medewerker = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -31,27 +72,22 @@ if (!$medewerker) {
     exit;
 }
 
-/* ---------------------------------------------------
-   2. Bestand opslaan
---------------------------------------------------- */
+// ---------------------------------------------------
+// 6. Bestand opslaan in DB
+// ---------------------------------------------------
 $insert = $pdo->prepare("
-    INSERT INTO MedewerkerBestanden (MedewerkerEmail, BestandNaam, BestandType, BestandData)
+    INSERT INTO MedewerkerBestanden 
+    (MedewerkerEmail, BestandNaam, BestandType, BestandData)
     VALUES (?, ?, ?, ?)
 ");
 
-$ok = $insert->execute([
-    $email,
-    $filename,
-    $mimetype,
-    $fileData
-]);
+// BELANGRIJK: bindParam voor BLOB
+$insert->bindParam(1, $email);
+$insert->bindParam(2, $filename);
+$insert->bindParam(3, $mimetype, PDO::PARAM_STR);
+$insert->bindParam(4, $fileData, PDO::PARAM_LOB);
 
-    // Logboek
-    $log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
-    $log->execute([
-        "$email heeft een bestand geupload voor zichzelf",
-        "Email"
-    ]);
+$ok = $insert->execute();
 
 if (!$ok) {
     echo json_encode([
@@ -61,9 +97,18 @@ if (!$ok) {
     exit;
 }
 
-/* ---------------------------------------------------
-   3. Succesmelding
---------------------------------------------------- */
+// ---------------------------------------------------
+// 7. Logboek
+// ---------------------------------------------------
+$log = $pdo->prepare("INSERT INTO Logboek (Actie, Soort) VALUES (?, ?)");
+$log->execute([
+    "$email heeft een bestand geupload via Power Automate",
+    "Email"
+]);
+
+// ---------------------------------------------------
+// 8. Succes response
+// ---------------------------------------------------
 echo json_encode([
     "success" => true,
     "message" => "Bestand succesvol opgeslagen in de database.",
