@@ -1,7 +1,9 @@
 <?php
 require_once "config2.php";
 
-if (!isset($_POST['email']) || !isset($_POST['fileData'])) {
+$input = json_decode(file_get_contents("php://input"), true);
+
+if (!isset($input['email']) || !isset($input['fileData'])) {
     echo json_encode([
         "success" => false,
         "message" => "Vereiste velden ontbreken."
@@ -9,10 +11,10 @@ if (!isset($_POST['email']) || !isset($_POST['fileData'])) {
     exit;
 }
 
-$email     = $_POST['email'];
-$filename  = $_POST['filename'] ?? 'onbekend';
-$mimetype  = $_POST['mimetype'] ?? 'application/octet-stream';
-$fileData  = base64_decode($_POST['fileData']);
+$email     = $input['email'];
+$filename  = $input['filename'] ?? 'onbekend';
+$mimetype  = $input['mimetype'] ?? 'application/octet-stream';
+$fileData  = base64_decode($input['fileData']);
 
 /* ---------------------------------------------------
    1. Medewerker zoeken
