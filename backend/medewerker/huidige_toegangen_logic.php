@@ -177,12 +177,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['actie']) && ($_POST['
     }
 
     // Webhook payload
-    $payload = [
+    $payload = [[
         "naam"      => $naam,
         "actie"     => $actieTekst,
         "producten" => [$veld],
         "emails"    => $emails
-    ];
+    ]];
 
     // Webhook call
     $url = "https://default86a972c8b7ac4a0381be61a5a6b32a.f6.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/67704d954d1e46b4bd238e9a09e45a48/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=1Q0M7SdhthHtZjgcWNnrUefxw98gDHOe17J-ac8_iYc";
